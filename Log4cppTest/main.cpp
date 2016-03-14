@@ -4,13 +4,11 @@
 #include <log4cpp/Category.hh>
 #include <log4cpp/PatternLayout.hh>
 
-using namespace std;
-
 int main()
 {
-    std::cout<<"test.cpp"<<std::endl;
-	log4cpp::BasicConfigurator::configure();
-	log4cpp::Category::shutdown();
+    std::cout << "test.cpp" << std::endl;
+    log4cpp::BasicConfigurator::configure();
+    log4cpp::Category::shutdown();
 
     return 0;
 }
