@@ -1,14 +1,12 @@
-#include <iostream>
+#include <stdio.h>
 #include <log4cpp/BasicLayout.hh>
 #include <log4cpp/BasicConfigurator.hh>
 #include <log4cpp/Category.hh>
 #include <log4cpp/PatternLayout.hh>
 
-using namespace std;
 
 int main()
 {
-    cout<<"std::cout <<\"est.cpp\""<<endl;
     log4cpp::BasicConfigurator::configure();
     //log4cpp::PatternLayout* layout = new log4cpp::PatternLayout();
     //log4cpp::Category::getRoot().getAppender()->setLayout(layout);
