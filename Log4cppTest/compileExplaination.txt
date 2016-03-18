@@ -1,0 +1,6 @@
+
+参考log4cpp测试程序编译参数
+
+分动态链接和静态链接
+g++ -pthread -o main main.cpp /usr/local/lib/liblog4cpp.so
+g++ -pthread -o main main.cpp /usr/local/lib/liblog4cpp.a
