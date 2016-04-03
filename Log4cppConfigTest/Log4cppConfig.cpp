@@ -18,16 +18,16 @@ int main(int argc, char* argv[])
         return -1;
     }
 
-    Category& root = Category::getRoot();
-    Category& sub1 = Category::getInstance("file");
+    Category& console = Category::getInstance("console");
+    Category& sub1 = Category::getInstance("tempfile");
     Category& sub2 = Category::getInstance("rolling");
 
     NDC::push("Log4cppConfigTest");
 
-    root.info("root info testing");
-    root.debug("root debug testing");
-    root.warn("root warn testing");
-    root.error("root error testing");
+    console.info("console info testing");
+    console.debug("console debug testing");
+    console.warn("console warn testing");
+    console.error("console error testing");
 
     sub1.info("sub1 info testing");
     sub1.debug("sub1 debug testing");
