@@ -10,23 +10,23 @@ using namespace log4cpp;
 int main(int argc, char* argv[])
 {
     cout<< argv[0] << endl;
-	BasicConfigurator::configure();
-	PatternLayout* layout = new PatternLayout();
-	Category::getRoot().getAppender()->setLayout(layout);
-	Category& cat = Category::getInstance("cat1");
+    BasicConfigurator::configure();
+    PatternLayout* layout = new PatternLayout();
+    Category::getRoot().getAppender()->setLayout(layout);
+    Category& cat = Category::getInstance("cat1");
 
-	layout->setConversionPattern("%d{%Y-%m-%d %H:%M:%S.%l} [%-5p] %c %m%n");
+    layout->setConversionPattern("%d{%Y-%m-%d %H:%M:%S.%l} [%-5p] %c %m%n");
 
-	cat.setPriority(Priority::DEBUG);
+    cat.setPriority(Priority::DEBUG);
 
-	cat.info("info testing");
-	cat.debug("debug testing");
-	cat.error("debug testing");
-	cat.fatal("debug testing");
-	cat.warn("debug testing");
-	cat.emerg("debug testing");
+    cat.info("info testing");
+    cat.debug("debug testing");
+    cat.error("debug testing");
+    cat.fatal("debug testing");
+    cat.warn("debug testing");
+    cat.emerg("debug testing");
 
-	Category::shutdown();
+    Category::shutdown();
 
     return 0;
 }
