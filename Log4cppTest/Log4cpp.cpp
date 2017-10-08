@@ -10,6 +10,9 @@ using namespace log4cpp;
 int main(int argc, char* argv[])
 {
     cout<< argv[0] << endl;
+
+    inr gitTest=0;//test
+
     BasicConfigurator::configure();
     PatternLayout* layout = new PatternLayout();
     Category::getRoot().getAppender()->setLayout(layout);
