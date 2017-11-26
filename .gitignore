@@ -1,3 +1,7 @@
 Log4cppConfigTest/logs
+
 ShuanglongServer/bin
+ShuanglongServer/*.log
+ShuanglongServer/*.scan
+
 .DS_Store
