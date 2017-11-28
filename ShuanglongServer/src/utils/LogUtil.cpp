@@ -1,14 +1,16 @@
 #include "LogUtil.h"
 
+#include <iostream>
+
 namespace Shuanglong::Utils
 {
-    LogUtil::LogUtils()
+    LogUtil::LogUtil()
     {
         std::cout << "LogUtil::LogUtils()" << std::endl;
     }
 
-    LogUtil::~LogUtils()
+    LogUtil::~LogUtil()
     {
-        std::cout << "LogUtil::LogUtils()" << std::endl;
+        std::cout << "LogUtil::~LogUtils()" << std::endl;
     }
 }

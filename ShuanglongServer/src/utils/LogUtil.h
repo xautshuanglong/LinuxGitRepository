@@ -12,7 +12,7 @@ namespace Shuanglong
             public:
                 LogUtil();
                 ~LogUtil();
-        }
+        };
     }
 }
 

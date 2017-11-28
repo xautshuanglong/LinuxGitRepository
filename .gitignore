@@ -3,5 +3,23 @@ Log4cppConfigTest/logs
 ShuanglongServer/bin
 ShuanglongServer/*.log
 ShuanglongServer/*.scan
+ShuanglongServer/*.ac
+
+ShuanglongServer/*.o
+ShuanglongServer/*/*.o
+ShuanglongServer/*/*/*.o
+
+ShuanglongServer/*.a
+ShuanglongServer/*/*.a
+ShuanglongServer/*/*/*.a
+
+ShuanglongServer/*/.deps
+ShuanglongServer/*/*/.deps
+ShuanglongServer/*/*/*/.deps
+
+ShuanglongServer/Makefile
+ShuanglongServer/*/Makefile
+ShuanglongServer/*/*/Makefile
+ShuanglongServer/*/*/*/Makefile
 
 .DS_Store
