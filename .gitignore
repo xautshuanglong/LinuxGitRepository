@@ -3,7 +3,6 @@ Log4cppConfigTest/logs
 ShuanglongServer/bin
 ShuanglongServer/*.log
 ShuanglongServer/*.scan
-ShuanglongServer/*.ac
 
 ShuanglongServer/*.o
 ShuanglongServer/*/*.o
