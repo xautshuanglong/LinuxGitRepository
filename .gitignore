@@ -39,7 +39,6 @@ Makefile
 Makefile.in
 *.scan
 */autom4te.cache
-*/aclocal.m4
 
 ShuanglongServer
 ShuanglongServer/bin
