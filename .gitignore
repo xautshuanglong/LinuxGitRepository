@@ -1,24 +1,50 @@
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+*.deps
+*.log
+
+# AutoMake Makefiles
+Makefile
+Makefile.in
+*.scan
+*/autom4te.cache
+*/aclocal.m4
+
+ShuanglongServer
+ShuanglongServer/bin
+
 Log4cppConfigTest/logs
 
-ShuanglongServer/bin
-ShuanglongServer/*.log
-ShuanglongServer/*.scan
-
-ShuanglongServer/*.o
-ShuanglongServer/*/*.o
-ShuanglongServer/*/*/*.o
-
-ShuanglongServer/*.a
-ShuanglongServer/*/*.a
-ShuanglongServer/*/*/*.a
-
-ShuanglongServer/*/.deps
-ShuanglongServer/*/*/.deps
-ShuanglongServer/*/*/*/.deps
-
-ShuanglongServer/Makefile
-ShuanglongServer/*/Makefile
-ShuanglongServer/*/*/Makefile
-ShuanglongServer/*/*/*/Makefile
-
+# For macos
 .DS_Store
