@@ -8,6 +8,17 @@ AC_CONFIG_SRCDIR([src/main.cpp])
 AM_INIT_AUTOMAKE
 AC_CONFIG_HEADERS([config.h])
 
+# enable debug or release feature
+AC_ARG_ENABLE([debug],
+              [AS_HELP_STRING([--enable-debug],[output debug log(default is no)])],
+              [if test "$enableval"=="yes"; then
+                   AC_DEFINE([DEBUG],[1],[Define if --enable-debug])
+               else
+                   AC_DEFINE([DEBUG],[0],[Define if --disable-debug])
+               fi
+              ],
+              [AC_DEFINE([DEBUG],[0],[Define if need to output debug log])])
+
 # Checks for programs.
 AC_PROG_CXX
 AC_PROG_CC

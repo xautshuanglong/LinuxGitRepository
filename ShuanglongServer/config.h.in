@@ -1,5 +1,8 @@
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
+/* Define if need to output debug log */
+#undef DEBUG
+
 /* Name of package */
 #undef PACKAGE
 

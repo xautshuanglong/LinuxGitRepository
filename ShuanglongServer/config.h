@@ -1,6 +1,9 @@
 /* config.h.  Generated from config.h.in by configure.  */
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
+/* Define if need to output debug log */
+#define DEBUG 0
+
 /* Name of package */
 #define PACKAGE "shuanglongserver"
 
