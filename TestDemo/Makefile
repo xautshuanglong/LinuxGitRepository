@@ -7,7 +7,9 @@ program = TestDemo
 
 deps = config.h
 
-objs = Main.o
+objs = Main.o                 \
+	   Utils/StringUtil.o
+
 srcs = $(objs:.o=.cpp)
 
 $(program) : $(objs)
