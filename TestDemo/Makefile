@@ -2,13 +2,14 @@
 
 mode=release
 
-CC = g++
+CC = g++ -std=c++17
 program = TestDemo
 
 deps = config.h
 
 objs = Main.o                 \
-	   Utils/StringUtil.o
+	   Utils/StringUtil.o     \
+	   Utils/LogUtil.o        \
 
 srcs = $(objs:.o=.cpp)
 
