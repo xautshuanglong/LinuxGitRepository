@@ -1,5 +1,4 @@
 #include "StringUtil.h"
-#include "../Common.h"
 
 namespace Shuanglong::Utils
 {
