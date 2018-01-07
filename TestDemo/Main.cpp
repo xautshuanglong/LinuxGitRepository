@@ -2,6 +2,7 @@
 
 #include "Utils/StringUtil.h"
 #include "Utils/LogUtil.h"
+#include "Utils/EnvUtil.h"
 
 void ShowDescription();
 
@@ -18,6 +19,8 @@ int main(int argc, char **argv)
     ShowDescription();
 
     std::cout << "Func:" << __FUNCTION__ << "  at " << __FILE__ << ":" << __LINE__ << std::endl; 
+    std::cout << "Endian big = " << Shuanglong::Utils::EnvUtil::IsEndianBig() << std::endl;
+    std::cout << "Endian little = " << Shuanglong::Utils::EnvUtil::IsEndianLittle() << std::endl;
 
     std::cout << "Before return 0" << std::endl;
 
