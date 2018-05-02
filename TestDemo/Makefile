@@ -10,6 +10,7 @@ deps = config.h
 objs = Main.o                 \
 	   Utils/StringUtil.o     \
 	   Utils/LogUtil.o        \
+	   Utils/EnvUtil.o        \
 
 srcs = $(objs:.o=.cpp)
 
