@@ -8,6 +8,7 @@ program = TestDemo
 deps = config.h
 
 objs = Main.o                 \
+	   Application.o          \
 	   Utils/StringUtil.o     \
 	   Utils/LogUtil.o        \
 	   Utils/EnvUtil.o        \

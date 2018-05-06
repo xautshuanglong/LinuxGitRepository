@@ -16,7 +16,15 @@ namespace Shuanglong::Utils
     {
     }
     
-    void Debug(CodeLocation& codeLocation, std::string& message)
+    void LogUtil::Debug(CodeLocation codeLocation, std::string message)
+    {
+        std::cout << __FUNCTION__ << std::endl;
+        std::cout << __PRETTY_FUNCTION__ << std::endl;
+
+        std::cout << message << " " << codeLocation.ToString() << std::endl;
+    }
+
+    void LogUtil::Debug(CodeLocation& codeLocation, std::string& message)
     {
     }
 

@@ -5,8 +5,8 @@
 
 namespace Shuanglong::Utils
 {
-#define CODE_LOCATION        Shuanglong::Utils::CodeLocation(__FUNCTION__, __FILE__, __LINE__)
-#define CODE_LOCATION_STRING Shuanglong::Utils::CodeLocation(__FUNCTION__, __FILE__, __LINE__).ToString()
+#define CODE_LOCATION        Shuanglong::Utils::CodeLocation(__PRETTY_FUNCTION__, __FILE__, __LINE__)
+#define CODE_LOCATION_STRING Shuanglong::Utils::CodeLocation(__PRETTY_FUNCTION__, __FILE__, __LINE__).ToString()
 
     class CodeLocation
     {
@@ -36,8 +36,9 @@ namespace Shuanglong::Utils
             LogUtil();
             ~LogUtil();
 
-            void Debug(std::string& message);
-            void Debug(CodeLocation& codeLocation, std::string& message);
+            static void Debug(std::string& message);
+            static void Debug(CodeLocation codeLocation, std::string message);
+            static void Debug(CodeLocation& codeLocation, std::string& message);
     };
 }
 
