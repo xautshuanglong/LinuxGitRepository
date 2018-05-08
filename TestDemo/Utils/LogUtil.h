@@ -8,6 +8,14 @@ namespace Shuanglong::Utils
 #define CODE_LOCATION        Shuanglong::Utils::CodeLocation(__PRETTY_FUNCTION__, __FILE__, __LINE__)
 #define CODE_LOCATION_STRING Shuanglong::Utils::CodeLocation(__PRETTY_FUNCTION__, __FILE__, __LINE__).ToString()
 
+#define DEAFAULT_LOG_BUFFER_LENGTH 1024
+
+#define DEAFAULT_LOG_FORMAT(buffer, fmt, length) \
+    va_list vaList;\
+    va_start(vaList, fmt);\
+    vsnprintf(buffer, DEAFAULT_LOG_BUFFER_LENGTH - 1, fmt, vaList);\
+    va_end(vaList);
+
     class CodeLocation
     {
         private:
@@ -37,6 +45,7 @@ namespace Shuanglong::Utils
             ~LogUtil();
 
             static void Debug(std::string& message);
+            static void Debug(CodeLocation codeLocation, char *format, ...);
             static void Debug(CodeLocation codeLocation, std::string message);
             static void Debug(CodeLocation& codeLocation, std::string& message);
     };

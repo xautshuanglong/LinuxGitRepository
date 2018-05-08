@@ -16,6 +16,11 @@ namespace Shuanglong::Utils
     {
     }
     
+    void LogUtil::Debug(CodeLocation codeLocation, char *format, ...)
+    {
+        std::cout << codeLocation.ToString() << " --> " << format << std::endl;
+    }
+    
     void LogUtil::Debug(CodeLocation codeLocation, std::string message)
     {
         std::cout << __FUNCTION__ << std::endl;

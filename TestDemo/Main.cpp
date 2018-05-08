@@ -1,7 +1,8 @@
 #include "Common.h"
 #include "Application.h"
-#include <string.h>
 
+#include "Utils/LogUtil.h"
+using namespace Shuanglong::Utils; 
 using namespace Shuanglong;
 
 void ShowDescription();
@@ -9,6 +10,8 @@ void ShowDescription();
 int main(int argc, char *argv[])
 {
     //ShowDescription();
+    
+    LogUtil::Debug(CODE_LOCATION, (char*)"Testing");
 
     Application app;
     return app.Run(argc, argv);
