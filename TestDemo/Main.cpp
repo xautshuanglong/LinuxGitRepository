@@ -1,19 +1,13 @@
 #include "Common.h"
 #include "Application.h"
 
-#include "Utils/LogUtil.h"
-using namespace Shuanglong::Utils; 
-using namespace Shuanglong;
-
 void ShowDescription();
 
 int main(int argc, char *argv[])
 {
-    //ShowDescription();
+    ShowDescription();
     
-    LogUtil::Debug(CODE_LOCATION, (char*)"Testing");
-
-    Application app;
+    Shuanglong::Application app;
     return app.Run(argc, argv);
 }
 

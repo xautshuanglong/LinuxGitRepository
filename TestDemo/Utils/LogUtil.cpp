@@ -2,35 +2,40 @@
 
 namespace Shuanglong::Utils
 {
-    LogUtil::LogUtil()
-    {
-        std::cout << "LogUtil::LogUtil()" << std::endl;
-    }
-
+//    LogUtil::LogUtil()
+//    {
+//    }
+//
     LogUtil::~LogUtil()
     {
-        std::cout << "LogUtil::~LogUtil()" << std::endl;
     }
 
-    void LogUtil::Debug(std::string& message)
+    void LogUtil::Debug(char *format, ...)
     {
+        char msgBuffer[DEFAULT_LOG_BUFFER_LENGTH] = { 0 };
+        DEFAULT_LOG_FORMAT(msgBuffer, format, DEFAULT_LOG_BUFFER_LENGTH);
+        std::cout << msgBuffer << std::endl;
     }
     
     void LogUtil::Debug(CodeLocation codeLocation, char *format, ...)
     {
-        std::cout << codeLocation.ToString() << " --> " << format << std::endl;
+        char msgBuffer[DEFAULT_LOG_BUFFER_LENGTH] = { 0 };
+        DEFAULT_LOG_FORMAT(msgBuffer, format, DEFAULT_LOG_BUFFER_LENGTH);
+        std::cout << codeLocation.ToString() << " --> " << msgBuffer << std::endl;
     }
     
-    void LogUtil::Debug(CodeLocation codeLocation, std::string message)
+    void LogUtil::Info(char *format, ...)
     {
-        std::cout << __FUNCTION__ << std::endl;
-        std::cout << __PRETTY_FUNCTION__ << std::endl;
-
-        std::cout << message << " " << codeLocation.ToString() << std::endl;
+        char msgBuffer[DEFAULT_LOG_BUFFER_LENGTH] = { 0 };
+        DEFAULT_LOG_FORMAT(msgBuffer, format, DEFAULT_LOG_BUFFER_LENGTH);
+        std::cout << msgBuffer << std::endl;
     }
 
-    void LogUtil::Debug(CodeLocation& codeLocation, std::string& message)
+    void LogUtil::Info(CodeLocation codeLocation, char *format, ...)
     {
+        char msgBuffer[DEFAULT_LOG_BUFFER_LENGTH] = { 0 };
+        DEFAULT_LOG_FORMAT(msgBuffer, format, DEFAULT_LOG_BUFFER_LENGTH);
+        std::cout << codeLocation.ToString() << " --> " << msgBuffer << std::endl;
     }
 
     CodeLocation::CodeLocation()
