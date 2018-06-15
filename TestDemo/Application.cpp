@@ -23,6 +23,8 @@ namespace Shuanglong
         }
         std::cout << std::endl;
 
+        LogUtil::Debug(CODE_LOCATION, "Start running %d", 666);
+
         return 0;
     }
 }

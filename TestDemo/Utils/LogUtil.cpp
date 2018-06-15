@@ -2,40 +2,87 @@
 
 namespace Shuanglong::Utils
 {
-//    LogUtil::LogUtil()
-//    {
-//    }
-//
     LogUtil::~LogUtil()
     {
     }
 
-    void LogUtil::Debug(char *format, ...)
+    void LogUtil::Debug(const char *format, ...)
     {
         char msgBuffer[DEFAULT_LOG_BUFFER_LENGTH] = { 0 };
         DEFAULT_LOG_FORMAT(msgBuffer, format, DEFAULT_LOG_BUFFER_LENGTH);
         std::cout << msgBuffer << std::endl;
     }
     
-    void LogUtil::Debug(CodeLocation codeLocation, char *format, ...)
+    void LogUtil::Debug(CodeLocation codeLocation, const char *format, ...)
     {
         char msgBuffer[DEFAULT_LOG_BUFFER_LENGTH] = { 0 };
         DEFAULT_LOG_FORMAT(msgBuffer, format, DEFAULT_LOG_BUFFER_LENGTH);
-        std::cout << codeLocation.ToString() << " --> " << msgBuffer << std::endl;
+
+        std::string tempMsg = GetSystemTimeString();
+        tempMsg.append(" [").append(GetLevelString(LOG_LEVEL_DEBUG)).append("] ");
+        tempMsg.append(msgBuffer);
+        tempMsg.append(" <== ").append(codeLocation.ToString());
+
+        std::cout << tempMsg << std::endl;
     }
     
-    void LogUtil::Info(char *format, ...)
+    void LogUtil::Info(const char *format, ...)
     {
         char msgBuffer[DEFAULT_LOG_BUFFER_LENGTH] = { 0 };
         DEFAULT_LOG_FORMAT(msgBuffer, format, DEFAULT_LOG_BUFFER_LENGTH);
         std::cout << msgBuffer << std::endl;
     }
 
-    void LogUtil::Info(CodeLocation codeLocation, char *format, ...)
+    void LogUtil::Info(CodeLocation codeLocation, const char *format, ...)
     {
         char msgBuffer[DEFAULT_LOG_BUFFER_LENGTH] = { 0 };
         DEFAULT_LOG_FORMAT(msgBuffer, format, DEFAULT_LOG_BUFFER_LENGTH);
         std::cout << codeLocation.ToString() << " --> " << msgBuffer << std::endl;
+    }
+
+    std::string LogUtil::GetSystemTimeString()
+    {
+        char timeBuffer[50] = {0};
+        struct timeval tv;
+        gettimeofday(&tv, NULL);
+        struct tm *pLocalTime = localtime(&tv.tv_sec);
+        int milliSeconds = (int)tv.tv_usec / 1000;
+        snprintf(timeBuffer, sizeof(timeBuffer)-1, "%04d-%02d-%02d %02d:%02d:%02d.%03d",
+                pLocalTime->tm_year + 1990,
+                pLocalTime->tm_mon + 1,
+                pLocalTime->tm_mday,
+                pLocalTime->tm_hour,
+                pLocalTime->tm_min,
+                pLocalTime->tm_sec,
+                milliSeconds);
+        return std::string(timeBuffer);
+    }
+
+    std::string LogUtil::GetLevelString(LogLevelType logLevel)
+    {
+        std::string retValue = "UNKNOW";
+        switch (logLevel)
+        {
+            case LOG_LEVEL_NONE:
+                retValue = "NONE";
+                break;
+            case LOG_LEVEL_DEBUG:
+                retValue = "DEBUG";
+                break;
+            case LOG_LEVEL_INFO:
+                retValue = "INFO";
+                break;
+            case LOG_LEVEL_WARN:
+                retValue = "WARN";
+                break;
+            case LOG_LEVEL_ERROR:
+                retValue = "ERROR";
+                break;
+            default:
+                break;
+        }
+        
+        return retValue;
     }
 
     CodeLocation::CodeLocation()

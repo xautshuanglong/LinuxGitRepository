@@ -5,7 +5,7 @@ void ShowDescription();
 
 int main(int argc, char *argv[])
 {
-    ShowDescription();
+//    ShowDescription();
     
     Shuanglong::Application app;
     return app.Run(argc, argv);

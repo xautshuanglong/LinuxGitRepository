@@ -11,10 +11,20 @@ namespace Shuanglong::Utils
 #define DEFAULT_LOG_BUFFER_LENGTH 1024
 
 #define DEFAULT_LOG_FORMAT(buffer, fmt, length) \
-    va_list vaList;\
-    va_start(vaList, fmt);\
-    vsnprintf(buffer, DEFAULT_LOG_BUFFER_LENGTH - 1, fmt, vaList);\
-    va_end(vaList);
+va_list vaList;\
+va_start(vaList, fmt);\
+vsnprintf(buffer, DEFAULT_LOG_BUFFER_LENGTH - 1, fmt, vaList);\
+va_end(vaList);
+
+    enum LogLevelType
+    {
+        LOG_LEVEL_DEBUG,
+        LOG_LEVEL_INFO,
+        LOG_LEVEL_WARN,
+        LOG_LEVEL_ERROR,
+        LOG_LEVEL_FATAL,
+        LOG_LEVEL_NONE
+    };
 
     class CodeLocation
     {
@@ -44,11 +54,15 @@ namespace Shuanglong::Utils
             LogUtil() = delete;
             ~LogUtil();
 
-            static void Debug(char *format, ...);
-            static void Debug(CodeLocation codeLocation, char *format, ...);
+            static void Debug(const char *format, ...);
+            static void Debug(CodeLocation codeLocation, const char *format, ...);
 
-            static void Info(char *format, ...);
-            static void Info(CodeLocation codeLocation, char *format, ...);
+            static void Info(const char *format, ...);
+            static void Info(CodeLocation codeLocation, const char *format, ...);
+
+        private:
+            static std::string GetSystemTimeString();
+            static std::string GetLevelString(LogLevelType logLevel);
     };
 }
 
