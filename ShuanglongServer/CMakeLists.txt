@@ -10,20 +10,23 @@
 # ADD_LIBRARY(myprint SHARED ${SRC_LIST_CPP} ${SRC_LIST_C})
 
 # For Executable
-CMAKE_MINIMUM_REQUIRED(VERSION 3.10.2)
+cmake_minimum_required(VERSION 3.10.2)
 
-PROJECT(ShuanglongServer)
+project(ShuanglongServer)
 
-SET(SRC_DIR ${PROJECT_SOURCE_DIR}/src)
+aux_source_directory(${PROJECT_SOURCE_DIR}/src SRC_MAIN)
 
-MESSAGE(STATUS "PROJECT_SOURCE_DIR" ${PROJECT_SOURCE_DIR})
-MESSAGE(STATUS "SRC_DIR" ${SRC_DIR})
+message(STATUS "PROJECT_SOURCE_DIR" ${PROJECT_SOURCE_DIR})
+# message(WARNING "messge warning test")
+# message(AUTHOR_WARNING "messge author_warning test")
+# message(SEND_ERROR "messge send_error test")
+# message(FATAL_ERROR "messge fatal_error test")
 
-INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/include)
+include_directories(${PROJECT_SOURCE_DIR}/include)
 
-ADD_SUBDIRECTORY(${SRC_DIR}/utils)
+add_subdirectory(${PROJECT_SOURCE_DIR}/src/utils)
 
-ADD_EXECUTABLE(${PROJECT_NAME}.out ${SRC_DIR}/main.cpp)
+add_executable(${PROJECT_NAME}.out ${SRC_MAIN})
 
-TARGET_LINK_LIBRARIES(${PROJECT_NAME}.out utils)
+target_link_libraries(${PROJECT_NAME}.out utils)
 
