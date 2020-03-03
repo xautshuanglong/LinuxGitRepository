@@ -7,7 +7,7 @@ CC = g++ -std=c++17
 CFLAGS :=
 LDFLAGS :=
 
-program = TestDemo
+program = TestDemo.out
 
 deps = config.h
 
