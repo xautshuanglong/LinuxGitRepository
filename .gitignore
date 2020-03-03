@@ -40,10 +40,10 @@ Makefile.in
 *.scan
 */autom4te.cache
 
-ShuanglongServer
-ShuanglongServer/bin
-
-Log4cppConfigTest/logs
-
 # For macos
 .DS_Store
+
+# Added by Shuanglong
+**/build/**
+Log4cppConfigTest/logs
+
