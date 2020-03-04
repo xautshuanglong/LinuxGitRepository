@@ -6,9 +6,10 @@ namespace Shuanglong::Utils
 	class LogUtil
     {
 	    private:
-		int mIntValue;
+    		int mIntValue;
 	    public:
-		LogUtil(); ~LogUtil();
+	    	LogUtil();
+            ~LogUtil();
 	};
 }
 
