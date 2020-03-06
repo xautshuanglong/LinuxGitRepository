@@ -1,8 +1,10 @@
 #include <iostream>
 
+#include "Application.h"
 #include "utils/LogUtil.h"
 #include "utils/StringUtil.h"
 
+using namespace Shuanglong;
 using namespace Shuanglong::Utils;
 
 int main(int argc, char **argv)
@@ -11,6 +13,7 @@ int main(int argc, char **argv)
 
     LogUtil log;
     StringUtil strutil;
+    Application app;
     
     std::cout << "---------------------------- END -------------------------------" << std::endl;
     

@@ -14,7 +14,7 @@ cmake_minimum_required(VERSION 3.10.2)
 
 project(ShuanglongServer)
 
-aux_source_directory(${PROJECT_SOURCE_DIR}/src SRC_MAIN)
+aux_source_directory(${PROJECT_SOURCE_DIR}/src SRCS)
 
 message(STATUS "PROJECT_SOURCE_DIR" ${PROJECT_SOURCE_DIR})
 # message(WARNING "messge warning test")
@@ -26,7 +26,7 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 
 add_subdirectory(${PROJECT_SOURCE_DIR}/src/utils)
 
-add_executable(${PROJECT_NAME}.out ${SRC_MAIN})
+add_executable(${PROJECT_NAME}.out ${SRCS})
 
 target_link_libraries(${PROJECT_NAME}.out utils)
 
