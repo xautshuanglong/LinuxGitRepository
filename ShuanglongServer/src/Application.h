@@ -11,6 +11,8 @@ namespace Shuanglong
         public:
             Application();
             ~Application();
+
+            int Run(int argc, char* argv[]);
     };
 }
 

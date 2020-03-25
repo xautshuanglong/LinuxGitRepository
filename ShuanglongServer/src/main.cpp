@@ -1,7 +1,6 @@
 #include <iostream>
 
 #include "Application.h"
-#include "utils/LogUtil.h"
 #include "utils/StringUtil.h"
 
 using namespace Shuanglong;
@@ -11,9 +10,9 @@ int main(int argc, char **argv)
 {
     std::cout << "--------------------- ShuanglongServer -------------------------" << std::endl;
 
-    LogUtil log;
     StringUtil strutil;
     Application app;
+    app.Run(argc, argv);
     
     std::cout << "---------------------------- END -------------------------------" << std::endl;
     

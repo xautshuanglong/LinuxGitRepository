@@ -8,9 +8,10 @@ namespace Shuanglong::Utils
     {
         std::cout << "StringUtil::StringUtil()" << std::endl;
     }
-    
+
     StringUtil::~StringUtil()
     {
         std::cout << "StringUtil::~StringUtil()" << std::endl;
     }
 }
+

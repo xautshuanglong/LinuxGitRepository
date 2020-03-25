@@ -1,12 +1,13 @@
 #ifndef STRING_UTIL_H
 #define STRING_UTIL_H
 
+
 namespace Shuanglong::Utils
 {
     class StringUtil
     {
         private:
-            int mIntValue;
+            int mValue;
 
         public:
             StringUtil();
