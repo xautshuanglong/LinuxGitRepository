@@ -8,22 +8,22 @@ using namespace Shuanglong::Utils;
 
 int main(int argc, char **argv)
 {
-    std::cout << "--------------------- ShuanglongServer -------------------------" << std::endl;
+#ifdef DEBUG
+    std::cout << "--------------------- ShuanglongServer ( DEBUG ) -------------------------" << std::endl;
+#else
+    std::cout << "--------------------- ShuanglongServer ( NDEBUG ) -------------------------" << std::endl;
+#endif
 
     StringUtil strutil;
     Application app;
     app.Run(argc, argv);
     
-    std::cout << "---------------------------- END -------------------------------" << std::endl;
-    
-    // warning: nested namespace definition is a C++1z extension; define each namespace separately [-Wc++1z-extensions]
-
-#if DEBUG
-    std::cout << "define DEBUG when excute configure" << std::endl;
+#ifdef NDEBUG
+    std::cout << "---------------------------- END ( NDEBUG ) -------------------------------" << std::endl;
 #else
-    std::cout << "do not define DEBUG" << std::endl;
+    std::cout << "---------------------------- END ( DEBUG ) -------------------------------" << std::endl;
 #endif
-
+    
     return 0;
 }
 

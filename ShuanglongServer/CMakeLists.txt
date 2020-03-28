@@ -30,3 +30,9 @@ add_executable(${PROJECT_NAME}.out ${SRCS})
 
 target_link_libraries(${PROJECT_NAME}.out utils)
 
+if(CMAKE_BUILD_TYPE STREQUAL DEBUG)
+    add_definitions(-DDEBUG)
+else()
+    add_definitions(-DNDEBUG)
+endif()
+
