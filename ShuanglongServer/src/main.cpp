@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "Application.h"
+#include "CommandLine.h"
 #include "utils/StringUtil.h"
 
 using namespace Shuanglong;
@@ -14,6 +15,7 @@ int main(int argc, char **argv)
     std::cout << "--------------------- ShuanglongServer ( NDEBUG ) -------------------------" << std::endl;
 #endif
 
+    CommandLine cmdLine;
     StringUtil strutil;
     Application app;
     app.Run(argc, argv);
