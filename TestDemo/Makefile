@@ -11,7 +11,7 @@ program = TestDemo.out
 
 deps = config.h
 
-#objs = Main.o                 \
+#objs = Main.o                \
 #	   Application.o          \
 #	   Utils/StringUtil.o     \
 #	   Utils/LogUtil.o        \
