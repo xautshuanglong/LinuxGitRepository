@@ -13,6 +13,8 @@ func() {
 
 upload="false"
 
+echo '$OPTIND -->' $OPTIND
+
 while getopts 'h:j:m:u' OPT; do
     case $OPT in
         j) S_DIR="$OPTARG";;
@@ -23,7 +25,20 @@ while getopts 'h:j:m:u' OPT; do
     esac
 done
 
-echo $S_DIR
-echo $D_DIR
-echo $upload
+# $OPTIND 从 1 开始，增长到最大参数个数，个数为 case 选项个数。
+
+echo '$S_DIR -->' $S_DIR
+echo '$D_DIR -->' $D_DIR
+echo '$upload -->' $upload
+
+echo '$1 -->' $1
+echo '$2 -->' $2
+echo '$3 -->' $3
+echo '$4 -->' $4
+echo '$5 -->' $5
+echo '$6 -->' $6
+
+echo '$OPTIND -->' $OPTIND
+shift $(($OPTIND - 1))
+echo $1
 
