@@ -16,6 +16,8 @@ int main(int argc, char **argv)
 #endif
 
     CommandLine cmdLine;
+    cmdLine.ParseCommandArguments(argc, argv);
+
     StringUtil strutil;
     Application app;
     app.Run(argc, argv);

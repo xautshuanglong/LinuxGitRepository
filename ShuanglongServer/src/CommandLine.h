@@ -1,6 +1,8 @@
 #ifndef COMMAND_LINE_H
 #define COMMAND_LINE_H
 
+#include <string>
+
 namespace Shuanglong
 {
     class CommandLine
@@ -8,6 +10,11 @@ namespace Shuanglong
         public:
             CommandLine();
             ~CommandLine();
+
+            bool ParseCommandArguments(int argc, char **argv);
+
+        private:
+            std::string   mStrCmdArgs;
     };
 }
 

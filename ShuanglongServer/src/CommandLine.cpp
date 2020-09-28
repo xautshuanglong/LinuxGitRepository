@@ -9,5 +9,11 @@ namespace Shuanglong
     CommandLine::~CommandLine()
     {
     }
+    
+    bool CommandLine::ParseCommandArguments(int argc, char **argv)
+    {
+        bool retValue = false;
+        return retValue;
+    }
 }
 
