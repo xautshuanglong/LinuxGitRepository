@@ -2,13 +2,17 @@
 
 echo ==================================== getoption testing ==================================== 
 
-func() {
+help_string () {
     echo "Usage:"
     echo "getoption_test.sh [-j S_DIR] [-m D_DIR]"
     echo "Description:"
     echo "S_DIR, the path of source."
     echo "D_DIR, the path of destination."
     exit -1
+}
+
+test_string () {
+    echo "test string"
 }
 
 upload="false"
@@ -20,8 +24,8 @@ while getopts 'h:j:m:u' OPT; do
         j) S_DIR="$OPTARG";;
         m) D_DIR="$OPTARG";;
         u) upload="true";;
-        h) func;;
-        ?) func;;
+        h) help_string;;
+        ?) help_string;;      # 接受未知选项
     esac
 done
 
@@ -40,5 +44,5 @@ echo '$6 -->' $6
 
 echo '$OPTIND -->' $OPTIND
 shift $(($OPTIND - 1))
-echo $1
+echo '$1 -->' $1
 
