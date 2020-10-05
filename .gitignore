@@ -47,3 +47,4 @@ Makefile.in
 **/build/**
 Log4cppConfigTest/logs
 
+**/__debug_bin
