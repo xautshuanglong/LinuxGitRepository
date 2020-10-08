@@ -2,8 +2,8 @@
 *  Author: xautshuanglong
 *  Date: 2020-10-06 15:36:02
 *  LastEditor: xautshuanglong
-*  LastEditTime: 2020-10-08 23:00:27
-*  FilePath: /GoLearning/src/main.go
+*  LastEditTime: 2020-10-09 01:17:10
+*  FilePath: /GoLearning/main.go
 *  Description:
 \********************************************************************/
 package main
@@ -29,6 +29,6 @@ func main() {
 
     fmt.Printf("Hello, world!\n")
 
-    test_demo.Init()
+    test_demo.TestInit()
     test_demo.TestEntry()
 }

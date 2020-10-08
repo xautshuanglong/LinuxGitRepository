@@ -2,8 +2,8 @@
 *  Author: xautshuanglong
 *  Date: 2020-10-06 11:13:42
 *  LastEditor: xautshuanglong
-*  LastEditTime: 2020-10-08 22:54:59
-*  FilePath: /GoLearning/src/test_demo/test_multithread.go
+*  LastEditTime: 2020-10-09 01:17:41
+*  FilePath: /GoLearning/test_demo/test_multithread.go
 *  Description:
 \********************************************************************/
 
@@ -14,11 +14,11 @@ import (
 )
 
 func init() {
-    fmt.Println("-------------------- testing init() ------------------")
+    fmt.Println("-------------------- testing auto init() ------------------")
 }
 
-func Init() {
-    fmt.Println("-------------------- testing Init() 1 ------------------")
+func TestInit() {
+    fmt.Println("-------------------- testing TestInit() ------------------")
 }
 
 /********************************************************************\

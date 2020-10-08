@@ -12,7 +12,8 @@
             // "showLog": true,
             // "trace":"log",
             // "logOutput": "rpc",
-            "program": "${fileDirname}",
+            // "program": "${fileDirname}",
+            "program": "${workspaceFolder}/main.go",
             "env": {},
             "args": ["1", "2", "3"]
         }
