@@ -2,9 +2,9 @@
 *  Author: xautshuanglong
 *  Date: 2020-10-06 15:36:02
 *  LastEditor: xautshuanglong
-*  LastEditTime: 2020-10-06 20:17:03
-*  FilePath: /GoLearning/main.go
-*  Description: 
+*  LastEditTime: 2020-10-08 23:00:27
+*  FilePath: /GoLearning/src/main.go
+*  Description:
 \********************************************************************/
 package main
 
@@ -13,6 +13,7 @@ import (
     "os"
     "strconv"
 )
+import "./test_demo"
 
 func main() {
     for index, arg := range os.Args {
@@ -27,4 +28,7 @@ func main() {
     }
 
     fmt.Printf("Hello, world!\n")
+
+    test_demo.Init()
+    test_demo.TestEntry()
 }
