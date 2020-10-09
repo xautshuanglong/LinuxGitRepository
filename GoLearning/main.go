@@ -2,7 +2,7 @@
 *  Author: xautshuanglong
 *  Date: 2020-10-06 15:36:02
 *  LastEditor: xautshuanglong
-*  LastEditTime: 2020-10-09 01:17:10
+*  LastEditTime: 2020-10-10 00:58:05
 *  FilePath: /GoLearning/main.go
 *  Description:
 \********************************************************************/
@@ -31,4 +31,6 @@ func main() {
 
     test_demo.TestInit()
     test_demo.TestEntry()
+    test_demo.MathInit()
+    test_demo.MultithreadInit()
 }

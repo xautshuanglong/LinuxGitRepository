@@ -2,7 +2,7 @@
 *  Author: xautshuanglong
 *  Date: 2020-10-06 11:13:42
 *  LastEditor: xautshuanglong
-*  LastEditTime: 2020-10-09 01:17:41
+*  LastEditTime: 2020-10-10 00:56:27
 *  FilePath: /GoLearning/test_demo/test_multithread.go
 *  Description:
 \********************************************************************/
@@ -14,18 +14,19 @@ import (
 )
 
 func init() {
-    fmt.Println("-------------------- testing auto init() ------------------")
+    fmt.Println("-------------------- test_multithread auto init() ------------------")
 }
 
-func TestInit() {
-    fmt.Println("-------------------- testing TestInit() ------------------")
-}
+// 同一个包中不能有同名函数，重复定义
+// func TestInit() {
+//     fmt.Println("-------------------- test_multithread TestInit() ------------------")
+// }
 
 /********************************************************************\
 *  description:
 *  param {type}
 *  return {type}
 \********************************************************************/
-func TestEntry() {
-    fmt.Println("-------------------- testing TestEntry --------------------")
+func MultithreadInit() {
+    fmt.Println("-------------------- test_multithread MultiThreadEntry --------------------")
 }
