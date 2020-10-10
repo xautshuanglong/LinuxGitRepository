@@ -2,11 +2,11 @@
 *  Author: xautshuanglong
 *  Date: 2020-10-10 16:33:17
 *  LastEditor: xautshuanglong
-*  LastEditTime: 2020-10-10 18:21:17
+*  LastEditTime: 2020-10-10 21:43:02
 *  FilePath: /GoLearning/unit_test/demo_test.go
 *  Description:
 \********************************************************************/
-package test_demo
+package unit_test
 
 import (
     "sync"
@@ -40,7 +40,7 @@ func Test_Fibonacci(t *testing.T) {
         {5, 5},
         {6, 8},
         {7, 13},
-        {8, 20},
+        // {8, 20},
     }
     for _, testCase := range testCases {
         actual = Fibonacci(testCase.n)
