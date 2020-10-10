@@ -54,9 +54,7 @@
             "mode": "test",
             "program": "${workspaceFolder}/unit_test",
             "args": [
-                "-test.v",
-                "-test.run",
-                "Test_*"
+                "-test.v"
             ]
         }
     ]
