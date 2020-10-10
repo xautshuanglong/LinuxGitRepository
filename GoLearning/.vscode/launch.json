@@ -5,17 +5,54 @@
     "version": "0.2.0",
     "configurations": [
         {
+            // 常用变量
+            // ${workspaceFolder}  工作区根目录
+            // ${file}             当前打开的文件
+            // ${fileDirname}      当前文件所属的程序包
+            // 名称
             "name": "Launch",
+            // 指定语言类型
             "type": "go",
+            // launch：启动新的进程；attach：附加到已处于运行状态的进程。
             "request": "launch",
+            // launch {auto, debug, remote, test, exec}  attach {local, remote}
             "mode": "auto",
+            // 布尔值，是否将调试信息输出
             // "showLog": true,
             // "trace":"log",
+            // 配置调试输出的组件（debugger, gdbwire, lldbout, debuglineerr, rpc），都好分隔，showLog 为 true 时有效。
             // "logOutput": "rpc",
-            // "program": "${fileDirname}",
+            // "program": "${fileDirname}",build
+            // 构建 go 程序时，传递给 go 编译器的标志
+            // "buildFlags"
+            // 远程调试程序的绝对路径，当 mode 为 remote 时有效。
+            // "remotePath"
+            // 目标服务器地址
+            // "host": "127.0.0.1",
+            // 目标端口
+            // "port": 2345,
+            // 进程 ID
+            // "processId"
+            // 指定包：源文件或者二进制文件的绝对路径
             "program": "${workspaceFolder}/main.go",
+            // 调试时使用的环境变量
             "env": {},
+            // 绝对路径，env 的值会覆盖 envFile 的值
+            // "envFile": "${workspaceFolder}/.env",
+            // 传递给正在调试的程序的命令行参数数组
             "args": ["1", "2", "3"]
+        },
+        {
+            "name": "Test",
+            "type": "go",
+            "request": "launch",
+            "mode": "test",
+            "program": "${workspaceFolder}/unit_test",
+            "args": [
+                "-test.v",
+                "-test.run",
+                "Test_*"
+            ]
         }
     ]
 }
