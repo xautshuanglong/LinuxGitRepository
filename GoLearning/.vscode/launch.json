@@ -40,7 +40,12 @@
             // 绝对路径，env 的值会覆盖 envFile 的值
             // "envFile": "${workspaceFolder}/.env",
             // 传递给正在调试的程序的命令行参数数组
-            "args": ["1", "2", "3"]
+            "args": [
+                "-age", "18",
+                "-flagname", "66",
+                "-gender", "男",
+                "-name", "张三"
+            ]
         },
         {
             "name": "Test",
