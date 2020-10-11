@@ -2,7 +2,7 @@
 *  Author: xautshuanglong
 *  Date: 2020-10-10 21:16:02
 *  LastEditor: xautshuanglong
-*  LastEditTime: 2020-10-10 22:16:43
+*  LastEditTime: 2020-10-11 19:49:02
 *  FilePath: /GoLearning/unit_test/interface_test.go
 *  Description:
 \********************************************************************/
@@ -10,14 +10,17 @@ package unit_test
 
 import "../test_demo"
 import "testing"
+import "fmt"
 
 func Test_Animal(t *testing.T) {
     var dogDuk test_demo.Animal
+    fmt.Printf("Animal --> %+v\n", dogDuk)
     dogDuk = &test_demo.AnimalDog{
         Name:   "duk",
         Age:    5,
         Weight: 13.4,
     }
+    fmt.Printf("Animal --> %+v\n", dogDuk)
     dogDuk.Eat("meat")
     dogDuk.Run()
 
@@ -53,6 +56,19 @@ func Test_AnimalDog(t *testing.T) {
     dogSony.Weight = 20.5
     dogSony.Eat("meat")
     dogSony.Run()
+
+    var dogTest = &test_demo.AnimalDog{
+        Name:   "Test",
+        Age:    9,
+        Weight: 11.4,
+    }
+    dogTest.Eat("fruit")
+    dogTest.Run()
+
+    fmt.Printf("AnimalDog -----> %v %+v\n", dogTony.Name, dogTony)
+    fmt.Printf("AnimalDog -----> %v %+v\n", dogBen.Name, dogBen)
+    fmt.Printf("AnimalDog -----> %v %+v\n", dogSony.Name, dogSony)
+    fmt.Printf("AnimalDog -----> %v %+v\n", dogTest.Name, dogTest)
 }
 
 func Test_AnimalCat(t *testing.T) {
