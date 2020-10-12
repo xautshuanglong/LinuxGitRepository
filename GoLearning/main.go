@@ -2,7 +2,7 @@
 *  Author: xautshuanglong
 *  Date: 2020-10-06 15:36:02
 *  LastEditor: xautshuanglong
-*  LastEditTime: 2020-10-11 22:52:37
+*  LastEditTime: 2020-10-12 19:57:59
 *  FilePath: /GoLearning/main.go
 *  Description:
 \********************************************************************/
@@ -51,8 +51,8 @@ func main() {
     test_demo.MathInit()
     test_demo.MultithreadInit()
 
-    go test_demo.ThreadPrintTime(5, "subThread")
-    test_demo.ThreadPrintTime(5, "mainThread")
+    go test_demo.ThreadPrintTime(15, "subThread")
+    test_demo.ThreadPrintTime(15, "mainThread")
 
     fmt.Println("-------------------- will exiting --------------------")
 }

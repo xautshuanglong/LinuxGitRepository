@@ -2,7 +2,7 @@
 *  Author: xautshuanglong
 *  Date: 2020-10-06 11:13:42
 *  LastEditor: xautshuanglong
-*  LastEditTime: 2020-10-11 23:15:38
+*  LastEditTime: 2020-10-12 20:04:46
 *  FilePath: /GoLearning/test_demo/test_multithread.go
 *  Description:
 \********************************************************************/
@@ -58,7 +58,7 @@ func Getgoid() int64 {
 func ThreadPrintTime(times int, threadName string) {
     for i := 0; i < times; i++ {
         time.Sleep(100 * time.Millisecond)
-        fmt.Printf("%v %v ---> current time: %v  pid:%v tid:%v goid:%v\n",
-            i+1, threadName, time.Now(), unix.Getpid(), unix.Gettid(), Getgoid())
+        fmt.Printf("%02v %12v ---> current time: %v  pid:%v tid:%v goid:%v\n",
+            i+1, threadName, time.Now().Format("2006-01-02 15:04:05.000"), unix.Getpid(), unix.Gettid(), Getgoid())
     }
 }
