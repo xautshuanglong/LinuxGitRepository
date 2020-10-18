@@ -46,5 +46,5 @@ func main() {
 
     test_demo.TestEntry()
 
-    fmt.Println("-------------------- will exiting --------------------")
+    fmt.Println("========================= will exiting =========================")
 }
