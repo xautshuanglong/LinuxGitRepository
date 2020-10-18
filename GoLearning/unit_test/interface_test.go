@@ -2,7 +2,7 @@
  *  Author: xautshuanglong
  *  Date: 2020-10-10 21:16:02
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-10-18 20:31:13
+ *  LastEditTime: 2020-10-18 20:44:12
  *  FilePath: /GoLearning/unit_test/interface_test.go
  *  Description:
 \********************************************************************/
@@ -24,8 +24,7 @@ func Test_Animal(t *testing.T) {
     dogDuk.Eat("meat")
     dogDuk.Run()
 
-    var catPen test_demo.Animal
-    catPen = &test_demo.AnimalCat{
+    var catPen = &test_demo.AnimalCat{
         Name:   "pen",
         Age:    5,
         Weight: 19.4,
