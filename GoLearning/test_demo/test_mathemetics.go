@@ -16,10 +16,6 @@ func init() {
     fmt.Println("-------------------- test_mathemetics auto init() ------------------")
 }
 
-func MathInit() {
-    fmt.Println("-------------------- test_mathemetics MathInit() ------------------")
-}
-
 // 同一个包中不能有同名函数，重复定义
 // func TestInit() {
 //     fmt.Println("-------------------- test_mathemetics TestInit() ------------------")

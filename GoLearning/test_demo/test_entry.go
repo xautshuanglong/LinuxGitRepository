@@ -27,4 +27,7 @@ func TestInit() {
 \********************************************************************/
 func TestEntry() {
     fmt.Println("-------------------- test_entry TestEntry --------------------")
+
+    go ThreadPrintTime(15, "subThread")
+    ThreadPrintTime(15, "mainThread")
 }

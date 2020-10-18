@@ -48,11 +48,6 @@ func main() {
 
     test_demo.TestInit()
     test_demo.TestEntry()
-    test_demo.MathInit()
-    test_demo.MultithreadInit()
-
-    go test_demo.ThreadPrintTime(15, "subThread")
-    test_demo.ThreadPrintTime(15, "mainThread")
 
     fmt.Println("-------------------- will exiting --------------------")
 }

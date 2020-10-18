@@ -27,15 +27,6 @@ func init() {
 //     fmt.Println("-------------------- test_multithread TestInit() ------------------")
 // }
 
-/********************************************************************\
-*  description:
-*  param {type}
-*  return {type}
-\********************************************************************/
-func MultithreadInit() {
-    fmt.Println("-------------------- test_multithread MultiThreadEntry --------------------")
-}
-
 // https://chai2010.cn/advanced-go-programming-book/
 // 获取 goroutine id
 func Getgoid() int64 {
