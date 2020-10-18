@@ -12,8 +12,8 @@ import (
     "./test_demo"
     "flag"
     "fmt"
-    "os"
-    "strconv"
+    // "os"
+    // "strconv"
 )
 
 var cliName = flag.String("name", "nick", "Input your name")
@@ -30,23 +30,20 @@ func main() {
     Init()
     flag.Parse()
     // flag.Args() 函数返回没有被解析的命令行参数
-    // func NArg() 函数返回没有被解析的命令行参数的个数
+    // flag.NArg() 函数返回没有被解析的命令行参数的个数
     fmt.Printf("args=%s, num=%d\n", flag.Args(), flag.NArg())
-    for i := 0; i != flag.NArg(); i++ {
-        fmt.Printf("arg[%d]=%s\n", i, flag.Arg(i))
-    }
 
-    // 输出命令行参数
+    // 输出解析后的命令行参数
     fmt.Println("name=", *cliName)
     fmt.Println("age=", *cliAge)
     fmt.Println("gender=", *cliGender)
     fmt.Println("flagname=", cliFlag)
 
-    for index, arg := range os.Args {
-        fmt.Println("Args["+strconv.Itoa(index)+"] = ", arg)
-    }
+    // 输出命令行参数
+    // for index, arg := range os.Args {
+    //     fmt.Println("Args["+strconv.Itoa(index)+"] = ", arg)
+    // }
 
-    test_demo.TestInit()
     test_demo.TestEntry()
 
     fmt.Println("-------------------- will exiting --------------------")

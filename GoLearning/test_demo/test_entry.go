@@ -16,18 +16,12 @@ func init() {
     fmt.Println("-------------------- test_entry auto init() ------------------")
 }
 
-func TestInit() {
-    fmt.Println("-------------------- test_entry TestInit() ------------------")
-}
-
 /********************************************************************\
 *  description:
 *  param {type}
 *  return {type}
 \********************************************************************/
 func TestEntry() {
-    fmt.Println("-------------------- test_entry TestEntry --------------------")
-
-    go ThreadPrintTime(15, "subThread")
-    ThreadPrintTime(15, "mainThread")
+    Multithread_TestEntry()
+    BaseType_TestEntry()
 }

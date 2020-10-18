@@ -22,6 +22,26 @@ func init() {
     fmt.Println("-------------------- test_multithread auto init() ------------------")
 }
 
+/********************************************************************\
+*  description:
+*  param {type}
+*  return {type}
+\********************************************************************/
+func Multithread_TestEntry() {
+    fmt.Println("========================= Multithread_TestEntry =========================")
+    // Multithread_Simple()
+}
+
+/********************************************************************\
+*  description:
+*  param {type}
+*  return {type}
+\********************************************************************/
+func Multithread_Simple() {
+    go ThreadPrintTime(15, "subThread")
+    ThreadPrintTime(15, "mainThread")
+}
+
 // 同一个包中不能有同名函数，重复定义
 // func TestInit() {
 //     fmt.Println("-------------------- test_multithread TestInit() ------------------")
