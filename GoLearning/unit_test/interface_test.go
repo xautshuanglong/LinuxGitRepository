@@ -1,10 +1,10 @@
 /********************************************************************\
-*  Author: xautshuanglong
-*  Date: 2020-10-10 21:16:02
-*  LastEditor: xautshuanglong
-*  LastEditTime: 2020-10-11 19:49:02
-*  FilePath: /GoLearning/unit_test/interface_test.go
-*  Description:
+ *  Author: xautshuanglong
+ *  Date: 2020-10-10 21:16:02
+ *  LastEditor: xautshuanglong
+ *  LastEditTime: 2020-10-18 20:31:13
+ *  FilePath: /GoLearning/unit_test/interface_test.go
+ *  Description:
 \********************************************************************/
 package unit_test
 

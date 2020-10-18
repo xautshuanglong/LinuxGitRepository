@@ -1,22 +1,18 @@
-/*
- * @Author: your name
- * @Date: 2020-10-18 02:03:53
- * @LastEditTime: 2020-10-18 19:48:36
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /GoLearning/test_demo/test_slice.go
- */
+/********************************************************************\
+ *  Author: xautshuanglong
+ *  Date: 2020-10-18 20:26:42
+ *  LastEditor: xautshuanglong
+ *  LastEditTime: 2020-10-18 20:29:43
+ *  FilePath: /GoLearning/test_demo/test_basetype.go
+ *  Description:
+\********************************************************************/
+
 package test_demo
 
 import (
     "fmt"
 )
 
-/********************************************************************\
-*  description:
-*  param {type}
-*  return {type}
-\********************************************************************/
 func BaseType_TestEntry() {
     fmt.Println("========================= BaseType_TestEntry =========================")
     BaseType_Slice()

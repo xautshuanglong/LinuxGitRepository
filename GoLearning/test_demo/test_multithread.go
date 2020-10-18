@@ -1,10 +1,10 @@
 /********************************************************************\
-*  Author: xautshuanglong
-*  Date: 2020-10-06 11:13:42
-*  LastEditor: xautshuanglong
-*  LastEditTime: 2020-10-12 20:04:46
-*  FilePath: /GoLearning/test_demo/test_multithread.go
-*  Description:
+ *  Author: xautshuanglong
+ *  Date: 2020-10-18 20:26:42
+ *  LastEditor: xautshuanglong
+ *  LastEditTime: 2020-10-18 20:29:19
+ *  FilePath: /GoLearning/test_demo/test_multithread.go
+ *  Description:
 \********************************************************************/
 
 package test_demo
@@ -23,20 +23,15 @@ func init() {
 }
 
 /********************************************************************\
-*  description:
-*  param {type}
-*  return {type}
+ *  description:
+ *  param {type}
+ *  return {type}
 \********************************************************************/
 func Multithread_TestEntry() {
     fmt.Println("========================= Multithread_TestEntry =========================")
     // Multithread_Simple()
 }
 
-/********************************************************************\
-*  description:
-*  param {type}
-*  return {type}
-\********************************************************************/
 func Multithread_Simple() {
     go ThreadPrintTime(15, "subThread")
     ThreadPrintTime(15, "mainThread")
