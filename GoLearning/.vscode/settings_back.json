@@ -1,7 +1,15 @@
 {
     "editor.renderWhitespace": "all",
-    "go.formatTool": "goformat",
-    "go.lintTool": "golangci-lint",
+    "fileheader.cursorMode": {
+    },
+    "fileheader.customMade": {
+        "Author": "xautshuanglong",
+        "Date": "Do not edit",
+        "LastEditor": "xautshuanglong",
+        "LastEditTime": "Do not edit",
+        "FilePath": "Do not edit",
+        "Description": ""
+    },
     "fileheader.configObj": {
         "createFileTime": true,
         "language": {
@@ -69,12 +77,11 @@
         "headDesignName": "random",
         "headDesign": false
     },
-    "fileheader.customMade": {
-        "Author": "xautshuanglong",
-        "Date": "Do not edit",
-        "LastEditors": "xautshuanglong",
-        "LastEditTime": "Do not edit",
-        "FilePath": "Do not edit",
-        "Description": ""
-    }
+    "diffEditor.ignoreTrimWhitespace": true,
+    "go.formatTool": "goformat",
+    "go.lintTool": "golangci-lint",
+    "editor.fontSize": 13,
+    "editor.renderControlCharacters": true,
+    "editor.columnSelection": false,
+    "window.zoomLevel": 0
 }
