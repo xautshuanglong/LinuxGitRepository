@@ -2,7 +2,7 @@
  *  Author: xautshuanglong
  *  Date: 2020-10-18 20:26:42
  *  LastEditor: xautshuanglong
- *  LastEditTime: ,: 2020-10-20 15:45:05
+ *  LastEditTime: ,: 2020-10-20 16:10:48
  *  FilePath: ,: \GoLearning\test_demo\test_multithread.go
  *  Description:
 \********************************************************************/
@@ -29,7 +29,7 @@ func init() {
 \********************************************************************/
 func Multithread_TestEntry() {
     fmt.Println("========================= Multithread_TestEntry =========================")
-    Multithread_Simple()
+    // Multithread_Simple()
 }
 
 func Multithread_Simple() {
