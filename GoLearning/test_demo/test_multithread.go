@@ -2,16 +2,16 @@
  *  Author: xautshuanglong
  *  Date: 2020-10-18 20:26:42
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-10-18 20:29:19
- *  FilePath: /GoLearning/test_demo/test_multithread.go
+ *  LastEditTime: ,: 2020-10-20 15:45:05
+ *  FilePath: ,: \GoLearning\test_demo\test_multithread.go
  *  Description:
 \********************************************************************/
 
 package test_demo
 
 import (
+    "../os_api"
     "fmt"
-    "golang.org/x/sys/unix"
     "runtime"
     "strconv"
     "strings"
@@ -29,7 +29,7 @@ func init() {
 \********************************************************************/
 func Multithread_TestEntry() {
     fmt.Println("========================= Multithread_TestEntry =========================")
-    // Multithread_Simple()
+    Multithread_Simple()
 }
 
 func Multithread_Simple() {
@@ -65,6 +65,6 @@ func ThreadPrintTime(times int, threadName string) {
     for i := 0; i < times; i++ {
         time.Sleep(100 * time.Millisecond)
         fmt.Printf("%02v %12v ---> current time: %v  pid:%v tid:%v goid:%v\n",
-            i+1, threadName, time.Now().Format("2006-01-02 15:04:05.000"), unix.Getpid(), unix.Gettid(), Getgoid())
+            i+1, threadName, time.Now().Format("2006-01-02 15:04:05.000"), os_api.GetCurrentProcessID(), os_api.GetCurrentThreadID(), Getgoid())
     }
 }
