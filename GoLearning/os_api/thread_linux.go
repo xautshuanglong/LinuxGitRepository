@@ -2,8 +2,8 @@
  *  Author: ,: xautshuanglong
  *  Date: ,: 2020-10-20 15:32:15
  *  LastEditor: ,: xautshuanglong
- *  LastEditTime: ,: 2020-10-20 15:56:11
- *  FilePath: ,: \GoLearning\os_api\thread_linux.go
+ *  LastEditTime: ,: 2020-10-20 16:05:41
+ *  FilePath: ,: /GoLearning/os_api/thread_linux.go
  *  Description: ,:
 \********************************************************************/
 package os_api
@@ -12,6 +12,7 @@ import (
     "golang.org/x/sys/unix"
 )
 
-func GetCurrentThreadID() (tid int) {
-    return unix.Gettid()
+func GetCurrentThreadID() (tid uint32) {
+    tid = uint32(unix.Gettid())
+    return
 }
