@@ -2,8 +2,8 @@
  *  Author: xautshuanglong
  *  Date: 2020-10-18 20:26:42
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-10-18 20:30:46
- *  FilePath: /GoLearning/test_demo/test_mathemetics.go
+ *  LastEditTime: ,: 2020-10-21 17:58:25
+ *  FilePath: ,: \GoLearning\test_demo\test_mathemetics.go
  *  Description:
 \********************************************************************/
 package test_demo
@@ -12,7 +12,7 @@ import (
     "fmt"
 )
 
-func init() {
+func Init() {
     fmt.Println("-------------------- test_mathemetics auto init() ------------------")
 }
 

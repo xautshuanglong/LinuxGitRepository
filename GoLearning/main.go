@@ -2,8 +2,8 @@
  *  Author: xautshuanglong
  *  Date: 2020-10-18 20:26:42
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-10-18 20:33:49
- *  FilePath: /GoLearning/main.go
+ *  LastEditTime: ,: 2020-10-21 17:57:07
+ *  FilePath: ,: \GoLearning\main.go
  *  Description:
 \********************************************************************/
 package main
@@ -22,12 +22,11 @@ var cliGender = flag.String("gender", "male", "Input Your Gender")
 
 var cliFlag int
 
-func Init() {
+func init() {
     flag.IntVar(&cliFlag, "flagname", 1234, "Just for demo")
 }
 
 func main() {
-    Init()
     flag.Parse()
     // flag.Args() 函数返回没有被解析的命令行参数
     // flag.NArg() 函数返回没有被解析的命令行参数的个数

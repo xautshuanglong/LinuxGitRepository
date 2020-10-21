@@ -2,7 +2,7 @@
  *  Author: xautshuanglong
  *  Date: 2020-10-18 20:26:42
  *  LastEditor: xautshuanglong
- *  LastEditTime: ,: 2020-10-20 16:10:48
+ *  LastEditTime: ,: 2020-10-21 17:57:48
  *  FilePath: ,: \GoLearning\test_demo\test_multithread.go
  *  Description:
 \********************************************************************/
@@ -18,9 +18,9 @@ import (
     "time"
 )
 
-func init() {
-    fmt.Println("-------------------- test_multithread auto init() ------------------")
-}
+// func init() {
+//     fmt.Println("-------------------- test_multithread auto init() ------------------")
+// }
 
 /********************************************************************\
  *  description:

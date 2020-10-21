@@ -2,8 +2,8 @@
  *  Author: xautshuanglong
  *  Date: 2020-10-18 20:26:42
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-10-18 20:29:43
- *  FilePath: /GoLearning/test_demo/test_basetype.go
+ *  LastEditTime: ,: 2020-10-21 17:59:54
+ *  FilePath: ,: \GoLearning\test_demo\test_basetype.go
  *  Description:
 \********************************************************************/
 
@@ -46,7 +46,7 @@ func BaseType_Slice() {
     numbers1 := make([]int, 0, 5)
     printSlice(numbers1)
 
-    /* 打印子切片从索引  0(包含) 到索引 2(不包含) */
+    /* 打印子切片从索引 0(包含) 到索引 2(不包含) */
     number2 := numbers[:2]
     printSlice(number2)
 
