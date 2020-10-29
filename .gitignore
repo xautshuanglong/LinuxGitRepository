@@ -45,6 +45,6 @@ Makefile.in
 
 # Added by Shuanglong
 **/build/**
-Log4cppConfigTest/logs
+**/logs/**
 
 **/__debug_bin
