@@ -2,8 +2,8 @@
  *  Author: xautshuanglong
  *  Date: 2020-10-20 14:51:29
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-10-29 17:19:23
- *  FilePath: \GoLearning\test_demo\test_basetype.go
+ *  LastEditTime: 2020-10-29 22:08:10
+ *  FilePath: /GoLearning/test_demo/test_basetype.go
  *  Description:
 \********************************************************************/
 
@@ -14,7 +14,6 @@ import (
 )
 
 func BaseType_TestEntry() {
-    fmt.Println("========================= BaseType_TestEntry =========================")
     BaseType_Slice()
     BaseType_Rename()
 }
@@ -80,6 +79,5 @@ func BaseType_Rename() {
     var a IntType
     var b int
     // a = b // https://www.coder.work/article/212328 https://golang.org/ref/spec#Assignability
-
-    fmt.Println(a, b)
+    fmt.Printf("a=%v  b=%v\n", a, b)
 }

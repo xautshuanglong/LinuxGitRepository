@@ -2,8 +2,8 @@
  *  Author: xautshuanglong
  *  Date: 2020-10-20 14:51:29
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-10-29 17:18:10
- *  FilePath: \GoLearning\test_demo\test_multithread.go
+ *  LastEditTime: 2020-10-29 21:59:09
+ *  FilePath: /GoLearning/test_demo/test_multithread.go
  *  Description:
 \********************************************************************/
 
@@ -28,7 +28,6 @@ import (
  *  return {type}
 \********************************************************************/
 func Multithread_TestEntry() {
-    fmt.Println("========================= Multithread_TestEntry =========================")
     // Multithread_Simple()
 }
 
