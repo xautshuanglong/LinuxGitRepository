@@ -1,11 +1,12 @@
 /********************************************************************\
- *  Author: ,: xautshuanglong
- *  Date: ,: 2020-10-20 15:32:27
- *  LastEditor: ,: xautshuanglong
- *  LastEditTime: ,: 2020-10-20 15:57:26
- *  FilePath: ,: \GoLearning\os_api\trhead_windows.go
- *  Description: ,:
+ *  Author: xautshuanglong
+ *  Date: 2020-10-20 15:32:27
+ *  LastEditor: xautshuanglong
+ *  LastEditTime: 2020-10-29 17:18:28
+ *  FilePath: \GoLearning\os_api\trhead_windows.go
+ *  Description:
 \********************************************************************/
+
 package os_api
 
 import (

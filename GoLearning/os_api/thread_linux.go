@@ -1,11 +1,12 @@
 /********************************************************************\
- *  Author: ,: xautshuanglong
- *  Date: ,: 2020-10-20 15:32:15
- *  LastEditor: ,: xautshuanglong
- *  LastEditTime: ,: 2020-10-20 16:05:41
- *  FilePath: ,: /GoLearning/os_api/thread_linux.go
- *  Description: ,:
+ *  Author: xautshuanglong
+ *  Date: 2020-10-20 15:32:15
+ *  LastEditor: xautshuanglong
+ *  LastEditTime: 2020-10-29 17:18:39
+ *  FilePath: \GoLearning\os_api\thread_linux.go
+ *  Description:
 \********************************************************************/
+
 package os_api
 
 import (

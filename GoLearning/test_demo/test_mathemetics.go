@@ -1,11 +1,12 @@
 /********************************************************************\
  *  Author: xautshuanglong
- *  Date: 2020-10-18 20:26:42
+ *  Date: 2020-10-20 14:51:29
  *  LastEditor: xautshuanglong
- *  LastEditTime: ,: 2020-10-21 17:58:25
- *  FilePath: ,: \GoLearning\test_demo\test_mathemetics.go
+ *  LastEditTime: 2020-10-29 17:19:51
+ *  FilePath: \GoLearning\test_demo\test_mathemetics.go
  *  Description:
 \********************************************************************/
+
 package test_demo
 
 import (
