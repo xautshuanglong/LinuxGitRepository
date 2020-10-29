@@ -2,7 +2,7 @@
  *  Author: xautshuanglong
  *  Date: 2020-10-20 14:51:29
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-10-29 22:31:28
+ *  LastEditTime: 2020-10-29 22:47:30
  *  FilePath: /GoLearning/main.go
  *  Description:
 \********************************************************************/
@@ -60,6 +60,7 @@ func initLogUtil() {
     logrus.SetReportCaller(true)
     logrus.SetLevel(logrus.InfoLevel)
 
+    var logFileOk = false
     var logDir = "./logs"
     var logFilename = "logrus.log"
     fileInfo, err := os.Stat(logDir)
@@ -69,13 +70,18 @@ func initLogUtil() {
             logrus.SetOutput(os.Stdout)
             logrus.Printf("Mkdir failed: %v", err)
         } else {
-            logFile, err := os.OpenFile(logDir+"/"+logFilename, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0666)
-            if err == nil {
-                logrus.SetOutput(io.MultiWriter(os.Stdout, logFile))
-            } else {
-                logrus.SetOutput(os.Stdout)
-                logrus.Printf("Failed to open log file: %v", err)
-            }
+            logFileOk = true
+        }
+    } else {
+        logFileOk = true
+    }
+    if logFileOk {
+        logFile, err := os.OpenFile(logDir+"/"+logFilename, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0666)
+        if err == nil {
+            logrus.SetOutput(io.MultiWriter(os.Stdout, logFile))
+        } else {
+            logrus.SetOutput(os.Stdout)
+            logrus.Printf("Failed to open log file: %v", err)
         }
     }
 }
