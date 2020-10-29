@@ -2,8 +2,8 @@
  *  Author: xautshuanglong
  *  Date: 2020-10-20 14:51:29
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-10-29 17:17:33
- *  FilePath: \GoLearning\main.go
+ *  LastEditTime: 2020-10-29 20:03:41
+ *  FilePath: /GoLearning/main.go
  *  Description:
 \********************************************************************/
 package main
@@ -12,7 +12,9 @@ import (
     "./test_demo"
     "flag"
     "fmt"
-    // "os"
+    "github.com/Sirupsen/logrus"
+    "io"
+    "os"
     // "strconv"
 )
 
@@ -24,6 +26,18 @@ var cliFlag int
 
 func init() {
     flag.IntVar(&cliFlag, "flagname", 1234, "Just for demo")
+    logrus.SetFormatter(&logrus.TextFormatter{
+        FullTimestamp: true,
+    }) // logrus.SetFormatter(&logrus.JSONFormatter{})
+    logrus.SetReportCaller(true)
+    logrus.SetLevel(logrus.InfoLevel)
+
+    logFile, err := os.OpenFile("logrus.log", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0666)
+    if err == nil {
+        logrus.SetOutput(io.MultiWriter(os.Stdout, logFile))
+    } else {
+        logrus.Info("Failed to open log file")
+    }
 }
 
 func main() {
@@ -46,4 +60,9 @@ func main() {
     test_demo.TestEntry()
 
     fmt.Println("========================= will exiting =========================")
+    logrus.Println("test logrus tools")
+    logrus.WithFields(logrus.Fields{
+        "test_key": "test_value",
+        "xixi":     "haha",
+    }).Info("fields testing")
 }
