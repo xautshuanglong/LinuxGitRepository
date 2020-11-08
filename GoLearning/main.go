@@ -2,7 +2,7 @@
  *  Author: xautshuanglong
  *  Date: 2020-10-20 14:51:29
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-11-08 17:12:13
+ *  LastEditTime: 2020-11-08 23:15:21
  *  FilePath: /GoLearning/main.go
  *  Description:
 \********************************************************************/
@@ -25,6 +25,7 @@ var cliGender = flag.String("gender", "male", "Input Your Gender")
 var cliFlag int
 
 func init() {
+    flag.IntVar(&cliFlag, "flagname", 1234, "Just for demo")
     initLogUtil()
 }
 
@@ -60,10 +61,17 @@ func main() {
 }
 
 func initLogUtil() {
-    flag.IntVar(&cliFlag, "flagname", 1234, "Just for demo")
+    var testHook = &Hook{
+        Writer: os.Stdout,
+        LogLevels: []logrus.Level{
+            logrus.DebugLevel,
+            logrus.InfoLevel,
+        },
+    }
+    logrus.AddHook(testHook)
     logrus.SetFormatter(&logrus.TextFormatter{
         FullTimestamp: true,
-        ForceColors:   true,
+        // ForceColors:   true,
     }) // logrus.SetFormatter(&logrus.JSONFormatter{})
     logrus.SetReportCaller(true)
     logrus.SetLevel(logrus.TraceLevel)
@@ -92,4 +100,24 @@ func initLogUtil() {
             logrus.Printf("Failed to open log file: %v", err)
         }
     }
+}
+
+type Hook struct {
+    Writer    io.Writer
+    LogLevels []logrus.Level
+}
+
+func (hook *Hook) Fire(entry *logrus.Entry) error {
+    line, err := entry.Bytes()
+    if err != nil {
+        return err
+    }
+    var lineString string = string(line[:])
+    lineString += " <-- custom hook"
+    _, err = hook.Writer.Write([]byte(lineString))
+    return err
+}
+
+func (hook *Hook) Levels() []logrus.Level {
+    return hook.LogLevels
 }
