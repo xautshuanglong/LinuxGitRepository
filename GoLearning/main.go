@@ -2,7 +2,7 @@
  *  Author: xautshuanglong
  *  Date: 2020-10-20 14:51:29
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-10-29 22:47:30
+ *  LastEditTime: 2020-11-08 17:12:13
  *  FilePath: /GoLearning/main.go
  *  Description:
 \********************************************************************/
@@ -39,7 +39,14 @@ func main() {
     //     fmt.Println("Args["+strconv.Itoa(index)+"] = ", arg)
     // }
 
-    logrus.Println("test logrus tools")
+    logrus.Debug("test logrus tools")
+    logrus.Trace("test logrus tools")
+    logrus.Warn("test logrus tools")
+    logrus.Info("test logrus tools")
+    logrus.Error("test logrus tools")
+    // logrus.Fatal("test logrus tools")
+    // logrus.Panic("test logrus tools")
+
     test_demo.TestEntry()
 
     // 输出解析后的命令行参数
@@ -56,9 +63,10 @@ func initLogUtil() {
     flag.IntVar(&cliFlag, "flagname", 1234, "Just for demo")
     logrus.SetFormatter(&logrus.TextFormatter{
         FullTimestamp: true,
+        ForceColors:   true,
     }) // logrus.SetFormatter(&logrus.JSONFormatter{})
     logrus.SetReportCaller(true)
-    logrus.SetLevel(logrus.InfoLevel)
+    logrus.SetLevel(logrus.TraceLevel)
 
     var logFileOk = false
     var logDir = "./logs"
