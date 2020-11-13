@@ -2,7 +2,7 @@
  *  Author: xautshuanglong
  *  Date: 2020-10-20 14:51:29
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-11-08 23:15:21
+ *  LastEditTime: 2020-11-13 23:29:26
  *  FilePath: /GoLearning/main.go
  *  Description:
 \********************************************************************/
@@ -120,4 +120,8 @@ func (hook *Hook) Fire(entry *logrus.Entry) error {
 
 func (hook *Hook) Levels() []logrus.Level {
     return hook.LogLevels
+}
+
+type Formatter struct {
+    FormatterName string
 }
