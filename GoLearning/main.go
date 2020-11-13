@@ -2,7 +2,7 @@
  *  Author: xautshuanglong
  *  Date: 2020-10-20 14:51:29
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-11-13 23:29:26
+ *  LastEditTime: 2020-11-14 00:06:06
  *  FilePath: /GoLearning/main.go
  *  Description:
 \********************************************************************/
@@ -10,11 +10,13 @@ package main
 
 import (
     "./test_demo"
+    "bytes"
     "flag"
     "fmt"
     "github.com/Sirupsen/logrus"
     "io"
     "os"
+    "time"
     // "strconv"
 )
 
@@ -57,12 +59,23 @@ func main() {
         "gender":   *cliGender,
         "flagname": cliFlag,
     }).Info("commandline arguments")
+
+    testLog := &logrus.Logger{
+        Out:       os.Stdout,
+        Formatter: new(Formatter),
+        Hooks:     make(logrus.LevelHooks),
+        Level:     logrus.DebugLevel,
+    }
+    testLog.WithFields(logrus.Fields{
+        "name": "custom formatter",
+    }).Debug("test custom formatter ...")
+
     fmt.Println("========================= will exiting =========================")
 }
 
 func initLogUtil() {
     var testHook = &Hook{
-        Writer: os.Stdout,
+        HookName: "ShuanglongCustom",
         LogLevels: []logrus.Level{
             logrus.DebugLevel,
             logrus.InfoLevel,
@@ -103,19 +116,13 @@ func initLogUtil() {
 }
 
 type Hook struct {
-    Writer    io.Writer
+    HookName  string
     LogLevels []logrus.Level
 }
 
 func (hook *Hook) Fire(entry *logrus.Entry) error {
-    line, err := entry.Bytes()
-    if err != nil {
-        return err
-    }
-    var lineString string = string(line[:])
-    lineString += " <-- custom hook"
-    _, err = hook.Writer.Write([]byte(lineString))
-    return err
+    entry.Data["HookBy"] = hook.HookName
+    return nil
 }
 
 func (hook *Hook) Levels() []logrus.Level {
@@ -124,4 +131,14 @@ func (hook *Hook) Levels() []logrus.Level {
 
 type Formatter struct {
     FormatterName string
+}
+
+func (format *Formatter) Format(entry *logrus.Entry) ([]byte, error) {
+    timeFormatter := time.RFC3339
+    buffer := &bytes.Buffer{}
+    buffer.WriteString(entry.Time.Format(timeFormatter))
+    buffer.WriteString(" [" + entry.Level.String() + "]")
+    buffer.WriteString(" " + entry.Message)
+    buffer.WriteByte('\n')
+    return buffer.Bytes(), nil
 }
