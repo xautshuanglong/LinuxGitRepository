@@ -2,7 +2,7 @@
  *  Author: xautshuanglong
  *  Date: 2020-10-20 14:51:29
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-11-08 23:15:21
+ *  LastEditTime: 2020-11-13 14:35:39
  *  FilePath: /GoLearning/main.go
  *  Description:
 \********************************************************************/
@@ -62,7 +62,7 @@ func main() {
 
 func initLogUtil() {
     var testHook = &Hook{
-        Writer: os.Stdout,
+        HookName: "ShuanglongCustom",
         LogLevels: []logrus.Level{
             logrus.DebugLevel,
             logrus.InfoLevel,
@@ -103,19 +103,13 @@ func initLogUtil() {
 }
 
 type Hook struct {
-    Writer    io.Writer
+    HookName  string
     LogLevels []logrus.Level
 }
 
 func (hook *Hook) Fire(entry *logrus.Entry) error {
-    line, err := entry.Bytes()
-    if err != nil {
-        return err
-    }
-    var lineString string = string(line[:])
-    lineString += " <-- custom hook"
-    _, err = hook.Writer.Write([]byte(lineString))
-    return err
+    entry.Data["HookBy"] = hook.HookName
+    return nil
 }
 
 func (hook *Hook) Levels() []logrus.Level {
