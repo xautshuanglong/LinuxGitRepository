@@ -2,14 +2,14 @@
  *  Author: xautshuanglong
  *  Date: 2020-10-20 14:51:29
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-11-14 00:06:06
+ *  LastEditTime: 2020-11-14 22:11:04
  *  FilePath: /GoLearning/main.go
  *  Description:
 \********************************************************************/
 package main
 
 import (
-    "./test_demo"
+    "./demo"
     "bytes"
     "flag"
     "fmt"

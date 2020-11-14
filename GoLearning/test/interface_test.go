@@ -2,13 +2,13 @@
  *  Author: xautshuanglong
  *  Date: 2020-10-10 21:16:02
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-10-18 20:44:12
- *  FilePath: /GoLearning/unit_test/interface_test.go
+ *  LastEditTime: 2020-11-14 22:12:34
+ *  FilePath: /GoLearning/test/interface_test.go
  *  Description:
 \********************************************************************/
 package unit_test
 
-import "../test_demo"
+import "../demo"
 import "testing"
 import "fmt"
 

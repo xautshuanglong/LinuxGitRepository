@@ -52,7 +52,7 @@
             "type": "go",
             "request": "launch",
             "mode": "test",
-            "program": "${workspaceFolder}/unit_test",
+            "program": "${workspaceFolder}/test",
             "args": [
                 "-test.v"
             ]
