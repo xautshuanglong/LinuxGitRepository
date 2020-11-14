@@ -2,7 +2,7 @@
  *  Author: xautshuanglong
  *  Date: 2020-10-20 14:51:29
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-11-14 22:51:33
+ *  LastEditTime: 2020-11-14 22:59:55
  *  FilePath: /GoLearning/main.go
  *  Description:
 \********************************************************************/
@@ -10,7 +10,7 @@ package main
 
 import (
     "./demo"
-    "./util"
+    logutil "./util/log"
     "flag"
     "fmt"
     "github.com/Sirupsen/logrus"
@@ -59,7 +59,7 @@ func main() {
 
     testLog := &logrus.Logger{
         Out:       os.Stdout,
-        Formatter: new(util.Formatter),
+        Formatter: new(logutil.Formatter),
         Hooks:     make(logrus.LevelHooks),
         Level:     logrus.DebugLevel,
     }

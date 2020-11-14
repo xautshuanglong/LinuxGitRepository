@@ -2,18 +2,16 @@
  *  Author: xautshuanglong
  *  Date: 2020-11-14 22:43:15
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-11-14 22:49:02
- *  FilePath: /GoLearning/util/log_util.go
+ *  LastEditTime: 2020-11-14 22:58:33
+ *  FilePath: /GoLearning/util/log/log_util.go
  *  Description:
 \********************************************************************/
-package util
+package log
 
 import (
-    "bytes"
     "github.com/Sirupsen/logrus"
     "io"
     "os"
-    "time"
 )
 
 func init() {
@@ -56,32 +54,4 @@ func init() {
             logrus.Printf("Failed to open log file: %v", err)
         }
     }
-}
-
-type Hook struct {
-    HookName  string
-    LogLevels []logrus.Level
-}
-
-func (hook *Hook) Fire(entry *logrus.Entry) error {
-    entry.Data["HookBy"] = hook.HookName
-    return nil
-}
-
-func (hook *Hook) Levels() []logrus.Level {
-    return hook.LogLevels
-}
-
-type Formatter struct {
-    FormatterName string
-}
-
-func (format *Formatter) Format(entry *logrus.Entry) ([]byte, error) {
-    timeFormatter := time.RFC3339
-    buffer := &bytes.Buffer{}
-    buffer.WriteString(entry.Time.Format(timeFormatter))
-    buffer.WriteString(" [" + entry.Level.String() + "]")
-    buffer.WriteString(" " + entry.Message)
-    buffer.WriteByte('\n')
-    return buffer.Bytes(), nil
 }
