@@ -2,7 +2,7 @@
  *  Author: xautshuanglong
  *  Date: 2020-11-14 22:43:15
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-11-14 22:58:33
+ *  LastEditTime: 2020-11-15 18:10:37
  *  FilePath: /GoLearning/util/log/log_util.go
  *  Description:
 \********************************************************************/
@@ -18,8 +18,12 @@ func init() {
     var testHook = &Hook{
         HookName: "ShuanglongCustom",
         LogLevels: []logrus.Level{
+            logrus.TraceLevel,
             logrus.DebugLevel,
             logrus.InfoLevel,
+            logrus.WarnLevel,
+            logrus.ErrorLevel,
+            logrus.FatalLevel,
         },
     }
     logrus.AddHook(testHook)

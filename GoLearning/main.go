@@ -2,7 +2,7 @@
  *  Author: xautshuanglong
  *  Date: 2020-10-20 14:51:29
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-11-14 22:59:55
+ *  LastEditTime: 2020-11-15 18:11:35
  *  FilePath: /GoLearning/main.go
  *  Description:
 \********************************************************************/
@@ -55,7 +55,7 @@ func main() {
         "age":      *cliAge,
         "gender":   *cliGender,
         "flagname": cliFlag,
-    }).Info("commandline arguments")
+    }).Info("commandline arguments ---> ")
 
     testLog := &logrus.Logger{
         Out:       os.Stdout,
