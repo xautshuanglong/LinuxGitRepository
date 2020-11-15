@@ -2,7 +2,7 @@
  *  Author: xautshuanglong
  *  Date: 2020-10-20 14:51:29
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-11-15 22:04:25
+ *  LastEditTime: 2020-11-15 22:36:34
  *  FilePath: /GoLearning/demo/test_basetype.go
  *  Description:
 \********************************************************************/
@@ -18,8 +18,8 @@ import (
 
 func BaseType_TestEntry() {
     // BaseType_Array()
-    BaseType_String()
-    // BaseType_Slice()
+    // BaseType_String()
+    BaseType_Slice()
     // BaseType_Rename()
 }
 
@@ -199,13 +199,13 @@ func BaseType_Slice() {
     fmt.Println("------------------------ BaseType_Slice ------------------------")
 
     var makeSlice = make([]int, 3, 5)
-    printSlice(makeSlice)
+    printSlice("makeSlice --> ", makeSlice)
 
     var nilSlice []int
-    printSlice(nilSlice)
+    printSlice("nilSlice --> ", nilSlice)
     /* 创建切片 */
     numbers := []int{0, 1, 2, 3, 4, 5, 6, 7, 8}
-    printSlice(numbers)
+    printSlice("numberr --> ", numbers)
 
     /* 打印原始切片 */
     fmt.Println("numbers ==", numbers)
@@ -220,19 +220,41 @@ func BaseType_Slice() {
     fmt.Println("numbers[4:] ==", numbers[4:])
 
     numbers1 := make([]int, 0, 5)
-    printSlice(numbers1)
+    printSlice("numbers1 --> ", numbers1)
 
     /* 打印子切片从索引 0(包含) 到索引 2(不包含) */
     number2 := numbers[:2]
-    printSlice(number2)
+    printSlice("number2 --> ", number2)
 
     /* 打印子切片从索引 2(包含) 到索引 5(不包含) */
     number3 := numbers[2:5]
-    printSlice(number3)
+    printSlice("number3 --> ", number3)
+
+    // slice 遍历方法
+    for i := range numbers {
+        fmt.Printf("range i --> numbers[%d]=%d\n", i, numbers[i])
+    }
+    for i, v := range numbers {
+        fmt.Printf("range i,v --> numbers[%d]=%d\n", i, v)
+    }
+    for i := 0; i < len(numbers); i++ {
+        fmt.Printf("len --> numbers[%d]=%d\n", i, numbers[i])
+    }
+
+    // 切片添加元素
+    var a []int
+    a = append(a, 1)
+    printSlice("a --> ", a)
+
+    a = append(a, 2, 3, 4)
+    printSlice("a --> ", a)
+
+    a = append(a, []int{5, 6, 7}...) // 追加切片需要解包
+    printSlice("a --> ", a)
 }
 
-func printSlice(x []int) {
-    fmt.Printf("len=%d cap=%d slice=%v\n", len(x), cap(x), x)
+func printSlice(prefix string, x []int) {
+    fmt.Printf("%s len=%d cap=%d slice=%v\n", prefix, len(x), cap(x), x)
 }
 
 func BaseType_Rename() {
@@ -242,14 +264,14 @@ func BaseType_Rename() {
     var i TestType
     var t []int
 
-    printSlice(t)
+    printSlice("t --> ", t)
 
     // i = append(i, 1, 2, 3)
     // t = append(t, 1, 2, 3)
     t = i
 
-    printSlice(i)
-    printSlice(t)
+    printSlice("i --> ", i)
+    printSlice("t --> ", t)
 
     type IntType int
     var a IntType
