@@ -2,7 +2,7 @@
  *  Author: xautshuanglong
  *  Date: 2020-10-20 14:51:29
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-11-15 22:36:34
+ *  LastEditTime: 2020-11-16 18:10:10
  *  FilePath: /GoLearning/demo/test_basetype.go
  *  Description:
 \********************************************************************/
@@ -241,16 +241,29 @@ func BaseType_Slice() {
         fmt.Printf("len --> numbers[%d]=%d\n", i, numbers[i])
     }
 
-    // 切片添加元素
+    // 切片尾部追加元素（内存不足的情况下导致重新分配内存）
     var a []int
     a = append(a, 1)
     printSlice("a --> ", a)
-
     a = append(a, 2, 3, 4)
     printSlice("a --> ", a)
-
     a = append(a, []int{5, 6, 7}...) // 追加切片需要解包
     printSlice("a --> ", a)
+
+    // 切片头部追加元素（一般会导致内存重新分配，且导致已有元素全部复制一次，比从尾部追加性能差）
+    var b = []int{1, 2, 3}
+    b = append([]int{0}, b...)
+    printSlice("b --> ", b)
+    b = append([]int{-3, -2, -1}, b...)
+    printSlice("b --> ", b)
+
+    // 任意位置插入新切片(append 函数返回新的切片，支持链式操作)
+    var c = []int{1, 2, 4, 7}
+    printSlice("c --> ", c)
+    c = append(c[:2], append([]int{3}, c[2:]...)...)
+    printSlice("c --> ", c)
+    c = append(c[:4], append([]int{5, 6}, c[4:]...)...)
+    printSlice("c --> ", c)
 }
 
 func printSlice(prefix string, x []int) {
