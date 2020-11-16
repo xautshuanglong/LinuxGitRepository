@@ -2,7 +2,7 @@
  *  Author: xautshuanglong
  *  Date: 2020-11-14 22:43:15
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-11-15 18:10:37
+ *  LastEditTime: 2020-11-16 10:15:59
  *  FilePath: /GoLearning/util/log/log_util.go
  *  Description:
 \********************************************************************/
@@ -10,8 +10,10 @@ package log
 
 import (
     "github.com/Sirupsen/logrus"
+    nested "github.com/antonfisher/nested-logrus-formatter"
     "io"
     "os"
+    "time"
 )
 
 func init() {
@@ -27,12 +29,16 @@ func init() {
         },
     }
     logrus.AddHook(testHook)
-    logrus.SetFormatter(&logrus.TextFormatter{
-        FullTimestamp: true,
-        // ForceColors:   true,
-    }) // logrus.SetFormatter(&logrus.JSONFormatter{})
-    logrus.SetReportCaller(true)
+    logrus.SetFormatter(&nested.Formatter{
+        TimestampFormat: time.RFC3339,
+        ShowFullLevel:   true,
+    })
+    // logrus.SetFormatter(&logrus.TextFormatter{
+    //     FullTimestamp: true,
+    //     // ForceColors:   true,
+    // })
     logrus.SetLevel(logrus.TraceLevel)
+    logrus.SetReportCaller(true)
 
     var logFileOk = false
     var logDir = "./logs"
