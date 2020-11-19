@@ -2,7 +2,7 @@
  *  Author: xautshuanglong
  *  Date: 2020-10-20 14:51:29
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-11-19 22:48:09
+ *  LastEditTime: 2020-11-20 00:55:26
  *  FilePath: /GoLearning/demo/test_basetype.go
  *  Description:
 \********************************************************************/
@@ -317,8 +317,8 @@ func BaseType_Slice() {
     var bytes = []byte{'h', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd'}
     fmt.Println("bytes --> ", bytes)
     var trimBytes = TrimSpace(bytes)
-    fmt.Println("trimBytes --> ", trimBytes)
     fmt.Println("bytes --> ", bytes)
+    fmt.Println("trimBytes --> ", trimBytes)
 
     bytes = []byte{'h', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd'}
     var filteredBytes = FilterByte(bytes, func(x byte) bool {
@@ -333,7 +333,8 @@ func BaseType_Slice() {
 
 // 注意：根据结果 s 被改变，b 和 s 可能共用一块内存
 func TrimSpace(s []byte) []byte {
-    b := s[:0]
+    b := s[:0] // 改变原数组
+    // b := []byte{} // 构建新切片，保留原切片不变
     for _, x := range s {
         if x != ' ' {
             b = append(b, x)
