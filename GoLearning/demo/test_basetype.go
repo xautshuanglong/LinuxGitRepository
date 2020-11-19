@@ -2,7 +2,7 @@
  *  Author: xautshuanglong
  *  Date: 2020-10-20 14:51:29
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-11-16 18:10:10
+ *  LastEditTime: 2020-11-19 20:49:04
  *  FilePath: /GoLearning/demo/test_basetype.go
  *  Description:
 \********************************************************************/
@@ -264,6 +264,95 @@ func BaseType_Slice() {
     printSlice("c --> ", c)
     c = append(c[:4], append([]int{5, 6}, c[4:]...)...)
     printSlice("c --> ", c)
+
+    // copy 助力 append 避免创建中间临时切片
+    var d = []int{1, 5, 6}
+    var dd = []int{2, 3, 4}
+    d = append(d, dd...)
+    printSlice("d --> ", d)
+
+    var i int = 1
+    copy(d[i+len(dd):], d[i:]) // 没有专门的扩容函数
+    printSlice("d --> ", d)
+    copy(d[i:], dd)
+    printSlice("d --> ", d)
+
+    // 删除切片元素：头部删除、中间删除、尾部删除（最快）
+    var e = []int{1, 2, 3, 4, 5, 6}
+    printSlice("e --> ", e)
+    e = append(e[:0], e[1:]...) // 删除开头 1 个元素
+    printSlice("e --> ", e)
+    e = e[:copy(e, e[1:])] // 删除开头 1 个元素
+    printSlice("e --> ", e)
+    e = e[:copy(e, e[3:])] // 删除开头 3 个元素
+    printSlice("e --> ", e)
+
+    i = 2
+    var f = []int{1, 2, 3, 4, 5}
+    printSlice("f --> ", f)
+    f = append(f[:i], f[i+1:]...) // 删除中间 1 个元素
+    printSlice("f --> ", f)
+    i = 1
+    var n int = 2
+    f = append(f[:i], f[i+n:]...) // 删除中间 N 个元素
+    printSlice("f --> ", f)
+    var g = []int{1, 2, 3, 4, 5}
+    printSlice("g --> ", g)
+    i = 2
+    g = g[:i+copy(g[i:], g[i+1:])] // 删除中间 1 个元素
+    printSlice("g --> ", g)
+    i = 1
+    n = 2
+    g = g[:i+copy(g[i:], g[i+n:])] // 删除中间 N 个元素
+    printSlice("g --> ", g)
+
+    var h = []int{1, 2, 3, 4, 5, 6}
+    h = h[:len(h)-1]
+    printSlice("h --> ", h)
+    n = 3
+    h = h[:len(h)-n]
+    printSlice("h --> ", h)
+
+    // 去除空格
+    var bytes = []byte{'h', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd'}
+    fmt.Println("bytes --> ", bytes)
+    var trimBytes = TrimSpace(bytes)
+    fmt.Println("trimBytes --> ", trimBytes)
+    fmt.Println("bytes --> ", bytes)
+
+    bytes = []byte{'h', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd'}
+    var filteredBytes = FilterByte(bytes, func(x byte) bool {
+        if x == ' ' {
+            return true
+        } else {
+            return false
+        }
+    })
+    fmt.Println("filteredBytes --> ", filteredBytes)
+}
+
+// 注意：根据结果 s 被改变，b 和 s 可能共用一块内存
+func TrimSpace(s []byte) []byte {
+    b := s[:0]
+    for i, x := range s {
+        fmt.Println("x -", i, "--> ", x)
+        if x != ' ' {
+            b = append(b, x)
+            fmt.Println("b --> ", b)
+        }
+    }
+    fmt.Println("s --> ", s)
+    return b
+}
+
+func FilterByte(s []byte, fn func(x byte) bool) []byte {
+    b := s[:0]
+    for _, x := range s {
+        if !fn(x) {
+            b = append(b, x)
+        }
+    }
+    return b
 }
 
 func printSlice(prefix string, x []int) {
