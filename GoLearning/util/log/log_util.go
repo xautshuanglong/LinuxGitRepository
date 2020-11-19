@@ -2,7 +2,7 @@
  *  Author: xautshuanglong
  *  Date: 2020-11-14 22:43:15
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-11-16 10:15:59
+ *  LastEditTime: 2020-11-19 11:12:57
  *  FilePath: /GoLearning/util/log/log_util.go
  *  Description:
 \********************************************************************/
@@ -31,7 +31,7 @@ func init() {
     logrus.AddHook(testHook)
     logrus.SetFormatter(&nested.Formatter{
         TimestampFormat: time.RFC3339,
-        ShowFullLevel:   true,
+        // ShowFullLevel:   true,
     })
     // logrus.SetFormatter(&logrus.TextFormatter{
     //     FullTimestamp: true,
