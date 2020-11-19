@@ -2,7 +2,7 @@
  *  Author: xautshuanglong
  *  Date: 2020-10-20 14:51:29
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-11-19 20:49:04
+ *  LastEditTime: 2020-11-19 22:48:09
  *  FilePath: /GoLearning/demo/test_basetype.go
  *  Description:
 \********************************************************************/
@@ -334,14 +334,12 @@ func BaseType_Slice() {
 // 注意：根据结果 s 被改变，b 和 s 可能共用一块内存
 func TrimSpace(s []byte) []byte {
     b := s[:0]
-    for i, x := range s {
-        fmt.Println("x -", i, "--> ", x)
+    for _, x := range s {
         if x != ' ' {
             b = append(b, x)
-            fmt.Println("b --> ", b)
         }
     }
-    fmt.Println("s --> ", s)
+    fmt.Printf("s : 0x%08X\nb : 0x%08X\n", &s[0], &b[0])
     return b
 }
 
