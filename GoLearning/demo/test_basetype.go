@@ -2,7 +2,7 @@
  *  Author: xautshuanglong
  *  Date: 2020-10-20 14:51:29
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-11-20 11:26:14
+ *  LastEditTime: 2020-11-20 13:47:12
  *  FilePath: /GoLearning/demo/test_basetype.go
  *  Description:
 \********************************************************************/
@@ -469,6 +469,9 @@ func BaseType_Interface() {
     PrintInterfaceFunc(a...)
 
     fmt.Println()
+    deferTest()
+
+    fmt.Println()
 }
 
 func PrintInterfaceFunc(a ...interface{}) {
@@ -479,4 +482,34 @@ func PrintInterfaceFunc(a ...interface{}) {
     fmt.Println("Before PrintInterfaceFunc ...")
     fmt.Println(a...)
     fmt.Println("After PrintInterfaceFunc ...")
+}
+
+// defer 与 函数闭包
+// 1. 函数退出时（前）调用 defer 修饰的函数
+// 2. 按 defer 函数声明顺序逆序调用
+// 3. defer 会立即对调用参数求值
+// 4. 循环语句中慎用 defer
+func deferTest() {
+    for i := 0; i < 3; i++ {
+        i := i // 没有该语句：输出 3 次 i --> 3
+        defer func() {
+            fmt.Println("i-1 --> ", i)
+        }()
+    }
+
+    defer func() { fmt.Println() }()
+
+    for i := 0; i < 3; i++ {
+        defer func() {
+            fmt.Println("i-2 --> ", i)
+        }()
+    }
+
+    defer func() { fmt.Println() }()
+
+    for i := 0; i < 3; i++ {
+        defer func(i int) {
+            fmt.Println("i-3 --> ", i)
+        }(i)
+    }
 }
