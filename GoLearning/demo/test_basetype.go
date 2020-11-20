@@ -2,7 +2,7 @@
  *  Author: xautshuanglong
  *  Date: 2020-10-20 14:51:29
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-11-20 10:04:35
+ *  LastEditTime: 2020-11-20 11:20:07
  *  FilePath: /GoLearning/demo/test_basetype.go
  *  Description:
 \********************************************************************/
@@ -19,8 +19,10 @@ import (
 func BaseType_TestEntry() {
     // BaseType_Array()
     // BaseType_String()
-    BaseType_Slice()
+    // BaseType_Slice()
+    // BaseType_Map()
     // BaseType_Rename()
+    BaseType_Interface()
 }
 
 func BaseType_Array() {
@@ -74,6 +76,8 @@ func BaseType_Array() {
 }
 
 func BaseType_String() {
+    fmt.Println("------------------------ BaseType_String ------------------------")
+
     var data = [...]byte{
         'h', 'e', 'l', 'l', 'o', ',', ' ', 'w', 'o', 'r', 'l', 'd', '!',
     }
@@ -231,17 +235,21 @@ func BaseType_Slice() {
     printSlice("number3 --> ", number3)
 
     // slice 遍历方法
+    fmt.Println()
     for i := range numbers {
         fmt.Printf("range i --> numbers[%d]=%d\n", i, numbers[i])
     }
+    fmt.Println()
     for i, v := range numbers {
         fmt.Printf("range i,v --> numbers[%d]=%d\n", i, v)
     }
+    fmt.Println()
     for i := 0; i < len(numbers); i++ {
         fmt.Printf("len --> numbers[%d]=%d\n", i, numbers[i])
     }
 
     // 切片尾部追加元素（内存不足的情况下导致重新分配内存）
+    fmt.Println()
     var a []int
     a = append(a, 1)
     printSlice("a --> ", a)
@@ -251,6 +259,7 @@ func BaseType_Slice() {
     printSlice("a --> ", a)
 
     // 切片头部追加元素（一般会导致内存重新分配，且导致已有元素全部复制一次，比从尾部追加性能差）
+    fmt.Println()
     var b = []int{1, 2, 3}
     b = append([]int{0}, b...)
     printSlice("b --> ", b)
@@ -258,6 +267,7 @@ func BaseType_Slice() {
     printSlice("b --> ", b)
 
     // 任意位置插入新切片(append 函数返回新的切片，支持链式操作)
+    fmt.Println()
     var c = []int{1, 2, 4, 7}
     printSlice("c --> ", c)
     c = append(c[:2], append([]int{3}, c[2:]...)...)
@@ -266,6 +276,7 @@ func BaseType_Slice() {
     printSlice("c --> ", c)
 
     // copy 助力 append 避免创建中间临时切片
+    fmt.Println()
     var d = []int{1, 5, 6}
     var dd = []int{2, 3, 4}
     d = append(d, dd...)
@@ -278,6 +289,7 @@ func BaseType_Slice() {
     printSlice("d --> ", d)
 
     // 删除切片元素：头部删除、中间删除、尾部删除（最快）
+    fmt.Println()
     var e = []int{1, 2, 3, 4, 5, 6}
     printSlice("e --> ", e)
     e = append(e[:0], e[1:]...) // 删除开头 1 个元素
@@ -287,6 +299,7 @@ func BaseType_Slice() {
     e = e[:copy(e, e[3:])] // 删除开头 3 个元素
     printSlice("e --> ", e)
 
+    fmt.Println()
     i = 2
     var f = []int{1, 2, 3, 4, 5}
     printSlice("f --> ", f)
@@ -296,6 +309,8 @@ func BaseType_Slice() {
     var n int = 2
     f = append(f[:i], f[i+n:]...) // 删除中间 N 个元素
     printSlice("f --> ", f)
+
+    fmt.Println()
     var g = []int{1, 2, 3, 4, 5}
     printSlice("g --> ", g)
     i = 2
@@ -306,6 +321,7 @@ func BaseType_Slice() {
     g = g[:i+copy(g[i:], g[i+n:])] // 删除中间 N 个元素
     printSlice("g --> ", g)
 
+    fmt.Println()
     var h = []int{1, 2, 3, 4, 5, 6}
     h = h[:len(h)-1]
     printSlice("h --> ", h)
@@ -314,11 +330,14 @@ func BaseType_Slice() {
     printSlice("h --> ", h)
 
     // 去除空格
+    fmt.Println()
     var bytes = []byte{'h', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd'}
     fmt.Printf("bytes len(%d) cap(%d) --> %v\n", len(bytes), cap(bytes), bytes)
     var trimBytes = TrimSpace(bytes)
     fmt.Printf("bytes : %p     bytes[0] : 0x%08x\n", &bytes, &bytes[0])
     fmt.Printf("bytes len(%d) cap(%d) --> %v\n", len(bytes), cap(bytes), bytes)
+
+    fmt.Println()
     fmt.Println("trimBytes --> ", trimBytes)
 
     bytes = []byte{'h', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd'}
@@ -329,7 +348,10 @@ func BaseType_Slice() {
             return false
         }
     })
+    fmt.Println()
     fmt.Println("filteredBytes --> ", filteredBytes)
+
+    fmt.Println()
 }
 
 // 注意：根据结果 s 被改变，b 和 s 可能共用一块底层内存
@@ -365,6 +387,46 @@ func printSlice(prefix string, x []int) {
     fmt.Printf("%s len=%d cap=%d slice=%v\n", prefix, len(x), cap(x), x)
 }
 
+func BaseType_Map() {
+    fmt.Println("------------------------ BaseType_Map ------------------------")
+
+    var aMap = map[int]int{}
+    aMap[0] = 10
+    aMap[1] = 20
+    aMap[5] = 50
+    fmt.Println(aMap)
+
+    fmt.Println()
+    for key, value := range aMap {
+        fmt.Printf("Key:%v  Value:%v\n", key, value)
+    }
+
+    fmt.Println()
+    for key := range aMap {
+        fmt.Printf("Key:%v  Value:%v\n", key, aMap[key])
+    }
+
+    fmt.Println()
+    for _, value := range aMap {
+        fmt.Printf("Only Value:%v\n", value)
+    }
+
+    fmt.Println()
+    var bMap = map[string]string{"a": "aaa", "c": "ccc", "d": "ddd"}
+    fmt.Println(bMap)
+    delete(bMap, "c")
+    fmt.Println(bMap)
+    var key string = "e"
+    value, ok := bMap[key]
+    if ok {
+        fmt.Printf("bMap[%s]'s value is %s", key, value)
+    } else {
+        fmt.Printf("bMap[%s]'s value is not exist", key)
+    }
+
+    fmt.Println()
+}
+
 func BaseType_Rename() {
     fmt.Println("------------------------ BaseType_Rename ------------------------")
 
@@ -386,4 +448,20 @@ func BaseType_Rename() {
     var b int
     // a = b // https://www.coder.work/article/212328 https://golang.org/ref/spec#Assignability
     fmt.Printf("a=%v  b=%v\n", a, b)
+}
+
+func BaseType_Interface() {
+    fmt.Println("------------------------ BaseType_Interface ------------------------")
+
+    fmt.Println()
+    var a = []interface{}{123, "abc", false}
+    fmt.Println(a...)
+    fmt.Println(a)
+
+    fmt.Println()
+    for i, value := range a {
+        fmt.Printf("a[%d] --> %v\n", i, value)
+    }
+
+    fmt.Println()
 }
