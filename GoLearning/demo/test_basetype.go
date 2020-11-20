@@ -2,7 +2,7 @@
  *  Author: xautshuanglong
  *  Date: 2020-10-20 14:51:29
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-11-20 13:47:12
+ *  LastEditTime: 2020-11-20 17:29:47
  *  FilePath: /GoLearning/demo/test_basetype.go
  *  Description:
 \********************************************************************/
@@ -11,6 +11,7 @@ package test_demo
 
 import (
     "fmt"
+    "image/color"
     "reflect"
     "unicode/utf8"
     "unsafe"
@@ -22,7 +23,8 @@ func BaseType_TestEntry() {
     // BaseType_Slice()
     // BaseType_Map()
     // BaseType_Rename()
-    BaseType_Interface()
+    BaseType_Inherit()
+    // BaseType_Interface()
 }
 
 func BaseType_Array() {
@@ -448,6 +450,50 @@ func BaseType_Rename() {
     var b int
     // a = b // https://www.coder.work/article/212328 https://golang.org/ref/spec#Assignability
     fmt.Printf("a=%v  b=%v\n", a, b)
+}
+
+type Point struct{ X, Y float64 }
+
+func (p *Point) toString() string {
+    var retValue string = fmt.Sprintf("Point (%.3f, %.3f)", p.X, p.Y)
+    return retValue
+}
+
+type ColoredPoint struct {
+    Point
+    Color color.RGBA
+}
+
+func (cp *ColoredPoint) toString() string {
+    var retValue string = fmt.Sprintf("Point (%.3f, %.3f)  Color : [%d, %d, %d, %d]",
+        cp.Point.X, cp.Point.Y,
+        cp.Color.R, cp.Color.G, cp.Color.B, cp.Color.A)
+    return retValue
+}
+
+func BaseType_Inherit() {
+    fmt.Println("------------------------ BaseType_Inherit ------------------------")
+
+    fmt.Println()
+    var p1 = &Point{
+        X: 100,
+        Y: 20.1235,
+    }
+    fmt.Println(p1.toString())
+    var p2 = ColoredPoint{
+        Color: color.RGBA{
+            R: 10,
+            G: 20,
+            B: 30,
+            A: 40,
+        },
+    }
+    p2.X = 12.34
+    p2.Y = 56.7890
+    fmt.Println(p2.Point.toString())
+    fmt.Println(p2.toString())
+
+    fmt.Println()
 }
 
 func BaseType_Interface() {
