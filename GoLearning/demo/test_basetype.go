@@ -2,7 +2,7 @@
  *  Author: xautshuanglong
  *  Date: 2020-10-20 14:51:29
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-11-20 00:55:26
+ *  LastEditTime: 2020-11-20 10:04:35
  *  FilePath: /GoLearning/demo/test_basetype.go
  *  Description:
 \********************************************************************/
@@ -205,7 +205,7 @@ func BaseType_Slice() {
     printSlice("nilSlice --> ", nilSlice)
     /* 创建切片 */
     numbers := []int{0, 1, 2, 3, 4, 5, 6, 7, 8}
-    printSlice("numberr --> ", numbers)
+    printSlice("numbers --> ", numbers)
 
     /* 打印原始切片 */
     fmt.Println("numbers ==", numbers)
@@ -315,9 +315,10 @@ func BaseType_Slice() {
 
     // 去除空格
     var bytes = []byte{'h', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd'}
-    fmt.Println("bytes --> ", bytes)
+    fmt.Printf("bytes len(%d) cap(%d) --> %v\n", len(bytes), cap(bytes), bytes)
     var trimBytes = TrimSpace(bytes)
-    fmt.Println("bytes --> ", bytes)
+    fmt.Printf("bytes : %p     bytes[0] : 0x%08x\n", &bytes, &bytes[0])
+    fmt.Printf("bytes len(%d) cap(%d) --> %v\n", len(bytes), cap(bytes), bytes)
     fmt.Println("trimBytes --> ", trimBytes)
 
     bytes = []byte{'h', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd'}
@@ -331,16 +332,22 @@ func BaseType_Slice() {
     fmt.Println("filteredBytes --> ", filteredBytes)
 }
 
-// 注意：根据结果 s 被改变，b 和 s 可能共用一块内存
+// 注意：根据结果 s 被改变，b 和 s 可能共用一块底层内存
 func TrimSpace(s []byte) []byte {
     b := s[:0] // 改变原数组
     // b := []byte{} // 构建新切片，保留原切片不变
+    delCount := 0
     for _, x := range s {
         if x != ' ' {
             b = append(b, x)
+        } else {
+            delCount++
         }
     }
-    fmt.Printf("s : 0x%08X\nb : 0x%08X\n", &s[0], &b[0])
+    if len(b) > 0 && len(s) > 0 && &b[0] == &s[0] {
+        s = s[:len(s)-delCount]
+    }
+    fmt.Printf("s : %p    s[0] : 0x%08x\nb : %p    b[0] : 0x%08x\n", &s, &s[0], &b, &b[0])
     return b
 }
 
