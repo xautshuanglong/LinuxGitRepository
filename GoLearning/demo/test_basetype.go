@@ -2,7 +2,7 @@
  *  Author: xautshuanglong
  *  Date: 2020-10-20 14:51:29
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-11-20 11:20:07
+ *  LastEditTime: 2020-11-20 11:26:14
  *  FilePath: /GoLearning/demo/test_basetype.go
  *  Description:
 \********************************************************************/
@@ -464,4 +464,19 @@ func BaseType_Interface() {
     }
 
     fmt.Println()
+    PrintInterfaceFunc(a)
+    fmt.Println()
+    PrintInterfaceFunc(a...)
+
+    fmt.Println()
+}
+
+func PrintInterfaceFunc(a ...interface{}) {
+    fmt.Println("Enter PrintInterfaceFunc ...")
+    defer func() {
+        fmt.Println("Leave PrintInterfaceFunc ...")
+    }()
+    fmt.Println("Before PrintInterfaceFunc ...")
+    fmt.Println(a...)
+    fmt.Println("After PrintInterfaceFunc ...")
 }
