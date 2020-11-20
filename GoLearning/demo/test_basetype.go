@@ -2,7 +2,7 @@
  *  Author: xautshuanglong
  *  Date: 2020-10-20 14:51:29
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-11-20 17:29:47
+ *  LastEditTime: 2020-11-20 18:09:35
  *  FilePath: /GoLearning/demo/test_basetype.go
  *  Description:
 \********************************************************************/
@@ -545,11 +545,11 @@ func deferTest() {
 
     defer func() { fmt.Println() }()
 
-    for i := 0; i < 3; i++ {
-        defer func() {
-            fmt.Println("i-2 --> ", i)
-        }()
-    }
+    // for i := 0; i < 3; i++ {
+    //     defer func() {
+    //         fmt.Println("i-2 --> ", i) // 输出 3 次 i --> 3    会有 go vet 警告
+    //     }()
+    // }
 
     defer func() { fmt.Println() }()
 
