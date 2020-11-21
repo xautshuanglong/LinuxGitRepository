@@ -2,7 +2,7 @@
  *  Author: xautshuanglong
  *  Date: 2020-10-10 21:16:02
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-11-14 22:12:34
+ *  LastEditTime: 2020-11-21 17:39:25
  *  FilePath: /GoLearning/test/interface_test.go
  *  Description:
 \********************************************************************/
@@ -31,6 +31,13 @@ func Test_Animal(t *testing.T) {
     }
     catPen.Eat("meat")
     catPen.Run()
+
+    printAnimalInfo(dogDuk)
+    printAnimalInfo(catPen)
+}
+
+func printAnimalInfo(animal test_demo.Animal) {
+    fmt.Printf("%s : %d years %f kilogram\n", animal.GetName(), animal.GetAge(), animal.GetWeight())
 }
 
 func Test_AnimalDog(t *testing.T) {
@@ -92,4 +99,17 @@ func Test_AnimalCat(t *testing.T) {
     catSony.Weight = 20.5
     catSony.Eat("meat")
     catSony.Run()
+}
+
+func Test_SecureInterfaceImp(t *testing.T) {
+    secureInterface := test_demo.SecureInterfaceImp{
+        ID: "TestingInterface",
+    }
+    secureInterface.PublicMethod()
+
+    printInterfaceTest(secureInterface)
+}
+
+func printInterfaceTest(si test_demo.SecureInterface) {
+    si.PublicMethod()
 }
