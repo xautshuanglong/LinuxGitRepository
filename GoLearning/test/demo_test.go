@@ -2,13 +2,14 @@
  *  Author: xautshuanglong
  *  Date: 2020-10-10 16:33:17
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-10-18 20:30:59
- *  FilePath: /GoLearning/unit_test/demo_test.go
+ *  LastEditTime: 2020-11-21 22:53:08
+ *  FilePath: /GoLearning/test/demo_test.go
  *  Description:
 \********************************************************************/
 package unit_test
 
 import (
+    "../demo/a"
     "sync"
     "testing"
 )
@@ -105,4 +106,8 @@ func Test_ReadFromMap(t *testing.T) {
             t.Errorf("the value of key(%s) is %s, expected: %s", tt.k, actual, tt.v)
         }
     }
+}
+
+func Test_InternalPackage(t *testing.T) {
+    a.AFunction()
 }
