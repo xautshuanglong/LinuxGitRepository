@@ -2,7 +2,7 @@
  *  Author: xautshuanglong
  *  Date: 2020-10-20 14:51:29
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-11-20 18:09:35
+ *  LastEditTime: 2020-11-21 16:20:54
  *  FilePath: /GoLearning/demo/test_basetype.go
  *  Description:
 \********************************************************************/
@@ -510,9 +510,9 @@ func BaseType_Interface() {
     }
 
     fmt.Println()
-    PrintInterfaceFunc(a)
+    printInterfaceFunc(a)
     fmt.Println()
-    PrintInterfaceFunc(a...)
+    printInterfaceFunc(a...)
 
     fmt.Println()
     deferTest()
@@ -520,14 +520,14 @@ func BaseType_Interface() {
     fmt.Println()
 }
 
-func PrintInterfaceFunc(a ...interface{}) {
-    fmt.Println("Enter PrintInterfaceFunc ...")
+func printInterfaceFunc(a ...interface{}) {
+    fmt.Println("Enter printInterfaceFunc ...")
     defer func() {
-        fmt.Println("Leave PrintInterfaceFunc ...")
+        fmt.Println("Leave printInterfaceFunc ...")
     }()
-    fmt.Println("Before PrintInterfaceFunc ...")
+    fmt.Println("Before printInterfaceFunc ...")
     fmt.Println(a...)
-    fmt.Println("After PrintInterfaceFunc ...")
+    fmt.Println("After printInterfaceFunc ...")
 }
 
 // defer 与 函数闭包
