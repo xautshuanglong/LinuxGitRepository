@@ -2,7 +2,7 @@
  *  Author: xautshuanglong
  *  Date: 2020-10-20 14:51:29
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-11-21 16:20:54
+ *  LastEditTime: 2020-11-22 19:16:51
  *  FilePath: /GoLearning/demo/test_basetype.go
  *  Description:
 \********************************************************************/
@@ -23,7 +23,7 @@ func BaseType_TestEntry() {
     // BaseType_Slice()
     // BaseType_Map()
     // BaseType_Rename()
-    BaseType_Inherit()
+    // BaseType_Inherit()
     // BaseType_Interface()
 }
 
