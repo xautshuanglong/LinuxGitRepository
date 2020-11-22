@@ -2,7 +2,7 @@
  *  Author: xautshuanglong
  *  Date: 2020-11-21 22:44:11
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-11-21 23:01:44
+ *  LastEditTime: 2020-11-22 18:42:34
  *  FilePath: /GoLearning/demo/a/a.go
  *  Description:
 \********************************************************************/
@@ -13,12 +13,16 @@ import "fmt"
 import "./b"
 import "./e"
 
-// import "./b/internal"
+import _ "unsafe"
+
+//go:linkname b_privateFunction b.b_privateFunction
+func b_privateFunction()
 
 func AFunction() {
 	fmt.Println("Inside AFunction ...")
 
 	b.BFunction()
 	e.EFunction()
-	// internal.InternalFunction()
+
+	b_privateFunction()
 }
