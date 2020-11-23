@@ -2,7 +2,7 @@
  *  Author: xautshuanglong
  *  Date: 2020-11-23 14:41:54
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-11-23 17:24:16
+ *  LastEditTime: 2020-11-23 17:59:15
  *  FilePath: /GoLearning/demo/test_exception.go
  *  Description:
 \********************************************************************/
@@ -50,7 +50,7 @@ func Exception_RetriveError() {
     if err == nil {
         fmt.Println("Value =", value)
     } else {
-        fmt.Println("getEvenNum failed!")
+        fmt.Println("getEvenNum failed!", err)
     }
 
     // test defer
