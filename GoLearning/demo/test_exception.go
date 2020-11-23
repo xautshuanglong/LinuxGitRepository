@@ -2,7 +2,7 @@
  *  Author: xautshuanglong
  *  Date: 2020-11-23 14:41:54
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-11-23 22:18:19
+ *  LastEditTime: 2020-11-23 22:24:44
  *  FilePath: /GoLearning/demo/test_exception.go
  *  Description:
 \********************************************************************/
@@ -10,7 +10,6 @@
 package demo
 
 import (
-    "errors"
     "fmt"
 )
 
@@ -33,8 +32,8 @@ func NewCustomError(code int, msg string) error {
 
 func Exception_TestEntry() {
     // Exception_MapError()
-    // Exception_RetriveError()
-    Exception_Panic()
+    Exception_RetriveError()
+    // Exception_Panic()
     // Exception_Recover()
     // Exception_PanicAndRecover()
 }
@@ -79,7 +78,7 @@ func Exception_RetriveError() {
     }()
     value, err = getEvenNum(2) // 3 提前 return 第一个 defer 被调用
     if err != nil {
-        fmt.Println("will return ...")
+        fmt.Println("will return ... value:", value)
         return
     }
     defer func() {
@@ -111,7 +110,7 @@ func getEvenNum(num int) (int, error) {
 }
 
 func getCustomError() error {
-    return NewCustomError(100, fmt.Sprintf("this custom error strinig"))
+    return NewCustomError(100, "this custom error strinig")
 }
 
 func retriveErrorOrNilIncorrect(nilFlag bool) error {
