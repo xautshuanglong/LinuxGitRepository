@@ -2,7 +2,7 @@
  *  Author: xautshuanglong
  *  Date: 2020-11-23 14:41:54
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-11-23 20:09:32
+ *  LastEditTime: 2020-11-23 20:28:35
  *  FilePath: /GoLearning/demo/test_exception.go
  *  Description:
 \********************************************************************/
@@ -33,7 +33,7 @@ func NewCustomError(code int, msg string) error {
 
 func Exception_TestEntry() {
     // Exception_MapError()
-    Exception_RetriveError()
+    // Exception_RetriveError()
 }
 
 func Exception_MapError() {
@@ -131,4 +131,13 @@ func retriveErrorOrNilCorrect(nilFlag bool) error {
         return pError
     }
     return nil // 此 nil 是错误或异常
+}
+
+func Exception_Panic() {
+}
+
+func Exception_Recover() {
+}
+
+func Exception_PanicAndRecover() {
 }
