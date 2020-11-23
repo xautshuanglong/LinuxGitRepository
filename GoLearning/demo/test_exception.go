@@ -2,7 +2,7 @@
  *  Author: xautshuanglong
  *  Date: 2020-11-23 14:41:54
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-11-23 17:59:15
+ *  LastEditTime: 2020-11-23 19:19:38
  *  FilePath: /GoLearning/demo/test_exception.go
  *  Description:
 \********************************************************************/
@@ -13,6 +13,23 @@ import (
     "errors"
     "fmt"
 )
+
+type _CustomError struct {
+    ErrorCode int
+    ErrorMsg  string
+    error
+}
+
+func (err *_CustomError) Error() string {
+    return fmt.Sprintf("ErrorCode:%d --> %s", err.ErrorCode, err.ErrorMsg)
+}
+
+func NewCustomError(code int, msg string) error {
+    return &_CustomError{
+        ErrorCode: code,
+        ErrorMsg:  msg,
+    }
+}
 
 func Exception_TestEntry() {
     // Exception_MapError()
@@ -57,7 +74,7 @@ func Exception_RetriveError() {
     defer func() {
         fmt.Println("Call defer before return")
     }()
-    value, err = getEvenNum(3)
+    value, err = getEvenNum(2) // 3 提前 return 第一个 defer 被调用
     if err != nil {
         fmt.Println("will return ...")
         return
@@ -65,6 +82,8 @@ func Exception_RetriveError() {
     defer func() {
         fmt.Println("Call defer after return")
     }()
+
+    fmt.Println("getCustomError testing:", getCustomError())
 }
 
 func getEvenNum(num int) (int, error) {
@@ -72,4 +91,8 @@ func getEvenNum(num int) (int, error) {
         return num, nil
     }
     return 0, errors.New(fmt.Sprintf("the value %d is not even number", num))
+}
+
+func getCustomError() error {
+    return NewCustomError(100, fmt.Sprintf("this custom error strinig"))
 }
