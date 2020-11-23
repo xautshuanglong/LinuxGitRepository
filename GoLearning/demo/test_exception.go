@@ -2,7 +2,7 @@
  *  Author: xautshuanglong
  *  Date: 2020-11-23 14:41:54
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-11-23 17:09:52
+ *  LastEditTime: 2020-11-23 17:24:16
  *  FilePath: /GoLearning/demo/test_exception.go
  *  Description:
 \********************************************************************/
@@ -15,8 +15,8 @@ import (
 )
 
 func Exception_TestEntry() {
-    Exception_MapError()
-    // Exception_RetriveError()
+    // Exception_MapError()
+    Exception_RetriveError()
 }
 
 func Exception_MapError() {
@@ -52,6 +52,19 @@ func Exception_RetriveError() {
     } else {
         fmt.Println("getEvenNum failed!")
     }
+
+    // test defer
+    defer func() {
+        fmt.Println("Call defer before return")
+    }()
+    value, err = getEvenNum(3)
+    if err != nil {
+        fmt.Println("will return ...")
+        return
+    }
+    defer func() {
+        fmt.Println("Call defer after return")
+    }()
 }
 
 func getEvenNum(num int) (int, error) {
