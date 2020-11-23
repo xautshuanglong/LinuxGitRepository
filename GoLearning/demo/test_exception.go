@@ -2,7 +2,7 @@
  *  Author: xautshuanglong
  *  Date: 2020-11-23 14:41:54
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-11-23 22:48:51
+ *  LastEditTime: 2020-11-23 23:00:39
  *  FilePath: /GoLearning/demo/test_exception.go
  *  Description:
 \********************************************************************/
@@ -34,8 +34,8 @@ func NewCustomError(code int, msg string) error {
 func Exception_TestEntry() {
     // Exception_MapError()
     // Exception_RetriveError()
-    Exception_Panic()
-    // Exception_Recover()
+    // Exception_Panic()
+    Exception_Recover()
     // Exception_PanicAndRecover()
 }
 
@@ -155,6 +155,29 @@ func Exception_Panic() {
 }
 
 func Exception_Recover() {
+    defer fmt.Println("defer out of goroutine ...")
+    var user = ""
+    go func() {
+        defer func() {
+            fmt.Println("defer caller ...")
+            if err := recover(); err != nil {
+                fmt.Println("recover success ...", err)
+            }
+        }()
+        func() {
+            defer func() {
+                fmt.Println("defer here ...")
+            }()
+
+            if user == "" {
+                panic("username should not be empty")
+            }
+            fmt.Println("after panic ...")
+        }()
+    }()
+
+    time.Sleep(1 * time.Second)
+    fmt.Println("------------------ panic exit ----------------")
 }
 
 func Exception_PanicAndRecover() {
