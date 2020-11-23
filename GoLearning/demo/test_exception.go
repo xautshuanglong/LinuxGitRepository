@@ -2,7 +2,7 @@
  *  Author: xautshuanglong
  *  Date: 2020-11-23 14:41:54
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-11-23 19:19:38
+ *  LastEditTime: 2020-11-23 20:09:32
  *  FilePath: /GoLearning/demo/test_exception.go
  *  Description:
 \********************************************************************/
@@ -20,7 +20,7 @@ type _CustomError struct {
     error
 }
 
-func (err *_CustomError) Error() string {
+func (err _CustomError) Error() string {
     return fmt.Sprintf("ErrorCode:%d --> %s", err.ErrorCode, err.ErrorMsg)
 }
 
@@ -83,7 +83,21 @@ func Exception_RetriveError() {
         fmt.Println("Call defer after return")
     }()
 
-    fmt.Println("getCustomError testing:", getCustomError())
+    fmt.Println("getCustomError format testing:", getCustomError())
+
+    err = retriveErrorOrNilIncorrect(true)
+    if err == nil {
+        fmt.Println("err==nil:", err)
+    } else {
+        fmt.Println("err!=nil:", err)
+    }
+
+    err = retriveErrorOrNilCorrect(false)
+    if err == nil {
+        fmt.Println("err==nil:", err)
+    } else {
+        fmt.Println("err!=nil:", err)
+    }
 }
 
 func getEvenNum(num int) (int, error) {
@@ -95,4 +109,26 @@ func getEvenNum(num int) (int, error) {
 
 func getCustomError() error {
     return NewCustomError(100, fmt.Sprintf("this custom error strinig"))
+}
+
+func retriveErrorOrNilIncorrect(nilFlag bool) error {
+    var pError *_CustomError = nil // 是一个正常的错误（non-nil），错误的值是一个空指针。
+    if !nilFlag {
+        pError = &_CustomError{
+            ErrorCode: 101,
+            ErrorMsg:  "Custom error test",
+        }
+    }
+    return pError
+}
+
+func retriveErrorOrNilCorrect(nilFlag bool) error {
+    if !nilFlag {
+        var pError *_CustomError = &_CustomError{
+            ErrorCode: 101,
+            ErrorMsg:  "Custom error test",
+        }
+        return pError
+    }
+    return nil // 此 nil 是错误或异常
 }
