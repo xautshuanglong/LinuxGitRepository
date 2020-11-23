@@ -2,7 +2,7 @@
  *  Author: xautshuanglong
  *  Date: 2020-11-23 14:41:54
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-11-23 20:28:35
+ *  LastEditTime: 2020-11-23 22:18:19
  *  FilePath: /GoLearning/demo/test_exception.go
  *  Description:
 \********************************************************************/
@@ -34,6 +34,9 @@ func NewCustomError(code int, msg string) error {
 func Exception_TestEntry() {
     // Exception_MapError()
     // Exception_RetriveError()
+    Exception_Panic()
+    // Exception_Recover()
+    // Exception_PanicAndRecover()
 }
 
 func Exception_MapError() {
@@ -104,7 +107,7 @@ func getEvenNum(num int) (int, error) {
     if num%2 == 0 {
         return num, nil
     }
-    return 0, errors.New(fmt.Sprintf("the value %d is not even number", num))
+    return 0, fmt.Errorf("the value %d is not even number", num)
 }
 
 func getCustomError() error {
