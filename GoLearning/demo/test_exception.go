@@ -2,7 +2,7 @@
  *  Author: xautshuanglong
  *  Date: 2020-11-23 14:41:54
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-11-23 23:00:39
+ *  LastEditTime: 2020-11-23 23:54:05
  *  FilePath: /GoLearning/demo/test_exception.go
  *  Description:
 \********************************************************************/
@@ -35,8 +35,8 @@ func Exception_TestEntry() {
     // Exception_MapError()
     // Exception_RetriveError()
     // Exception_Panic()
-    Exception_Recover()
-    // Exception_PanicAndRecover()
+    // Exception_Recover()
+    Exception_PanicAndRecover()
 }
 
 func Exception_MapError() {
@@ -181,4 +181,23 @@ func Exception_Recover() {
 }
 
 func Exception_PanicAndRecover() {
+    defer func() {
+        if err := recover(); err != nil {
+            fmt.Println("recover panic again -->", err)
+        }
+    }()
+    emitPanicException()
+}
+
+func emitPanicException() {
+    defer func() {
+        if err := recover(); err != nil {
+            fmt.Println("recover panic -->", err)
+            panic(err)
+        }
+    }()
+    func(num int) {
+        x := 10 / num
+        fmt.Println(x)
+    }(0)
 }
