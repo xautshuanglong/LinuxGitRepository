@@ -2,12 +2,12 @@
  *  Author: xautshuanglong
  *  Date: 2020-10-20 14:51:29
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-11-22 19:16:51
+ *  LastEditTime: 2020-11-23 14:48:32
  *  FilePath: /GoLearning/demo/test_basetype.go
  *  Description:
 \********************************************************************/
 
-package test_demo
+package demo
 
 import (
     "fmt"

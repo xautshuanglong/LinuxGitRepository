@@ -2,12 +2,12 @@
  *  Author: xautshuanglong
  *  Date: 2020-10-20 14:51:29
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-10-29 17:19:51
- *  FilePath: \GoLearning\test_demo\test_mathemetics.go
+ *  LastEditTime: 2020-11-23 14:49:10
+ *  FilePath: /GoLearning/demo/test_mathemetics.go
  *  Description:
 \********************************************************************/
 
-package test_demo
+package demo
 
 import (
     "fmt"

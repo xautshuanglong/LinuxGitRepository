@@ -2,12 +2,12 @@
  *  Author: xautshuanglong
  *  Date: 2020-10-20 14:51:29
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-10-29 17:19:35
- *  FilePath: \GoLearning\test_demo\test_entry.go
+ *  LastEditTime: 2020-11-23 14:53:33
+ *  FilePath: /GoLearning/demo/test_entry.go
  *  Description:
 \********************************************************************/
 
-package test_demo
+package demo
 
 import (
 // "fmt"
@@ -20,4 +20,5 @@ import (
 func TestEntry() {
     Multithread_TestEntry()
     BaseType_TestEntry()
+    Exception_TestEntry()
 }

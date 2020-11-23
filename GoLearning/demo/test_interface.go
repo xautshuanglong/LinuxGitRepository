@@ -2,11 +2,11 @@
  *  Author: xautshuanglong
  *  Date: 2020-10-10 20:35:33
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-11-21 17:41:20
+ *  LastEditTime: 2020-11-23 14:48:45
  *  FilePath: /GoLearning/demo/test_interface.go
  *  Description:
 \********************************************************************/
-package test_demo
+package demo
 
 import "fmt"
 

@@ -2,7 +2,7 @@
  *  Author: xautshuanglong
  *  Date: 2020-10-20 14:51:29
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-11-15 18:11:35
+ *  LastEditTime: 2020-11-23 14:52:47
  *  FilePath: /GoLearning/main.go
  *  Description:
 \********************************************************************/
@@ -47,7 +47,7 @@ func main() {
     // logrus.Fatal("test logrus tools")
     // logrus.Panic("test logrus tools")
 
-    test_demo.TestEntry()
+    demo.TestEntry()
 
     // 输出解析后的命令行参数
     logrus.WithFields(logrus.Fields{

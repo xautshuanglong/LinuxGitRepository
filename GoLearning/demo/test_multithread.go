@@ -2,12 +2,12 @@
  *  Author: xautshuanglong
  *  Date: 2020-10-20 14:51:29
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-11-22 20:26:23
+ *  LastEditTime: 2020-11-23 14:53:01
  *  FilePath: /GoLearning/demo/test_multithread.go
  *  Description:
 \********************************************************************/
 
-package test_demo
+package demo
 
 import (
     "../os_api"
@@ -33,7 +33,7 @@ import (
 func Multithread_TestEntry() {
     // Multithread_Simple()
     // Multithread_Mutex()
-    Multithread_Atomic()
+    // Multithread_Atomic()
 }
 
 // 多个线程孰先孰后没有定数
