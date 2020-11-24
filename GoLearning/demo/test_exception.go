@@ -2,7 +2,7 @@
  *  Author: xautshuanglong
  *  Date: 2020-11-23 14:41:54
  *  LastEditor: xautshuanglong
- *  LastEditTime: 2020-11-23 23:54:05
+ *  LastEditTime: 2020-11-24 09:58:05
  *  FilePath: /GoLearning/demo/test_exception.go
  *  Description:
 \********************************************************************/
@@ -199,5 +199,5 @@ func emitPanicException() {
     func(num int) {
         x := 10 / num
         fmt.Println(x)
-    }(0)
+    }(0) // 模拟除零异常
 }
