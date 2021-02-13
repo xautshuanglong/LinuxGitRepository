@@ -17,11 +17,30 @@ static sighandler_t oldSignalHandler = SIG_ERR;
 void InitializeSignalHandler();
 void UninitializeSignalHandler();
 void SignalHandler(int sigNum);
+void SignalActionHandler(int sigNum, siginfo_t *pSigInfo, void *pSigValue);
 
 void ShowDescription();
 
 int main(int argc, char *argv[])
 {
+    // 模拟发送信号
+    if (argc >= 3)
+    {
+        gLoopFlag = false;
+        int pid = atoi(argv[1]);
+        int sigNum = atoi(argv[2]);
+        //kill(pid, sigNum);
+
+        int sigValue = 0;
+        if (argc >= 4)
+        {
+            sigValue = atoi(argv[3]);
+        }
+        union sigval sig;
+        sig.sival_int = sigValue;
+        sigqueue(pid, sigNum, sig);
+    }
+
     ShowDescription();
     
     Shuanglong::Application app;
@@ -46,6 +65,7 @@ int main(int argc, char *argv[])
 
     UninitializeSignalHandler();
 
+    std::cout << "will exiting with ExitCode:" << resultCode << std::endl;
     return resultCode;
 }
 
@@ -64,6 +84,15 @@ void InitializeSignalHandler()
     {
         printf("Set SIGKILL handler failed: [errno=%d] %s\n", errno, strerror(errno));
     }
+
+    // sigaction 测试
+    struct sigaction sigact;
+    sigact.sa_sigaction = SignalActionHandler;
+    sigact.sa_flags = SA_SIGINFO;
+    sigaction(SIGIO, &sigact, NULL);
+    sigaction(SIGINT, &sigact, NULL);
+    sigaction(SIGUSR1, &sigact, NULL);
+    sigaction(SIGKILL, &sigact, NULL);
 }
 
 void UninitializeSignalHandler()
@@ -88,6 +117,31 @@ void SignalHandler(int sigNum)
             break;
         default:
             printf("Unknown signal number SignalHandler Main.cpp\n");
+            break;
+    }
+}
+
+void SignalActionHandler(int sigNum, siginfo_t *pSigInfo, void *pSigValue)
+{
+    int sigInt = pSigInfo->si_int;
+    int sigValue = pSigInfo->si_value.sival_int;
+    switch (sigNum)
+    {
+        case SIGIO:
+            printf("SignalAction SIGIO sigint:%d sigval:%d SignalActionHandler Main.cpp\n", sigInt, sigValue);
+            break;
+        case SIGINT:
+            gLoopFlag = false;
+            printf("SignalAction SIGINT sigint:%d sigval:%d SignalActionHandler Main.cpp\n", sigInt, sigValue);
+            break;
+        case SIGKILL:
+            printf("SignalAction SIGKILL sigint:%d sigval:%d SignalActionHandler Main.cpp\n", sigInt, sigValue);
+            break;
+        case SIGUSR1:
+            printf("SignalAction SIGUSR1 sigint:%d sigval:%d SignalActionHandler Main.cpp\n", sigInt, sigValue);
+            break;
+        default:
+            printf("Unknown signal number SignalActionHandler Main.cpp\n");
             break;
     }
 }
