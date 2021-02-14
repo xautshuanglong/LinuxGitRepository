@@ -96,7 +96,12 @@ void InitializeSignalHandler()
 }
 
 void UninitializeSignalHandler()
-{}
+{
+    signal(SIGIO, SIG_DFL);
+    signal(SIGINT, SIG_DFL);
+    signal(SIGUSR1, SIG_DFL);
+    signal(SIGKILL, SIG_DFL);
+}
 
 void SignalHandler(int sigNum)
 {
@@ -144,6 +149,9 @@ void SignalActionHandler(int sigNum, siginfo_t *pSigInfo, void *pSigValue)
             printf("Unknown signal number SignalActionHandler Main.cpp\n");
             break;
     }
+    printf("gettid id : %ld\n", gettid());
+    printf("pthread_self id : %lu\n", pthread_self());
+    std::cout << "std::this_thread::get_id id : " << std::this_thread::get_id() << std::endl;
 }
 
 void ShowDescription()
