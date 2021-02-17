@@ -58,6 +58,8 @@ int main(int argc, char *argv[])
     
     int resultCode = app.Run(argc, argv);
 
+    alarm(2);
+
     while (gLoopFlag)
     {
         sleep(100);
@@ -77,6 +79,8 @@ void InitializeSignalHandler()
     printf("oldSignalHandler = 0x%p\n", oldSignalHandler);
     oldSignalHandler = signal(SIGUSR1, SignalHandler);
     printf("oldSignalHandler = 0x%p\n", oldSignalHandler);
+    oldSignalHandler = signal(SIGALRM, SignalHandler);
+    printf("oldSignalHandler = 0x%p\n", oldSignalHandler);
 
     // 不能被捕获的信号
     oldSignalHandler = signal(SIGKILL, SignalHandler);
@@ -84,6 +88,8 @@ void InitializeSignalHandler()
     {
         printf("Set SIGKILL handler failed: [errno=%d] %s\n", errno, strerror(errno));
     }
+
+    //return;
 
     // sigaction 测试
     struct sigaction sigact;
@@ -93,6 +99,7 @@ void InitializeSignalHandler()
     sigaction(SIGINT, &sigact, NULL);
     sigaction(SIGUSR1, &sigact, NULL);
     sigaction(SIGKILL, &sigact, NULL);
+    sigaction(SIGALRM, &sigact, NULL);
 }
 
 void UninitializeSignalHandler()
@@ -100,6 +107,7 @@ void UninitializeSignalHandler()
     signal(SIGIO, SIG_DFL);
     signal(SIGINT, SIG_DFL);
     signal(SIGUSR1, SIG_DFL);
+    signal(SIGALRM, SIG_DFL);
     signal(SIGKILL, SIG_DFL);
 }
 
@@ -119,6 +127,10 @@ void SignalHandler(int sigNum)
             break;
         case SIGUSR1:
             printf("Signal SIGUSR1 SignalHandler Main.cpp\n");
+            break;
+        case SIGALRM:
+            printf("Signal SIGALRM SignalHandler Main.cpp\n");
+            alarm(2);
             break;
         default:
             printf("Unknown signal number SignalHandler Main.cpp\n");
@@ -144,6 +156,10 @@ void SignalActionHandler(int sigNum, siginfo_t *pSigInfo, void *pSigValue)
             break;
         case SIGUSR1:
             printf("SignalAction SIGUSR1 sigint:%d sigval:%d SignalActionHandler Main.cpp\n", sigInt, sigValue);
+            break;
+        case SIGALRM:
+            printf("SignalAction SIGALRM sigint:%d sigval:%d SignalActionHandler Main.cpp\n", sigInt, sigValue);
+            alarm(2);
             break;
         default:
             printf("Unknown signal number SignalActionHandler Main.cpp\n");
