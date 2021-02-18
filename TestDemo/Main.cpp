@@ -11,6 +11,9 @@
 #include <sys/syscall.h>
 #define gettid() syscall(__NR_gettid)
 
+#include "Utils/TimeUtil.h"
+using namespace Shuanglong::Utils;
+
 static bool gLoopFlag = true;
 static sighandler_t oldSignalHandler = SIG_ERR;
 
@@ -129,7 +132,7 @@ void SignalHandler(int sigNum)
             printf("Signal SIGUSR1 SignalHandler Main.cpp\n");
             break;
         case SIGALRM:
-            printf("Signal SIGALRM SignalHandler Main.cpp\n");
+            printf("Signal SIGALRM CurrentTime:%lld SignalHandler Main.cpp\n", TimeUtil::CurrentSecondsFromEpoch());
             alarm(2);
             break;
         default:
@@ -158,7 +161,8 @@ void SignalActionHandler(int sigNum, siginfo_t *pSigInfo, void *pSigValue)
             printf("SignalAction SIGUSR1 sigint:%d sigval:%d SignalActionHandler Main.cpp\n", sigInt, sigValue);
             break;
         case SIGALRM:
-            printf("SignalAction SIGALRM sigint:%d sigval:%d SignalActionHandler Main.cpp\n", sigInt, sigValue);
+            printf("SignalAction SIGALRM sigint:%d sigval:%d CurrentTime:%lld SignalActionHandler Main.cpp\n",
+                    sigInt, sigValue, TimeUtil::CurrentSecondsFromEpoch());
             alarm(2);
             break;
         default:
