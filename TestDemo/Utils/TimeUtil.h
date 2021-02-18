@@ -1,6 +1,8 @@
 #ifndef TIME_UTIL_H
 #define TIME_UTIL_H
 
+#include "../Common.h"
+
 namespace Shuanglong::Utils
 {
     class TimeUtil final
