@@ -5,6 +5,12 @@
 
 namespace Shuanglong::Utils
 {
+    enum class TimestampStandard
+    {
+        LOCAL,
+        GREENWICH
+    };
+
     class TimeUtil final
     {
         private:
@@ -15,6 +21,10 @@ namespace Shuanglong::Utils
 
             static long long CurrentSecondsFromEpoch();
             static long long CurrentMilliSecondsFromEpoch();
+            static std::string CurrentTimestampString(TimestampStandard timeStandardi = TimestampStandard::LOCAL);
+
+        private:
+            static std::string FormatTimestamp(struct tm *pTimestamp, struct timeval *pTimeVal);
     };
 }
 

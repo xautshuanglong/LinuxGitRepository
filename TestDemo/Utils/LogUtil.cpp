@@ -48,7 +48,7 @@ namespace Shuanglong::Utils
         struct tm *pLocalTime = localtime(&tv.tv_sec);
         int milliSeconds = (int)tv.tv_usec / 1000;
         snprintf(timeBuffer, sizeof(timeBuffer)-1, "%04d-%02d-%02d %02d:%02d:%02d.%03d",
-                pLocalTime->tm_year + 1990,
+                pLocalTime->tm_year + 1900,
                 pLocalTime->tm_mon + 1,
                 pLocalTime->tm_mday,
                 pLocalTime->tm_hour,

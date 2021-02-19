@@ -61,7 +61,21 @@ int main(int argc, char *argv[])
     
     int resultCode = app.Run(argc, argv);
 
-    alarm(2);
+    // 定时器测试
+    alarm(2); // 如果想要重复触发，需在处理函数中再次调用 alarm(2)。
+    struct itimerval timerValue;
+    memset(&timerValue, 0, sizeof(timerValue));
+    timerValue.it_value.tv_sec = 5;
+    timerValue.it_value.tv_usec = 0;
+    int res = setitimer(ITIMER_REAL, &timerValue, NULL);
+    if (res == 0)
+    {
+        std::cout << "settimer successfully!" << std::endl;
+    }
+    else
+    {
+        std::cout << "settimer failed! [errno=" << errno << "] " << strerror(errno) << std::endl;
+    }
 
     while (gLoopFlag)
     {
@@ -132,8 +146,8 @@ void SignalHandler(int sigNum)
             printf("Signal SIGUSR1 SignalHandler Main.cpp\n");
             break;
         case SIGALRM:
-            printf("Signal SIGALRM CurrentTime:%lld SignalHandler Main.cpp\n", TimeUtil::CurrentSecondsFromEpoch());
-            alarm(2);
+            printf("Signal SIGALRM CurrentTime: %s SignalHandler Main.cpp\n", TimeUtil::CurrentTimestampString().c_str());
+            //alarm(2);
             break;
         default:
             printf("Unknown signal number SignalHandler Main.cpp\n");
@@ -179,8 +193,8 @@ void SignalActionHandler(int sigNum, siginfo_t *pSigInfo, void *pSigValue)
             */
             break;
         case SIGALRM:
-            printf("SignalAction SIGALRM sigint:%d sigval:%d CurrentTime:%lld SignalActionHandler Main.cpp\n",
-                    sigInt, sigValue, TimeUtil::CurrentSecondsFromEpoch());
+            printf("SignalAction SIGALRM sigint:%d sigval:%d CurrentTime:%s SignalActionHandler Main.cpp\n",
+                    sigInt, sigValue, TimeUtil::CurrentTimestampString().c_str());
             // alarm(2);
             break;
         default:
