@@ -145,6 +145,13 @@ void SignalActionHandler(int sigNum, siginfo_t *pSigInfo, void *pSigValue)
 {
     int sigInt = pSigInfo->si_int;
     int sigValue = pSigInfo->si_value.sival_int;
+
+    int res = 0;
+    struct timeval changeTimeOfDay;
+    changeTimeOfDay.tv_sec = 88899L;
+    changeTimeOfDay.tv_usec = 0L;
+    struct timezone changeTimeZone;
+
     switch (sigNum)
     {
         case SIGIO:
@@ -159,11 +166,22 @@ void SignalActionHandler(int sigNum, siginfo_t *pSigInfo, void *pSigValue)
             break;
         case SIGUSR1:
             printf("SignalAction SIGUSR1 sigint:%d sigval:%d SignalActionHandler Main.cpp\n", sigInt, sigValue);
+            /*
+            res = settimeofday(&changeTimeOfDay, NULL);
+            if (res == 0)
+            {
+                printf("settimeofday successfully!\n");
+            }
+            else
+            {
+                printf("settimeofday failed! errno=%d %s\n", errno, strerror(errno));
+            }
+            */
             break;
         case SIGALRM:
             printf("SignalAction SIGALRM sigint:%d sigval:%d CurrentTime:%lld SignalActionHandler Main.cpp\n",
                     sigInt, sigValue, TimeUtil::CurrentSecondsFromEpoch());
-            alarm(2);
+            // alarm(2);
             break;
         default:
             printf("Unknown signal number SignalActionHandler Main.cpp\n");
