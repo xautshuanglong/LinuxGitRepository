@@ -19,6 +19,12 @@ deps = config.h
 
 objs :=
 
+EXT_INC :=
+EXT_LIBS :=
+
+# glibc runtime : timer_create()
+EXT_LIBS += -lrt
+    
 SRCS += $(wildcard ./*.cpp)
 UTIL_SRCS +=$(wildcard Utils/*.cpp)
 
@@ -30,7 +36,7 @@ ifeq ($(mode), debug)
 endif
 
 $(program) : $(objs)
-	$(CC) $(CFLAGS) -o $(program) $(objs)
+	$(CC) $(CFLAGS) -o $(program) $(objs) $(EXT_LIBS)
 
 %.o : %.cpp $(deps)
 	$(CC) -c $(CFLAGS) $< -o $@

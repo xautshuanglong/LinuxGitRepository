@@ -16,6 +16,7 @@ using namespace Shuanglong::Utils;
 
 static bool gLoopFlag = true;
 static sighandler_t oldSignalHandler = SIG_ERR;
+static timer_t gTimerID = 0;
 
 void InitializeSignalHandler();
 void UninitializeSignalHandler();
@@ -62,14 +63,16 @@ int main(int argc, char *argv[])
     InitializeSignalHandler();
     
     int resultCode = app.Run(argc, argv);
+    int res = 0;
 
     // 定时器测试
-    alarm(2); // 如果想要重复触发，需在处理函数中再次调用 alarm(2)。
+    // alarm(2); // 如果想要重复触发，需在处理函数中再次调用 alarm(2)。
     struct itimerval timerValue;
     memset(&timerValue, 0, sizeof(timerValue));
-    timerValue.it_value.tv_sec = 5;
-    timerValue.it_value.tv_usec = 0;
-    int res = setitimer(ITIMER_REAL, &timerValue, NULL);
+    timerValue.it_value.tv_sec = 5; // 只响应一次超时
+    // timerValue.it_interval.tv_sec = 1; // 多次超时响应
+    /*
+    res = setitimer(ITIMER_REAL, &timerValue, NULL);
     if (res == 0)
     {
         LogUtil::Debug(CODE_LOCATION, "settimer successfully!");
@@ -77,6 +80,34 @@ int main(int argc, char *argv[])
     else
     {
         LogUtil::Debug(CODE_LOCATION, "settimer failed! [errno=%d] %s", errno, strerror(errno));
+    }
+    */
+    // POSIX 定时器测试
+    struct sigevent timerEvent = {0};
+    timerEvent.sigev_value.sival_ptr = &gTimerID; // 不能使用局部变量的地址
+    timerEvent.sigev_notify = SIGEV_SIGNAL;
+    timerEvent.sigev_signo = SIGUSR2;
+    LogUtil::Debug(CODE_LOCATION, "The address of gTimerID is 0x%016x", &gTimerID);
+    res = timer_create(CLOCK_REALTIME, &timerEvent, &gTimerID);
+    if (res == 0)
+    {
+        LogUtil::Debug(CODE_LOCATION, "timer_create successfully! gTimerID=%llu", gTimerID);
+        struct itimerspec timerInterval = {0};
+        timerInterval.it_interval.tv_sec = 1;
+        res = timer_settime(gTimerID, 0, &timerInterval, NULL);
+        if (res == 0)
+        {
+            LogUtil::Debug(CODE_LOCATION, "timer_settime successfully!");
+        }
+        else
+        {
+            LogUtil::Debug(CODE_LOCATION, "timer_settime failed! [errno=%d] %s", errno, strerror(errno));
+        }
+
+    }
+    else
+    {
+        LogUtil::Debug(CODE_LOCATION, "timer_create failed! [errno=%d] %s", errno, strerror(errno));
     }
 
     while (gLoopFlag)
@@ -98,6 +129,8 @@ void InitializeSignalHandler()
     LogUtil::Debug(CODE_LOCATION, "oldSignalHandler = 0x%p", oldSignalHandler);
     oldSignalHandler = signal(SIGUSR1, SignalHandler);
     LogUtil::Debug(CODE_LOCATION, "oldSignalHandler = 0x%p", oldSignalHandler);
+    oldSignalHandler = signal(SIGUSR2, SignalHandler);
+    LogUtil::Debug(CODE_LOCATION, "oldSignalHandler = 0x%p", oldSignalHandler);
     oldSignalHandler = signal(SIGALRM, SignalHandler);
     LogUtil::Debug(CODE_LOCATION, "oldSignalHandler = 0x%p", oldSignalHandler);
 
@@ -114,9 +147,11 @@ void InitializeSignalHandler()
     struct sigaction sigact;
     sigact.sa_sigaction = SignalActionHandler;
     sigact.sa_flags = SA_SIGINFO;
+    sigemptyset(&sigact.sa_mask);
     sigaction(SIGIO, &sigact, NULL);
     sigaction(SIGINT, &sigact, NULL);
     sigaction(SIGUSR1, &sigact, NULL);
+    sigaction(SIGUSR2, &sigact, NULL);
     sigaction(SIGKILL, &sigact, NULL);
     sigaction(SIGALRM, &sigact, NULL);
 }
@@ -126,6 +161,7 @@ void UninitializeSignalHandler()
     signal(SIGIO, SIG_DFL);
     signal(SIGINT, SIG_DFL);
     signal(SIGUSR1, SIG_DFL);
+    signal(SIGUSR2, SIG_DFL);
     signal(SIGALRM, SIG_DFL);
     signal(SIGKILL, SIG_DFL);
 }
@@ -147,6 +183,9 @@ void SignalHandler(int sigNum)
         case SIGUSR1:
             LogUtil::Debug(CODE_LOCATION, "Signal SIGUSR1");
             break;
+        case SIGUSR2:
+            LogUtil::Debug(CODE_LOCATION, "Signal SIGUSR2");
+            break;
         case SIGALRM:
             LogUtil::Debug(CODE_LOCATION, "Signal SIGALRM CurrentTime: %s", TimeUtil::CurrentTimestampString().c_str());
             //alarm(2);
@@ -159,8 +198,8 @@ void SignalHandler(int sigNum)
 
 void SignalActionHandler(int sigNum, siginfo_t *pSigInfo, void *pSigValue)
 {
+    static timer_t timerID = 0;
     int sigInt = pSigInfo->si_int;
-    int sigValue = pSigInfo->si_value.sival_int;
 
     int res = 0;
     struct timeval changeTimeOfDay;
@@ -171,17 +210,22 @@ void SignalActionHandler(int sigNum, siginfo_t *pSigInfo, void *pSigValue)
     switch (sigNum)
     {
         case SIGIO:
-            LogUtil::Debug(CODE_LOCATION, "SignalAction SIGIO sigint:%d sigval:%dp", sigInt, sigValue);
+            LogUtil::Debug(CODE_LOCATION, "SignalAction SIGIO sigint:%d", sigInt);
             break;
         case SIGINT:
             gLoopFlag = false;
-            LogUtil::Debug(CODE_LOCATION, "SignalAction SIGINT sigint:%d sigval:%d", sigInt, sigValue);
+            LogUtil::Debug(CODE_LOCATION, "SignalAction SIGINT sigint:%d", sigInt);
             break;
         case SIGKILL:
-            LogUtil::Debug(CODE_LOCATION, "SignalAction SIGKILL sigint:%d sigval:%d", sigInt, sigValue);
+            LogUtil::Debug(CODE_LOCATION, "SignalAction SIGKILL sigint:%d", sigInt);
             break;
         case SIGUSR1:
-            LogUtil::Debug(CODE_LOCATION, "SignalAction SIGUSR1 sigint:%d sigval:%d", sigInt, sigValue);
+            LogUtil::Debug(CODE_LOCATION, "SignalAction SIGUSR1 sigint:%d", sigInt);
+            if (timerID != 0)
+            {
+                timerID = 0;
+                timer_delete(timerID);
+            }
             /*
             res = settimeofday(&changeTimeOfDay, NULL);
             if (res == 0)
@@ -194,9 +238,13 @@ void SignalActionHandler(int sigNum, siginfo_t *pSigInfo, void *pSigValue)
             }
             */
             break;
+        case SIGUSR2:
+            LogUtil::Debug(CODE_LOCATION, "SignalAction SIGUSR2 CurrentTime:%s", TimeUtil::CurrentTimestampString().c_str());
+            LogUtil::Debug(CODE_LOCATION, "timerID=%llu, sigval.timerid=%llu", timerID, pSigInfo->si_timerid);
+            break;
         case SIGALRM:
-            LogUtil::Debug(CODE_LOCATION, "SignalAction SIGALRM sigint:%d sigval:%d CurrentTime:%s",
-                    sigInt, sigValue, TimeUtil::CurrentTimestampString().c_str());
+            LogUtil::Debug(CODE_LOCATION, "SignalAction SIGALRM sigint:%d CurrentTime:%s",
+                    sigInt, TimeUtil::CurrentTimestampString().c_str());
             // alarm(2);
             break;
         default:

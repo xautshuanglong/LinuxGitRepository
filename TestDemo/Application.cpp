@@ -27,11 +27,11 @@ namespace Shuanglong
         std::ostringstream sstring;
         for (int i=0; i<argc; ++i)
         {
-            sstring << *argv++;
             if (i != 0)
             {
                 sstring << " ";
             }
+            sstring << *argv++;
         }
         LogUtil::Debug(CODE_LOCATION, "Command Line: %s", sstring.str().c_str());
     }
