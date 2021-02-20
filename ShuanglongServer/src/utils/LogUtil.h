@@ -1,7 +1,7 @@
 #ifndef LOGUTIL_H
 #define LOGUTIL_H
 
-#include <string>
+#include "../Common.h"
 
 namespace Shuanglong::Utils
 {
@@ -34,15 +34,13 @@ va_end(vaList);
             int              mLineNumber;
 
         public:
-            CodeLocation();
-            CodeLocation(CodeLocation& originalObj);
             CodeLocation(const CodeLocation& originalObj);
             CodeLocation(std::string function, std::string filename, int lineNumber);
 
-            std::string ToString();
+            std::string ToString() const;
 
         private:
-            template<class T> std::string NumberToString(T number);
+            template<class T> std::string NumberToString(T number) const;
     };
 
     class LogUtil
@@ -55,12 +53,13 @@ va_end(vaList);
             ~LogUtil();
 
             static void Debug(const char *format, ...);
-            static void Debug(CodeLocation codeLocation, const char *format, ...);
+            static void Debug(const CodeLocation &codeLocation, const char *format, ...);
 
             static void Info(const char *format, ...);
-            static void Info(CodeLocation codeLocation, const char *format, ...);
+            static void Info(const CodeLocation &codeLocation, const char *format, ...);
 
         private:
+            static std::string GetAssembledMessage(const char *pMsgBuffer, const CodeLocation &codeLocation);
             static std::string GetSystemTimeString();
             static std::string GetLevelString(LogLevelType logLevel);
     };
