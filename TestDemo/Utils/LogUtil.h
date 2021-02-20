@@ -5,8 +5,10 @@
 
 namespace Shuanglong::Utils
 {
-#define CODE_LOCATION        Shuanglong::Utils::CodeLocation(__PRETTY_FUNCTION__, __FILE__, __LINE__)
-#define CODE_LOCATION_STRING Shuanglong::Utils::CodeLocation(__PRETTY_FUNCTION__, __FILE__, __LINE__).ToString()
+// #define CODE_LOCATION        Shuanglong::Utils::CodeLocation(__PRETTY_FUNCTION__, __FILE__, __LINE__)
+// #define CODE_LOCATION_STRING Shuanglong::Utils::CodeLocation(__PRETTY_FUNCTION__, __FILE__, __LINE__).ToString()
+#define CODE_LOCATION        Shuanglong::Utils::CodeLocation(__FUNCTION__, __FILE__, __LINE__)
+#define CODE_LOCATION_STRING Shuanglong::Utils::CodeLocation(__FUNCTION__, __FILE__, __LINE__).ToString()
 
 #define DEFAULT_LOG_BUFFER_LENGTH 1024
 

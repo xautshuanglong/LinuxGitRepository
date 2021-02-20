@@ -39,7 +39,7 @@ namespace Shuanglong::Utils
         std::string retValue = LogUtil::GetSystemTimeString();
         retValue.append(" [").append(GetLevelString(LOG_LEVEL_DEBUG)).append("] ");
         retValue.append(pMsgBuffer);
-        retValue.append(" <--- ").append(codeLocation.ToString());
+        retValue.append(" <=== ").append(codeLocation.ToString());
 
         return retValue;
     }
@@ -109,7 +109,7 @@ namespace Shuanglong::Utils
     {
         std::string retValue;
 
-        retValue += "[ " + mFunctionName + " ]";
+        retValue += "[" + mFunctionName + "]";
         retValue += " " + mSourceFileName + ":" + this->NumberToString(mLineNumber);
 
         return retValue;

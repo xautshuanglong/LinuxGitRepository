@@ -1,7 +1,6 @@
 #include "Application.h"
 
 #include "Common.h"
-#include "Utils/LogUtil.h"
 
 using namespace Shuanglong::Utils;
 

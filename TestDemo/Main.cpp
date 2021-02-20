@@ -48,14 +48,16 @@ int main(int argc, char *argv[])
     
     Shuanglong::Application app;
     
-    printf("getpid id : %d\n", getpid());
-    printf("gettid id : %ld\n", gettid());
-    printf("pthread_self id : %lu\n", pthread_self());
-    printf("pthread_self id : 0x%lX\n", pthread_self());
-    std::cout << "std::this_thread::get_id id : " << std::this_thread::get_id() << std::endl;
+    LogUtil::Debug(CODE_LOCATION, "getpid id : %d", getpid());
+    LogUtil::Debug(CODE_LOCATION, "gettid id : %ld", gettid());
+    LogUtil::Debug(CODE_LOCATION, "pthread_self id : %lu", pthread_self());
+    LogUtil::Debug(CODE_LOCATION, "pthread_self id : 0x%lX", pthread_self());
+    std::ostringstream sstring;
+    sstring << std::this_thread::get_id();
+    LogUtil::Debug(CODE_LOCATION, "std::this_thread::get_id id : %s", sstring.str().c_str());
 
     struct pthread *pThreadSelf = (struct pthread *)pthread_self();
-    //printf("pthread_self tid: %d\n", pThreadSelf->tid);
+    //LogUtil::Debug(CODE_LOCATION, "pthread_self tid: %d", pThreadSelf->tid);
 
     InitializeSignalHandler();
     
@@ -70,11 +72,11 @@ int main(int argc, char *argv[])
     int res = setitimer(ITIMER_REAL, &timerValue, NULL);
     if (res == 0)
     {
-        std::cout << "settimer successfully!" << std::endl;
+        LogUtil::Debug(CODE_LOCATION, "settimer successfully!");
     }
     else
     {
-        std::cout << "settimer failed! [errno=" << errno << "] " << strerror(errno) << std::endl;
+        LogUtil::Debug(CODE_LOCATION, "settimer failed! [errno=%d] %s", errno, strerror(errno));
     }
 
     while (gLoopFlag)
@@ -84,26 +86,26 @@ int main(int argc, char *argv[])
 
     UninitializeSignalHandler();
 
-    std::cout << "will exiting with ExitCode:" << resultCode << std::endl;
+    LogUtil::Debug(CODE_LOCATION, "==================== will exiting with ExitCode:%d", resultCode);
     return resultCode;
 }
 
 void InitializeSignalHandler()
 {
     oldSignalHandler = signal(SIGIO, SignalHandler);
-    printf("oldSignalHandler = 0x%p\n", oldSignalHandler);
+    LogUtil::Debug(CODE_LOCATION, "oldSignalHandler = 0x%p", oldSignalHandler);
     oldSignalHandler = signal(SIGINT, SignalHandler);
-    printf("oldSignalHandler = 0x%p\n", oldSignalHandler);
+    LogUtil::Debug(CODE_LOCATION, "oldSignalHandler = 0x%p", oldSignalHandler);
     oldSignalHandler = signal(SIGUSR1, SignalHandler);
-    printf("oldSignalHandler = 0x%p\n", oldSignalHandler);
+    LogUtil::Debug(CODE_LOCATION, "oldSignalHandler = 0x%p", oldSignalHandler);
     oldSignalHandler = signal(SIGALRM, SignalHandler);
-    printf("oldSignalHandler = 0x%p\n", oldSignalHandler);
+    LogUtil::Debug(CODE_LOCATION, "oldSignalHandler = 0x%p", oldSignalHandler);
 
     // 不能被捕获的信号
     oldSignalHandler = signal(SIGKILL, SignalHandler);
     if (oldSignalHandler == SIG_ERR)
     {
-        printf("Set SIGKILL handler failed: [errno=%d] %s\n", errno, strerror(errno));
+        LogUtil::Debug(CODE_LOCATION, "Set SIGKILL handler failed: [errno=%d] %s", errno, strerror(errno));
     }
 
     //return;
@@ -133,24 +135,24 @@ void SignalHandler(int sigNum)
     switch (sigNum)
     {
         case SIGIO:
-            printf("Signal SIGIO SignalHandler Main.cpp\n");
+            LogUtil::Debug(CODE_LOCATION, "Signal SIGIO");
             break;
         case SIGINT:
             gLoopFlag = false;
-            printf("Signal SIGINT SignalHandler Main.cpp\n");
+            LogUtil::Debug(CODE_LOCATION, "Signal SIGINT");
             break;
         case SIGKILL:
-            printf("Signal SIGKILL SignalHandler Main.cpp\n");
+            LogUtil::Debug(CODE_LOCATION, "Signal SIGKILL");
             break;
         case SIGUSR1:
-            printf("Signal SIGUSR1 SignalHandler Main.cpp\n");
+            LogUtil::Debug(CODE_LOCATION, "Signal SIGUSR1");
             break;
         case SIGALRM:
-            printf("Signal SIGALRM CurrentTime: %s SignalHandler Main.cpp\n", TimeUtil::CurrentTimestampString().c_str());
+            LogUtil::Debug(CODE_LOCATION, "Signal SIGALRM CurrentTime: %s", TimeUtil::CurrentTimestampString().c_str());
             //alarm(2);
             break;
         default:
-            printf("Unknown signal number SignalHandler Main.cpp\n");
+            LogUtil::Debug(CODE_LOCATION, "Unknown signal number");
             break;
     }
 }
@@ -169,41 +171,43 @@ void SignalActionHandler(int sigNum, siginfo_t *pSigInfo, void *pSigValue)
     switch (sigNum)
     {
         case SIGIO:
-            printf("SignalAction SIGIO sigint:%d sigval:%d SignalActionHandler Main.cpp\n", sigInt, sigValue);
+            LogUtil::Debug(CODE_LOCATION, "SignalAction SIGIO sigint:%d sigval:%dp", sigInt, sigValue);
             break;
         case SIGINT:
             gLoopFlag = false;
-            printf("SignalAction SIGINT sigint:%d sigval:%d SignalActionHandler Main.cpp\n", sigInt, sigValue);
+            LogUtil::Debug(CODE_LOCATION, "SignalAction SIGINT sigint:%d sigval:%d", sigInt, sigValue);
             break;
         case SIGKILL:
-            printf("SignalAction SIGKILL sigint:%d sigval:%d SignalActionHandler Main.cpp\n", sigInt, sigValue);
+            LogUtil::Debug(CODE_LOCATION, "SignalAction SIGKILL sigint:%d sigval:%d", sigInt, sigValue);
             break;
         case SIGUSR1:
-            printf("SignalAction SIGUSR1 sigint:%d sigval:%d SignalActionHandler Main.cpp\n", sigInt, sigValue);
+            LogUtil::Debug(CODE_LOCATION, "SignalAction SIGUSR1 sigint:%d sigval:%d", sigInt, sigValue);
             /*
             res = settimeofday(&changeTimeOfDay, NULL);
             if (res == 0)
             {
-                printf("settimeofday successfully!\n");
+                LogUtil::Debug(CODE_LOCATION, "settimeofday successfully!");
             }
             else
             {
-                printf("settimeofday failed! errno=%d %s\n", errno, strerror(errno));
+                LogUtil::Debug(CODE_LOCATION, "settimeofday failed! errno=%d %s", errno, strerror(errno));
             }
             */
             break;
         case SIGALRM:
-            printf("SignalAction SIGALRM sigint:%d sigval:%d CurrentTime:%s SignalActionHandler Main.cpp\n",
+            LogUtil::Debug(CODE_LOCATION, "SignalAction SIGALRM sigint:%d sigval:%d CurrentTime:%s",
                     sigInt, sigValue, TimeUtil::CurrentTimestampString().c_str());
             // alarm(2);
             break;
         default:
-            printf("Unknown signal number SignalActionHandler Main.cpp\n");
+            LogUtil::Debug(CODE_LOCATION, "Unknown signal number");
             break;
     }
-    printf("gettid id : %ld\n", gettid());
-    printf("pthread_self id : %lu\n", pthread_self());
-    std::cout << "std::this_thread::get_id id : " << std::this_thread::get_id() << std::endl;
+    std::ostringstream sstring;
+    sstring << std::this_thread::get_id();
+    LogUtil::Debug(CODE_LOCATION, "gettid id : %ld", gettid());
+    LogUtil::Debug(CODE_LOCATION, "pthread_self id : %lu", pthread_self());
+    LogUtil::Debug(CODE_LOCATION, "std::this_thread::get_id id : %s", sstring.str().c_str());
 }
 
 void ShowDescription()

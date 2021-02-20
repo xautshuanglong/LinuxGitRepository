@@ -8,5 +8,7 @@
 #include <string>
 #include <sys/time.h>
 
+#include "Utils/LogUtil.h"
+
 #endif
 
