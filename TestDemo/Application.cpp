@@ -15,17 +15,26 @@ namespace Shuanglong
     {
     }
 
-    int Application::Run(int argc, char* argv[])
+    int Application::Run(int argc, char *argv[])
     {
-        for (int i=0; i<argc; ++i)
-        {
-            std::cout << *argv++ << " ";
-        }
-        std::cout << std::endl;
-
+        this->PrintArguments(argc, argv);
         LogUtil::Debug(CODE_LOCATION, "Start running %d", 666);
 
         return 0;
+    }
+
+    void Application::PrintArguments(int argc, char *argv[])
+    {
+        std::ostringstream sstring;
+        for (int i=0; i<argc; ++i)
+        {
+            sstring << *argv++;
+            if (i != 0)
+            {
+                sstring << " ";
+            }
+        }
+        LogUtil::Debug(CODE_LOCATION, "Command Line: %s", sstring.str().c_str());
     }
 }
 

@@ -9,7 +9,9 @@ namespace Shuanglong
             Application();
             ~Application();
 
-            int Run(int argc, char* argv[]);
+            int Run(int argc, char *argv[]);
+        private:
+            void PrintArguments(int argc, char *argv[]);
     };
 }
 

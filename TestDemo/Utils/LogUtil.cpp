@@ -13,17 +13,11 @@ namespace Shuanglong::Utils
         std::cout << msgBuffer << std::endl;
     }
     
-    void LogUtil::Debug(CodeLocation codeLocation, const char *format, ...)
+    void LogUtil::Debug(const CodeLocation &codeLocation, const char *format, ...)
     {
         char msgBuffer[DEFAULT_LOG_BUFFER_LENGTH] = { 0 };
         DEFAULT_LOG_FORMAT(msgBuffer, format, DEFAULT_LOG_BUFFER_LENGTH);
-
-        std::string tempMsg = GetSystemTimeString();
-        tempMsg.append(" [").append(GetLevelString(LOG_LEVEL_DEBUG)).append("] ");
-        tempMsg.append(msgBuffer);
-        tempMsg.append(" <== ").append(codeLocation.ToString());
-
-        std::cout << tempMsg << std::endl;
+        std::cout << LogUtil::GetAssembledMessage(msgBuffer, codeLocation) << std::endl;
     }
     
     void LogUtil::Info(const char *format, ...)
@@ -33,11 +27,21 @@ namespace Shuanglong::Utils
         std::cout << msgBuffer << std::endl;
     }
 
-    void LogUtil::Info(CodeLocation codeLocation, const char *format, ...)
+    void LogUtil::Info(const CodeLocation &codeLocation, const char *format, ...)
     {
         char msgBuffer[DEFAULT_LOG_BUFFER_LENGTH] = { 0 };
         DEFAULT_LOG_FORMAT(msgBuffer, format, DEFAULT_LOG_BUFFER_LENGTH);
-        std::cout << codeLocation.ToString() << " --> " << msgBuffer << std::endl;
+        std::cout << LogUtil::GetAssembledMessage(msgBuffer, codeLocation) << std::endl;
+    }
+
+    std::string LogUtil::GetAssembledMessage(const char *pMsgBuffer, const CodeLocation &codeLocation)
+    {
+        std::string retValue = LogUtil::GetSystemTimeString();
+        retValue.append(" [").append(GetLevelString(LOG_LEVEL_DEBUG)).append("] ");
+        retValue.append(pMsgBuffer);
+        retValue.append(" <--- ").append(codeLocation.ToString());
+
+        return retValue;
     }
 
     std::string LogUtil::GetSystemTimeString()
@@ -85,16 +89,13 @@ namespace Shuanglong::Utils
         return retValue;
     }
 
-    CodeLocation::CodeLocation()
-    {
-    }
-
-    CodeLocation::CodeLocation(CodeLocation& originalObj)
-    {
-    }
-
     CodeLocation::CodeLocation(const CodeLocation& originalObj)
     {
+        if (&originalObj == this) return;
+        //=========================================
+        mFunctionName = originalObj.mFunctionName;
+        mSourceFileName = originalObj.mSourceFileName;
+        mLineNumber = originalObj.mLineNumber;
     }
 
     CodeLocation::CodeLocation(std::string function, std::string filename, int lineNumber)
@@ -104,17 +105,17 @@ namespace Shuanglong::Utils
         mLineNumber = lineNumber;
     }
 
-    std::string CodeLocation::ToString()
+    std::string CodeLocation::ToString() const
     {
         std::string retValue;
 
         retValue += "[ " + mFunctionName + " ]";
-        retValue += " " + mSourceFileName + ":" + NumberToString(mLineNumber);
+        retValue += " " + mSourceFileName + ":" + this->NumberToString(mLineNumber);
 
         return retValue;
     }
     
-    template<class T> std::string CodeLocation::NumberToString(T number)
+    template<class T> std::string CodeLocation::NumberToString(T number) const
     {
         std::stringstream ss;
         ss << number;
