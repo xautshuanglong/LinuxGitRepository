@@ -66,12 +66,11 @@ int main(int argc, char *argv[])
     int res = 0;
 
     // 定时器测试
-    // alarm(2); // 如果想要重复触发，需在处理函数中再次调用 alarm(2)。
+    alarm(2); // 如果想要重复触发，需在处理函数中再次调用 alarm(2)。
     struct itimerval timerValue;
     memset(&timerValue, 0, sizeof(timerValue));
     timerValue.it_value.tv_sec = 5; // 只响应一次超时
     // timerValue.it_interval.tv_sec = 1; // 多次超时响应
-    /*
     res = setitimer(ITIMER_REAL, &timerValue, NULL);
     if (res == 0)
     {
@@ -81,7 +80,6 @@ int main(int argc, char *argv[])
     {
         LogUtil::Debug(CODE_LOCATION, "settimer failed! [errno=%d] %s", errno, strerror(errno));
     }
-    */
     // POSIX 定时器测试
     struct sigevent timerEvent = {0};
     timerEvent.sigev_value.sival_ptr = &gTimerID; // 不能使用局部变量的地址
@@ -94,6 +92,7 @@ int main(int argc, char *argv[])
         LogUtil::Debug(CODE_LOCATION, "timer_create successfully! gTimerID=%llu", gTimerID);
         struct itimerspec timerInterval = {0};
         timerInterval.it_interval.tv_sec = 1;
+        timerInterval.it_value.tv_sec = 1;
         res = timer_settime(gTimerID, 0, &timerInterval, NULL);
         if (res == 0)
         {
@@ -103,7 +102,6 @@ int main(int argc, char *argv[])
         {
             LogUtil::Debug(CODE_LOCATION, "timer_settime failed! [errno=%d] %s", errno, strerror(errno));
         }
-
     }
     else
     {
@@ -112,7 +110,7 @@ int main(int argc, char *argv[])
 
     while (gLoopFlag)
     {
-        sleep(100);
+        sleep(1);
     }
 
     UninitializeSignalHandler();
@@ -223,8 +221,8 @@ void SignalActionHandler(int sigNum, siginfo_t *pSigInfo, void *pSigValue)
             LogUtil::Debug(CODE_LOCATION, "SignalAction SIGUSR1 sigint:%d", sigInt);
             if (timerID != 0)
             {
-                timerID = 0;
                 timer_delete(timerID);
+                timerID = 0;
             }
             /*
             res = settimeofday(&changeTimeOfDay, NULL);
@@ -239,8 +237,12 @@ void SignalActionHandler(int sigNum, siginfo_t *pSigInfo, void *pSigValue)
             */
             break;
         case SIGUSR2:
-            LogUtil::Debug(CODE_LOCATION, "SignalAction SIGUSR2 CurrentTime:%s", TimeUtil::CurrentTimestampString().c_str());
-            LogUtil::Debug(CODE_LOCATION, "timerID=%llu, sigval.timerid=%llu", timerID, pSigInfo->si_timerid);
+            if (pSigInfo->si_ptr)
+            {
+                timerID = *(timer_t*)pSigInfo->si_ptr;
+            }
+            LogUtil::Debug(CODE_LOCATION, "SignalAction SIGUSR2 CurrentTime:%s TimerID:%llu  gettid=%ld  pthread_self=%lu",
+                    TimeUtil::CurrentTimestampString().c_str(), timerID, gettid(), pthread_self());
             break;
         case SIGALRM:
             LogUtil::Debug(CODE_LOCATION, "SignalAction SIGALRM sigint:%d CurrentTime:%s",
@@ -251,11 +253,6 @@ void SignalActionHandler(int sigNum, siginfo_t *pSigInfo, void *pSigValue)
             LogUtil::Debug(CODE_LOCATION, "Unknown signal number");
             break;
     }
-    std::ostringstream sstring;
-    sstring << std::this_thread::get_id();
-    LogUtil::Debug(CODE_LOCATION, "gettid id : %ld", gettid());
-    LogUtil::Debug(CODE_LOCATION, "pthread_self id : %lu", pthread_self());
-    LogUtil::Debug(CODE_LOCATION, "std::this_thread::get_id id : %s", sstring.str().c_str());
 }
 
 void ShowDescription()
