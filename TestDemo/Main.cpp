@@ -24,9 +24,11 @@ void SignalHandler(int sigNum);
 void SignalActionHandler(int sigNum, siginfo_t *pSigInfo, void *pSigValue);
 
 void ShowDescription();
+void ShowSignalInfoCode();
 
 int main(int argc, char *argv[])
 {
+    ShowSignalInfoCode();
     // 模拟发送信号
     if (argc >= 3)
     {
@@ -237,15 +239,23 @@ void SignalActionHandler(int sigNum, siginfo_t *pSigInfo, void *pSigValue)
             */
             break;
         case SIGUSR2:
-            if (pSigInfo->si_ptr)
+            if (pSigInfo->si_code == SI_TIMER)
             {
-                timerID = *(timer_t*)pSigInfo->si_ptr;
+                if (pSigInfo->si_ptr)
+                {
+                    timerID = *(timer_t*)pSigInfo->si_ptr;
+                }
+                LogUtil::Debug(CODE_LOCATION, "Receive SIGUSR2 CurrentTime:%s TimerID:%llu  gettid=%ld  pthread_self=%lu",
+                        TimeUtil::CurrentTimestampString().c_str(), timerID, gettid(), pthread_self());
             }
-            LogUtil::Debug(CODE_LOCATION, "SignalAction SIGUSR2 CurrentTime:%s TimerID:%llu  gettid=%ld  pthread_self=%lu",
-                    TimeUtil::CurrentTimestampString().c_str(), timerID, gettid(), pthread_self());
+            else
+            {
+                LogUtil::Debug(CODE_LOCATION, "Receive SIGUSR2 but not timer emit it. pid=%d si_code=%d",
+                        pSigInfo->si_pid, pSigInfo->si_code);
+            }
             break;
         case SIGALRM:
-            LogUtil::Debug(CODE_LOCATION, "SignalAction SIGALRM sigint:%d CurrentTime:%s",
+            LogUtil::Debug(CODE_LOCATION, "Receive SIGALRM sigint:%d CurrentTime:%s",
                     sigInt, TimeUtil::CurrentTimestampString().c_str());
             // alarm(2);
             break;
@@ -266,5 +276,18 @@ void ShowDescription()
     std::cout << " (__  ) / / / /_/ / /_/ / / / / /_/ / / /_/ / / / / /_/ /  " << std::endl;
     std::cout << "/____/_/ /_/\\__,_/\\__,_/_/ /_/\\__, /_/\\____/_/ /_/\\__, /   " << std::endl;
     std::cout << "                             /____/              /____/    " << std::endl;
+}
+
+void ShowSignalInfoCode()
+{
+    LogUtil::Debug(CODE_LOCATION, "SI_ASYNCNL  = %d", SI_ASYNCNL);
+    LogUtil::Debug(CODE_LOCATION, "SI_TKILL    = %d", SI_TKILL);
+    LogUtil::Debug(CODE_LOCATION, "SI_SIGIO    = %d", SI_SIGIO);
+    LogUtil::Debug(CODE_LOCATION, "SI_ASYNCIO  = %d", SI_ASYNCIO);
+    LogUtil::Debug(CODE_LOCATION, "SI_MESGQ    = %d", SI_MESGQ);
+    LogUtil::Debug(CODE_LOCATION, "SI_TIMER    = %d", SI_TIMER);
+    LogUtil::Debug(CODE_LOCATION, "SI_QUEUE    = %d", SI_QUEUE);
+    LogUtil::Debug(CODE_LOCATION, "SI_USER     = %d", SI_USER);
+    LogUtil::Debug(CODE_LOCATION, "SI_KERNEL   = %d", SI_KERNEL);
 }
 
