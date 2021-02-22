@@ -16,12 +16,15 @@ using namespace Shuanglong::Utils;
 
 static bool gLoopFlag = true;
 static sighandler_t oldSignalHandler = SIG_ERR;
-static timer_t gTimerID = 0;
 
 void InitializeSignalHandler();
 void UninitializeSignalHandler();
 void SignalHandler(int sigNum);
 void SignalActionHandler(int sigNum, siginfo_t *pSigInfo, void *pSigValue);
+
+int TimerCreate(timer_t *pOutTimerID, int intervalSeconds, int startSeconds);
+int TimerSetTime(timer_t timerID, int intervalSeconds, int startSeconds);
+int TimerDelete(timer_t timerID);
 
 void ShowDescription();
 void ShowSignalInfoCode();
@@ -83,31 +86,11 @@ int main(int argc, char *argv[])
         LogUtil::Debug(CODE_LOCATION, "settimer failed! [errno=%d] %s", errno, strerror(errno));
     }
     // POSIX 定时器测试
-    struct sigevent timerEvent = {0};
-    timerEvent.sigev_value.sival_ptr = &gTimerID; // 不能使用局部变量的地址
-    timerEvent.sigev_notify = SIGEV_SIGNAL;
-    timerEvent.sigev_signo = SIGUSR2;
-    LogUtil::Debug(CODE_LOCATION, "The address of gTimerID is 0x%016x", &gTimerID);
-    res = timer_create(CLOCK_REALTIME, &timerEvent, &gTimerID);
-    if (res == 0)
+    timer_t timerID = 0;
+    res = TimerCreate(&timerID, 5, 5);
+    if (res != 0)
     {
-        LogUtil::Debug(CODE_LOCATION, "timer_create successfully! gTimerID=%llu", gTimerID);
-        struct itimerspec timerInterval = {0};
-        timerInterval.it_interval.tv_sec = 1;
-        timerInterval.it_value.tv_sec = 1;
-        res = timer_settime(gTimerID, 0, &timerInterval, NULL);
-        if (res == 0)
-        {
-            LogUtil::Debug(CODE_LOCATION, "timer_settime successfully!");
-        }
-        else
-        {
-            LogUtil::Debug(CODE_LOCATION, "timer_settime failed! [errno=%d] %s", errno, strerror(errno));
-        }
-    }
-    else
-    {
-        LogUtil::Debug(CODE_LOCATION, "timer_create failed! [errno=%d] %s", errno, strerror(errno));
+        LogUtil::Debug(CODE_LOCATION, "TimerCreate failed! [errno=%d] %s", errno, strerror(errno));
     }
 
     while (gLoopFlag)
@@ -115,6 +98,11 @@ int main(int argc, char *argv[])
         sleep(1);
     }
 
+    res = TimerDelete(timerID);
+    if (res != 0)
+    {
+        LogUtil::Debug(CODE_LOCATION, "TimerDelete failed! [errno=%d] %s", errno, strerror(errno));
+    }
     UninitializeSignalHandler();
 
     LogUtil::Debug(CODE_LOCATION, "==================== will exiting with ExitCode:%d", resultCode);
@@ -198,6 +186,7 @@ void SignalHandler(int sigNum)
 
 void SignalActionHandler(int sigNum, siginfo_t *pSigInfo, void *pSigValue)
 {
+    static bool swichTimerState = true;
     static timer_t timerID = 0;
     int sigInt = pSigInfo->si_int;
 
@@ -221,11 +210,15 @@ void SignalActionHandler(int sigNum, siginfo_t *pSigInfo, void *pSigValue)
             break;
         case SIGUSR1:
             LogUtil::Debug(CODE_LOCATION, "SignalAction SIGUSR1 sigint:%d", sigInt);
-            if (timerID != 0)
+            if (swichTimerState)
             {
-                timer_delete(timerID);
-                timerID = 0;
+                TimerSetTime(timerID, 0, 0);
             }
+            else
+            {
+                TimerSetTime(timerID, 5, 5);
+            }
+            swichTimerState = !swichTimerState;
             /*
             res = settimeofday(&changeTimeOfDay, NULL);
             if (res == 0)
@@ -263,6 +256,58 @@ void SignalActionHandler(int sigNum, siginfo_t *pSigInfo, void *pSigValue)
             LogUtil::Debug(CODE_LOCATION, "Unknown signal number");
             break;
     }
+}
+
+/*
+ * intervalSeconds 定时器超时时间间隔，该值为 0 时，定时器只触发一次，取决于 startSeconds。
+ * startSeconds 首次超时时间，该值为 0 时，定时器无效，永远不会触发超时。
+ * */
+int TimerCreate(timer_t *pOutTimerID, int intervalSeconds, int startSeconds)
+{
+    int result = 0;
+    timer_t timerID = 0;
+    struct sigevent timerEvent = {0};
+    timerEvent.sigev_value.sival_ptr = pOutTimerID;
+    timerEvent.sigev_notify = SIGEV_SIGNAL;
+    timerEvent.sigev_signo = SIGUSR2;
+    
+    result = timer_create(CLOCK_REALTIME, &timerEvent, &timerID);
+    if (result == 0)
+    {
+        if (pOutTimerID != NULL)
+        {
+            *pOutTimerID = timerID;
+        }
+        result = TimerSetTime(timerID, intervalSeconds, startSeconds);
+    }
+    else
+    {
+        LogUtil::Info(CODE_LOCATION, "timer_create failed! [errno=%d] %s", errno, strerror(errno));
+    }
+
+    return result;
+}
+
+int TimerSetTime(timer_t timerID, int intervalSeconds, int startSeconds)
+{
+    int result = 0;
+
+    struct itimerspec timerInterval = { 0 };
+    timerInterval.it_interval.tv_sec = intervalSeconds;
+    timerInterval.it_value.tv_sec = startSeconds;
+    result = timer_settime(timerID, 0, &timerInterval, NULL);
+    if (result != 0)
+    {
+        LogUtil::Info(CODE_LOCATION, "timer_settime failed! timerID=%d [errno=%d] %s",
+                timerID, errno, strerror(errno));
+    }
+
+    return result;
+}
+
+int TimerDelete(timer_t timerID)
+{
+    return timer_delete(timerID);
 }
 
 void ShowDescription()
