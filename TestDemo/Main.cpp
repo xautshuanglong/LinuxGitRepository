@@ -11,11 +11,17 @@
 #include <sys/syscall.h>
 #define gettid() syscall(__NR_gettid)
 
+#include <event2/event-config.h>
+#include <event.h>
+
 #include "Utils/TimeUtil.h"
 using namespace Shuanglong::Utils;
 
 static bool gLoopFlag = true;
 static sighandler_t oldSignalHandler = SIG_ERR;
+// libevent timer testing
+struct event ev;
+struct timeval tv;
 
 void InitializeSignalHandler();
 void UninitializeSignalHandler();
@@ -26,11 +32,23 @@ int TimerCreate(timer_t *pOutTimerID, int intervalSeconds, int startSeconds);
 int TimerSetTime(timer_t timerID, int intervalSeconds, int startSeconds);
 int TimerDelete(timer_t timerID);
 
+void LibeventTimerCallback(int fd, short event, void *argc);
+
 void ShowDescription();
 void ShowSignalInfoCode();
 
 int main(int argc, char *argv[])
 {
+    /*
+    struct event_base *base = event_init();
+    tv.tv_sec = 2;
+    tv.tv_usec = 0; 
+    evtimer_set(&ev, LibeventTimerCallback, NULL);
+    event_base_set(base, &ev);
+    event_add(&ev, &tv);
+    event_base_dispatch(base);
+    */
+
     ShowSignalInfoCode();
     // 模拟发送信号
     if (argc >= 3)
@@ -238,12 +256,12 @@ void SignalActionHandler(int sigNum, siginfo_t *pSigInfo, void *pSigValue)
                 {
                     timerID = *(timer_t*)pSigInfo->si_ptr;
                 }
-                LogUtil::Debug(CODE_LOCATION, "Receive SIGUSR2 CurrentTime:%s TimerID:%llu  gettid=%ld  pthread_self=%lu",
+                LogUtil::Info(CODE_LOCATION, "Receive SIGUSR2 CurrentTime:%s TimerID:%llu  gettid=%ld  pthread_self=%lu",
                         TimeUtil::CurrentTimestampString().c_str(), timerID, gettid(), pthread_self());
             }
             else
             {
-                LogUtil::Debug(CODE_LOCATION, "Receive SIGUSR2 but not timer emit it. pid=%d si_code=%d",
+                LogUtil::Warn(CODE_LOCATION, "Receive SIGUSR2 but not timer emit it. pid=%d si_code=%d",
                         pSigInfo->si_pid, pSigInfo->si_code);
             }
             break;
@@ -310,6 +328,12 @@ int TimerDelete(timer_t timerID)
     return timer_delete(timerID);
 }
 
+void LibeventTimerCallback(int fd, short event, void *argc)
+{
+    LogUtil::Info(CODE_LOCATION, "fd=%d  event=%hd  argc=%p", fd, event, argc);
+//    event_add(&ev, &tv);
+}
+
 void ShowDescription()
 {
     // sudo apt install figlet
@@ -325,14 +349,14 @@ void ShowDescription()
 
 void ShowSignalInfoCode()
 {
-    LogUtil::Debug(CODE_LOCATION, "SI_ASYNCNL  = %d", SI_ASYNCNL);
-    LogUtil::Debug(CODE_LOCATION, "SI_TKILL    = %d", SI_TKILL);
-    LogUtil::Debug(CODE_LOCATION, "SI_SIGIO    = %d", SI_SIGIO);
-    LogUtil::Debug(CODE_LOCATION, "SI_ASYNCIO  = %d", SI_ASYNCIO);
-    LogUtil::Debug(CODE_LOCATION, "SI_MESGQ    = %d", SI_MESGQ);
-    LogUtil::Debug(CODE_LOCATION, "SI_TIMER    = %d", SI_TIMER);
-    LogUtil::Debug(CODE_LOCATION, "SI_QUEUE    = %d", SI_QUEUE);
-    LogUtil::Debug(CODE_LOCATION, "SI_USER     = %d", SI_USER);
-    LogUtil::Debug(CODE_LOCATION, "SI_KERNEL   = %d", SI_KERNEL);
+    LogUtil::Info(CODE_LOCATION, "SI_ASYNCNL  = %d", SI_ASYNCNL);
+    LogUtil::Info(CODE_LOCATION, "SI_TKILL    = %d", SI_TKILL);
+    LogUtil::Info(CODE_LOCATION, "SI_SIGIO    = %d", SI_SIGIO);
+    LogUtil::Info(CODE_LOCATION, "SI_ASYNCIO  = %d", SI_ASYNCIO);
+    LogUtil::Info(CODE_LOCATION, "SI_MESGQ    = %d", SI_MESGQ);
+    LogUtil::Info(CODE_LOCATION, "SI_TIMER    = %d", SI_TIMER);
+    LogUtil::Info(CODE_LOCATION, "SI_QUEUE    = %d", SI_QUEUE);
+    LogUtil::Info(CODE_LOCATION, "SI_USER     = %d", SI_USER);
+    LogUtil::Info(CODE_LOCATION, "SI_KERNEL   = %d", SI_KERNEL);
 }
 

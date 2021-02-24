@@ -22,8 +22,13 @@ objs :=
 EXT_INC :=
 EXT_LIBS :=
 
+# libevent include files
+# EXT_INC += -I /usr/local/include
+
 # glibc runtime : timer_create()
 EXT_LIBS += -lrt
+# libevent timer
+EXT_LIBS += -levent
     
 SRCS += $(wildcard ./*.cpp)
 UTIL_SRCS +=$(wildcard Utils/*.cpp)
@@ -36,7 +41,7 @@ ifeq ($(mode), debug)
 endif
 
 $(program) : $(objs)
-	$(CC) $(CFLAGS) -o $(program) $(objs) $(EXT_LIBS)
+	$(CC) $(CFLAGS) $(EXT_INC) -o $(program) $(objs) $(EXT_LIBS)
 
 %.o : %.cpp $(deps)
 	$(CC) -c $(CFLAGS) $< -o $@
