@@ -45,7 +45,7 @@ va_end(vaList);
             template<class T> std::string NumberToString(T number) const;
     };
 
-    class LogUtil
+    class LogUtil final
     {
         private:
             int mValue;
@@ -60,8 +60,18 @@ va_end(vaList);
             static void Info(const char *format, ...);
             static void Info(const CodeLocation &codeLocation, const char *format, ...);
 
+            static void Warn(const char *format, ...);
+            static void Warn(const CodeLocation &codeLocation, const char *format, ...);
+
+            static void Error(const char *format, ...);
+            static void Error(const CodeLocation &codeLocation, const char *format, ...);
+
+            static void Fatal(const char *format, ...);
+            static void Fatal(const CodeLocation &codeLocation, const char *format, ...);
+
         private:
-            static std::string GetAssembledMessage(const char *pMsgBuffer, const CodeLocation &codeLocation);
+            static std::string GetAssembledMessage(const char *pMsgBuffer, LogLevelType logLevel);
+            static std::string GetAssembledMessage(const char *pMsgBuffer, const CodeLocation &codeLocation, LogLevelType logLevel);
             static std::string GetSystemTimeString();
             static std::string GetLevelString(LogLevelType logLevel);
     };
