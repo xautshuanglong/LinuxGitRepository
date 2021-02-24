@@ -2,8 +2,6 @@
 
 echo =========================== getoption testing pid:$$ argc:$# =============================
 
-
-7
 echo '$* -->' $*
 while getopts ":a:bc:-:" opt
 do
@@ -35,7 +33,7 @@ do
                     echo "----- inside case others -->"
                     ;;
                 *)
-                    echo "----- inside case * --> long option error"
+                    echo "----- inside case - --> long option error"
                     exit 1
             esac;;
         *)

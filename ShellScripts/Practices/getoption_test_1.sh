@@ -19,7 +19,8 @@ upload="false"
 
 echo '$OPTIND -->' $OPTIND
 
-while getopts 'h:j:m:u' OPT; do
+while getopts 'h:j:m:u' OPT
+do
     case $OPT in
         j) S_DIR="$OPTARG";;
         m) D_DIR="$OPTARG";;
