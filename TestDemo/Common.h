@@ -12,6 +12,7 @@
 #include "Utils/TimeUtil.h"
 #include "Utils/EnvUtil.h"
 #include "Utils/StringUtil.h"
+#include "EventLoop/MainLoop.h"
 
 // 信号值定义
 #define SIGNAL_CONTROL SIGUSR1  // 通过该信号发送控制指令

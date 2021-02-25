@@ -17,9 +17,10 @@
 #include <event.h>
 
 using namespace Shuanglong::Utils;
+using namespace Shuanglong::EventLoop;
 
-static bool gLoopFlag = true;
 static sighandler_t oldSignalHandler = SIG_ERR;
+static MainLoop gMainLoop;
 // libevent timer testing
 struct event ev;
 struct timeval tv;
@@ -33,7 +34,7 @@ int TimerCreate(timer_t *pOutTimerID, int intervalSeconds, int startSeconds);
 int TimerSetTime(timer_t timerID, int intervalSeconds, int startSeconds);
 int TimerDelete(timer_t timerID);
 
-void LibeventTimerCallback(int fd, short event, void *argc);
+void  LibeventTimerCallback(int fd, short event, void *argc);
 
 void ShowDescription();
 void ShowSignalInfoCode();
@@ -50,11 +51,9 @@ int main(int argc, char *argv[])
     event_base_dispatch(base);
     */
 
-    ShowSignalInfoCode();
     // 模拟发送信号
     if (argc >= 3)
     {
-        gLoopFlag = false;
         int pid = atoi(argv[1]);
         int sigNum = atoi(argv[2]);
         //kill(pid, sigNum);
@@ -70,6 +69,7 @@ int main(int argc, char *argv[])
     }
 
     ShowDescription();
+    ShowSignalInfoCode();
     
     Shuanglong::Application app;
     
@@ -112,10 +112,11 @@ int main(int argc, char *argv[])
         LogUtil::Debug(CODE_LOCATION, "TimerCreate failed! [errno=%d] %s", errno, strerror(errno));
     }
 
-    while (gLoopFlag)
-    {
-        sleep(1);
-    }
+    // 子线程中运行 libevent 事件循环
+    void *pThreadStatus = NULL;
+    pthread_t eventTID = 0;
+    pthread_create(&eventTID, NULL, MainLoop::ThreadRoutine, &gMainLoop);
+    pthread_join(eventTID, &pThreadStatus);
 
     res = TimerDelete(timerID);
     if (res != 0)
@@ -124,7 +125,8 @@ int main(int argc, char *argv[])
     }
     UninitializeSignalHandler();
 
-    LogUtil::Debug(CODE_LOCATION, "==================== will exiting with ExitCode:%d", resultCode);
+    LogUtil::Info(CODE_LOCATION, "==================== will exiting with ExitCode:%d and LibeventMainLoopStatus:%p",
+            resultCode, pThreadStatus);
     return resultCode;
 }
 
@@ -181,7 +183,7 @@ void SignalHandler(int sigNum)
             LogUtil::Debug(CODE_LOCATION, "Signal SIGIO");
             break;
         case SIGINT:
-            gLoopFlag = false;
+            gMainLoop.Stop();
             LogUtil::Debug(CODE_LOCATION, "Signal SIGINT");
             break;
         case SIGKILL:
@@ -221,7 +223,7 @@ void SignalActionHandler(int sigNum, siginfo_t *pSigInfo, void *pSigValue)
             LogUtil::Debug(CODE_LOCATION, "SignalAction SIGIO sigint:%d", sigInt);
             break;
         case SIGINT:
-            gLoopFlag = false;
+            gMainLoop.Stop();
             LogUtil::Debug(CODE_LOCATION, "SignalAction SIGINT sigint:%d", sigInt);
             break;
         case SIGKILL:
@@ -288,7 +290,7 @@ int TimerCreate(timer_t *pOutTimerID, int intervalSeconds, int startSeconds)
     struct sigevent timerEvent = {0};
     timerEvent.sigev_value.sival_ptr = pOutTimerID;
     timerEvent.sigev_notify = SIGEV_SIGNAL;
-    timerEvent.sigev_signo = SIGUSR2;
+    timerEvent.sigev_signo = SIGNAL_TIMER;
     
     result = timer_create(CLOCK_REALTIME, &timerEvent, &timerID);
     if (result == 0)
