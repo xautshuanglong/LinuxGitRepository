@@ -1,5 +1,7 @@
 #include "StringUtil.h"
 
+#include <iostream>
+
 namespace Shuanglong::Utils
 {
     StringUtil::StringUtil()

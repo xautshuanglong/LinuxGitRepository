@@ -2,6 +2,8 @@
 
 #include "Common.h"
 
+#include <sstream>
+
 using namespace Shuanglong::Utils;
 
 namespace Shuanglong

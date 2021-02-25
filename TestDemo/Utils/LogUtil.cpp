@@ -1,5 +1,10 @@
 #include "LogUtil.h"
 
+#include <cstring>
+#include <sstream>
+#include <iostream>
+#include <sys/time.h>
+
 namespace Shuanglong::Utils
 {
 #define LOG_COLOR_RESET   "\033[0m"

@@ -1,5 +1,5 @@
-#ifndef APPLICATION_H
-#define APPLICATION_H
+#ifndef _APPLICATION_H
+#define _APPLICATION_H
 
 namespace Shuanglong
 {
@@ -15,5 +15,5 @@ namespace Shuanglong
     };
 }
 
-#endif
+#endif // _APPLICATION_H
 

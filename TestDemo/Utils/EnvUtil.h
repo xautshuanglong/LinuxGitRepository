@@ -1,7 +1,5 @@
-#ifndef ENV_UTIL_H 
-#define ENV_UTIL_H 
-
-#include "../Common.h"
+#ifndef _ENV_UTIL_H_
+#define _ENV_UTIL_H_
 
 namespace Shuanglong::Utils
 {
@@ -18,4 +16,4 @@ namespace Shuanglong::Utils
     };
 }
 
-#endif
+#endif // _ENV_UTIL_H_

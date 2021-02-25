@@ -1,7 +1,7 @@
-#ifndef STRING_UTIL_H
-#define STRING_UTIL_H
+#ifndef _STRING_UTIL_H_
+#define _STRING_UTIL_H_
 
-#include "../Common.h"
+#include <string>
 
 namespace Shuanglong::Utils
 {
@@ -16,5 +16,5 @@ namespace Shuanglong::Utils
     };
 }
 
-#endif
+#endif // _STRING_UTIL_H_
 

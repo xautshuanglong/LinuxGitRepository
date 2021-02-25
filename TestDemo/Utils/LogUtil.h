@@ -1,7 +1,8 @@
-#ifndef LOGUTIL_H
-#define LOGUTIL_H
+#ifndef _LOG_UTIL_H_
+#define _LOG_UTIL_H_
 
-#include "../Common.h"
+#include <string>
+#include <cstdarg>
 
 namespace Shuanglong::Utils
 {
@@ -77,5 +78,5 @@ va_end(vaList);
     };
 }
 
-#endif
+#endif // _LOG_UTIL_H_
 

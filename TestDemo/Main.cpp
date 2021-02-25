@@ -1,8 +1,10 @@
 #include "Common.h"
 #include "Application.h"
 
-#include <string.h>
-#include <signal.h>
+#include <iostream>
+#include <sstream>
+#include <string>
+#include <cstring>
 #include <unistd.h>
 
 #include <pthread.h>
@@ -14,7 +16,6 @@
 #include <event2/event-config.h>
 #include <event.h>
 
-#include "Utils/TimeUtil.h"
 using namespace Shuanglong::Utils;
 
 static bool gLoopFlag = true;

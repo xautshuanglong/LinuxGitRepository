@@ -1,7 +1,7 @@
-#ifndef TIME_UTIL_H
-#define TIME_UTIL_H
+#ifndef _TIME_UTIL_H_
+#define _TIME_UTIL_H_
 
-#include "../Common.h"
+#include <string>
 
 namespace Shuanglong::Utils
 {
@@ -28,5 +28,5 @@ namespace Shuanglong::Utils
     };
 }
 
-#endif
+#endif // _TIME_UTIL_H_
 
