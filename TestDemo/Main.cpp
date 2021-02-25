@@ -21,9 +21,6 @@ using namespace Shuanglong::EventLoop;
 
 static sighandler_t oldSignalHandler = SIG_ERR;
 static MainLoop gMainLoop;
-// libevent timer testing
-struct event ev;
-struct timeval tv;
 
 void InitializeSignalHandler();
 void UninitializeSignalHandler();
@@ -34,23 +31,11 @@ int TimerCreate(timer_t *pOutTimerID, int intervalSeconds, int startSeconds);
 int TimerSetTime(timer_t timerID, int intervalSeconds, int startSeconds);
 int TimerDelete(timer_t timerID);
 
-void  LibeventTimerCallback(int fd, short event, void *argc);
-
 void ShowDescription();
 void ShowSignalInfoCode();
 
 int main(int argc, char *argv[])
 {
-    /*
-    struct event_base *base = event_init();
-    tv.tv_sec = 2;
-    tv.tv_usec = 0; 
-    evtimer_set(&ev, LibeventTimerCallback, NULL);
-    event_base_set(base, &ev);
-    event_add(&ev, &tv);
-    event_base_dispatch(base);
-    */
-
     // 模拟发送信号
     if (argc >= 3)
     {
@@ -113,10 +98,7 @@ int main(int argc, char *argv[])
     }
 
     // 子线程中运行 libevent 事件循环
-    void *pThreadStatus = NULL;
-    pthread_t eventTID = 0;
-    pthread_create(&eventTID, NULL, MainLoop::ThreadRoutine, &gMainLoop);
-    pthread_join(eventTID, &pThreadStatus);
+    gMainLoop.Start();
 
     res = TimerDelete(timerID);
     if (res != 0)
@@ -125,8 +107,7 @@ int main(int argc, char *argv[])
     }
     UninitializeSignalHandler();
 
-    LogUtil::Info(CODE_LOCATION, "==================== will exiting with ExitCode:%d and LibeventMainLoopStatus:%p",
-            resultCode, pThreadStatus);
+    LogUtil::Info(CODE_LOCATION, "==================== will exiting with ExitCode:%d", resultCode);
     return resultCode;
 }
 
@@ -223,8 +204,8 @@ void SignalActionHandler(int sigNum, siginfo_t *pSigInfo, void *pSigValue)
             LogUtil::Debug(CODE_LOCATION, "SignalAction SIGIO sigint:%d", sigInt);
             break;
         case SIGINT:
-            gMainLoop.Stop();
             LogUtil::Debug(CODE_LOCATION, "SignalAction SIGINT sigint:%d", sigInt);
+            gMainLoop.Stop();
             break;
         case SIGKILL:
             LogUtil::Debug(CODE_LOCATION, "SignalAction SIGKILL sigint:%d", sigInt);
@@ -329,12 +310,6 @@ int TimerSetTime(timer_t timerID, int intervalSeconds, int startSeconds)
 int TimerDelete(timer_t timerID)
 {
     return timer_delete(timerID);
-}
-
-void LibeventTimerCallback(int fd, short event, void *argc)
-{
-    LogUtil::Info(CODE_LOCATION, "fd=%d  event=%hd  argc=%p", fd, event, argc);
-//    event_add(&ev, &tv);
 }
 
 void ShowDescription()

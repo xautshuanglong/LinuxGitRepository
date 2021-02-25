@@ -1,6 +1,12 @@
 #ifndef _MAIN_LOOP_H_
 #define _MAIN_LOOP_H_
 
+#include <pthread.h>
+
+struct event;
+struct event_base;
+struct timeval;
+
 namespace Shuanglong::EventLoop
 {
     class MainLoop
@@ -11,14 +17,19 @@ namespace Shuanglong::EventLoop
 
             void Start();
             void Stop();
-            static void* ThreadRoutine(void *pArguement);
+
+            void* Run();
+            void TimerEventHandler();
 
         private:
-            void SetValue(int value);
+            static void* ThreadStartRoutine(void *pArguement);
+            static void EventCallback(int fd, short event, void *pArgument);
 
         private:
-            volatile bool mRunningFlag;
-            int mValue;
+            pthread_t          mEventThread;
+            struct event_base *mpEventBase;
+            struct event      *mpEventTimer;
+            struct timeval    *mpTimeValue;
     };
 }
 

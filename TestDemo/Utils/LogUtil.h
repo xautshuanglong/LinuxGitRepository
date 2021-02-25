@@ -14,10 +14,10 @@ namespace Shuanglong::Utils
 #define DEFAULT_LOG_BUFFER_LENGTH 1024
 
 #define DEFAULT_LOG_FORMAT(buffer, fmt, length) \
-va_list vaList;\
-va_start(vaList, fmt);\
-vsnprintf(buffer, DEFAULT_LOG_BUFFER_LENGTH - 1, fmt, vaList);\
-va_end(vaList);
+    va_list vaList;\
+    va_start(vaList, fmt);\
+    vsnprintf(buffer, DEFAULT_LOG_BUFFER_LENGTH - 1, fmt, vaList);\
+    va_end(vaList);
 
     enum LogLevelType
     {
