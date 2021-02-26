@@ -205,6 +205,7 @@ void SignalActionHandler(int sigNum, siginfo_t *pSigInfo, void *pSigValue)
             break;
         case SIGINT:
             LogUtil::Debug(CODE_LOCATION, "SignalAction SIGINT sigint:%d", sigInt);
+            sleep(9);
             gMainLoop.Stop();
             break;
         case SIGKILL:
@@ -246,9 +247,15 @@ void SignalActionHandler(int sigNum, siginfo_t *pSigInfo, void *pSigValue)
                 sigset_t pendingSigSet;
                 sigemptyset(&pendingSigSet);
                 sigpending(&pendingSigSet);
-                if (sigisemptyset(&pendingSigSet))
+                if (!sigisemptyset(&pendingSigSet))
                 {
-                    LogUtil::Warn(CODE_LOCATION, "There are some signals suspending ...");
+                    for (int i=1; i<_NSIG; i++)
+                    {
+                        if (sigismember(&pendingSigSet, i))
+                        {
+                            LogUtil::Warn(CODE_LOCATION, "There are some signals suspending %d", i);
+                        }
+                    }
                 }
             }
             else
