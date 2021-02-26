@@ -205,7 +205,6 @@ void SignalActionHandler(int sigNum, siginfo_t *pSigInfo, void *pSigValue)
             break;
         case SIGINT:
             LogUtil::Debug(CODE_LOCATION, "SignalAction SIGINT sigint:%d", sigInt);
-            sleep(9);
             gMainLoop.Stop();
             break;
         case SIGKILL:
