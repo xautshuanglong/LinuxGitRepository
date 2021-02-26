@@ -14,6 +14,11 @@ array_directory_list=(
     '/cygdrive/i/WorkMGI/02_design/05_SW/97_third_party/coturn-4.5.1.3/'
     '/cygdrive/i/WorkMGI/02_design/05_SW/97_third_party/libwebsockets/RestClientDemo/'
     '/cygdrive/i/WorkMGI/02_design/05_SW/97_third_party/libwebsockets/libwebsockets-4.1.6/'
+    '/home/shuanglong/Programing/MgiWorks/coturn-4.5.1.3/'
+    '/home/shuanglong/Programing/MgiWorks/libwebsockets/RestClientDemo/'
+    '/home/shuanglong/Programing/MgiWorks/libwebsockets/libwebsockets-4.1.6/'
+    '/home/shuanglong/Programing/LinuxGitRepository/TestDemo/'
+    '/home/shuanglong/Programing/LinuxGitRepository/ShellScripts'
 )
 
 function print_help ()
@@ -39,11 +44,14 @@ function list_all_directories ()
 function change_work_directory ()
 {
     dir=${array_directory_list[$1]}
-    echo "---> change to directory $dir"
     if [ -d "$dir" ]
     then
+        echo "---> change to directory $dir"
         cd "$dir"
         ls -al
+    else
+        echo "---> does not exist : $dir"
+        cd ~
     fi
 }
 
