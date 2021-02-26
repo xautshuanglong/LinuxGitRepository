@@ -242,6 +242,14 @@ void SignalActionHandler(int sigNum, siginfo_t *pSigInfo, void *pSigValue)
                 }
                 LogUtil::Info(CODE_LOCATION, "Receive SIGUSR2 CurrentTime:%s TimerID:%llu  gettid=%ld  pthread_self=%lu",
                         TimeUtil::CurrentTimestampString().c_str(), timerID, gettid(), pthread_self());
+
+                sigset_t pendingSigSet;
+                sigemptyset(&pendingSigSet);
+                sigpending(&pendingSigSet);
+                if (sigisemptyset(&pendingSigSet))
+                {
+                    LogUtil::Warn(CODE_LOCATION, "There are some signals suspending ...");
+                }
             }
             else
             {

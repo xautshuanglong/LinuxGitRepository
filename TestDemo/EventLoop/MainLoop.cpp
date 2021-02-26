@@ -30,19 +30,19 @@ namespace Shuanglong::EventLoop
     void MainLoop::Start()
     {
         pthread_create(&mEventThread, NULL, MainLoop::ThreadStartRoutine, this);
-        pthread_join(mEventThread, NULL);
+
+        void *pRetValue = NULL;
+        int retCode = pthread_join(mEventThread, &pRetValue);
+        LogUtil::Warn(CODE_LOCATION, "After pthread_join retCode=%d  pRetValue=%p", retCode, pRetValue);
     }
 
     void MainLoop::Stop()
     {
-        LogUtil::Debug(CODE_LOCATION, "Inside function ...");
+        LogUtil::Debug(CODE_LOCATION, "stopping main loop ...");
+        event_del(mpEventTimer);
         event_base_loopbreak(mpEventBase);
         // event_base_loopexit(mpEventBase, NULL);
-        LogUtil::Debug(CODE_LOCATION, "event loop will stopping ...");
-
-        void *pThreadReturn = NULL;
-        int retVal = pthread_tryjoin_np(mEventThread, &pThreadReturn);
-        LogUtil::Debug(CODE_LOCATION, "retVal=%d   pThreadReturn=%p", retVal, pThreadReturn);
+        LogUtil::Debug(CODE_LOCATION, "have broke the event loop ...");
     }
 
     void* MainLoop::Run()
@@ -60,7 +60,7 @@ namespace Shuanglong::EventLoop
 
     void MainLoop::TimerEventHandler()
     {
-        //LogUtil::Info(CODE_LOCATION, "fd=%d  event=%hd  argc=%p", fd, event, pArgument);
+        LogUtil::Info(CODE_LOCATION, "Inside function ...");
         event_add(mpEventTimer, mpTimeValue);
     }
 
@@ -74,7 +74,6 @@ namespace Shuanglong::EventLoop
 
     void MainLoop::EventCallback(int fd, short event, void *pArgument)
     {
-        LogUtil::Info(CODE_LOCATION, "fd=%d  event=%hd  argc=%p", fd, event, pArgument);
         if (pArgument == NULL) return;
 
         MainLoop *pMainLoop = static_cast<MainLoop*>(pArgument);
