@@ -46,5 +46,6 @@ Makefile.in
 # Added by Shuanglong
 **/build/**
 **/logs/**
+**/outdir/**
 
 **/__debug_bin
