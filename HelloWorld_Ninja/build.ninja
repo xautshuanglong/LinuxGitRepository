@@ -1,0 +1,32 @@
+ninja_required_version = 1.10.2
+
+CC = g++
+cflags = /w
+builddir = outdir
+standard = /std:c++latest
+
+rule compile_HelloWorld
+    command = $CC -c $in
+    description = --------> Compiling $in to $out
+    depfile = $out.d
+    deps = msvc
+
+build test_func.o : compile_HelloWorld src/test_func.cpp
+build main.o : compile_HelloWorld src/main.cpp
+
+rule link_HelloWorld
+    command = $CC $in -o $out
+    description = --------> Linking $in to $out
+
+build hello_world.out : link_HelloWorld main.o test_func.o
+
+rule clean_cmd
+    command = bash $
+        if [-f main.o]; then echo main.o; fi
+#if [ -z func.o ]; then echo test_func.o; fi
+    description = --------> Deleting generated files
+
+build clean: clean_cmd
+
+default hello_world.out
+
