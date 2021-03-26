@@ -32,7 +32,7 @@ class IpUtil:
         # print(response.content)
         # print(response.json())
 
-        return result;
+        return result
 
     # https://ip.taobao.com/ipSearch
     # 响应数据 code 值含义，0：成功  1：服务器异常  2：请求参数异常  3：服务器繁忙  4：个人qps超出。
