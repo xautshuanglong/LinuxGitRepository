@@ -1,4 +1,4 @@
-ninja_required_version = 1.10.2
+ninja_required_version = 1.8.2
 
 CC = g++
 cflags = /w
