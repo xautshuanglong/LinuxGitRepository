@@ -22,7 +22,7 @@ objs :=
 EXT_INC :=
 EXT_LIBS :=
 
-# EXT_INC += -I /usr/local/include
+EXT_INC += -I /usr/local/include
 
 EXT_LIBS += -lrt
 EXT_LIBS += -levent

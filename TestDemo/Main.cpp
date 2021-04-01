@@ -66,9 +66,6 @@ int main(int argc, char *argv[])
     sstring << std::this_thread::get_id();
     LogUtil::Debug(CODE_LOCATION, "std::this_thread::get_id id : %s", sstring.str().c_str());
 
-    struct pthread *pThreadSelf = (struct pthread *)pthread_self();
-    //LogUtil::Debug(CODE_LOCATION, "pthread_self tid: %d", pThreadSelf->tid);
-
     InitializeSignalHandler();
     
     int resultCode = app.Run(argc, argv);
@@ -192,11 +189,13 @@ void SignalActionHandler(int sigNum, siginfo_t *pSigInfo, void *pSigValue)
     static timer_t timerID = 0;
     int sigInt = pSigInfo->si_int;
 
+    /*
     int res = 0;
     struct timeval changeTimeOfDay;
     changeTimeOfDay.tv_sec = 88899L;
     changeTimeOfDay.tv_usec = 0L;
     struct timezone changeTimeZone;
+    */
 
     switch (sigNum)
     {
