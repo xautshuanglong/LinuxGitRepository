@@ -3,8 +3,8 @@
 
 mode=release
 
-CC = g++ -std=c++17
-CFLAGS :=
+CC = g++
+CFLAGS := -Wall
 LDFLAGS :=
 
 program = TestDemo.out
@@ -29,28 +29,22 @@ EXT_LIBS += -levent
 EXT_LIBS += -lpthread
     
 SRCS += $(wildcard ./*.cpp)
-UTIL_SRCS +=$(wildcard Utils/*.cpp)
-EVENT_LOOP_SRCS +=$(wildcard EventLoop/*.cpp)
+UTIL_SRCS += $(wildcard Utils/*.cpp)
+EVENT_LOOP_SRCS += $(wildcard EventLoop/*.cpp)
 
 objs += $(SRCS:.cpp=.o)
 objs += $(UTIL_SRCS:.cpp=.o)
 objs += $(EVENT_LOOP_SRCS:.cpp=.o)
 
 ifeq ($(mode), debug)
-	CFLAGS +=-g
+	CFLAGS += -g
 endif
 
 $(program) : $(objs)
-	$(CC) $(CFLAGS) $(EXT_INC) -o $(program) $(objs) $(EXT_LIBS)
+	$(CC) $(CFLAGS) -o $(program) $(objs) $(EXT_INC) $(EXT_LIBS)
 
-%.o : %.cpp $(deps)
-	$(CC) -c $(CFLAGS) $< -o $@
-
-#ifeq ($(mode), debug)
-#	$(CC) -c -g $< -o $@
-#else
-#	$(CC) -c $< -o $@
-#endif
+$(objs) :
+	$(CC) $(CFLAGS) -c $(@:.o=.cpp) -o $@
 
 .PHONY:clean
 clean:
