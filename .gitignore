@@ -47,5 +47,6 @@ Makefile.in
 **/build/**
 **/logs/**
 **/outdir/**
+*.debug
 
 **/__debug_bin

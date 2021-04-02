@@ -72,7 +72,7 @@ namespace Shuanglong::EventLoop
 
     void MainLoop::TimerEventHandler()
     {
-        LogUtil::Info(CODE_LOCATION, "Inside function ...");
+        LogUtil::Info(CODE_LOCATION, "Inside function ... %p", &MainLoop::TimerEventHandler);
         event_add(mpEventTimer, mpTimeValue);
     }
 
